@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Breadcrumb, Row, Col, Divider } from "antd";
+import { Layout, Menu, Row, Col, Divider } from "antd";
 import "./App.css";
 import DataTable from "./components/DataTable";
 import tempIMG from "./assets/640-480.png";
@@ -12,9 +12,9 @@ function App() {
       <Header>
         <div className="logo" />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-          <Menu.Item key="1">nav 1</Menu.Item>
-          <Menu.Item key="2">nav 2</Menu.Item>
-          <Menu.Item key="3">nav 3</Menu.Item>
+          <Menu.Item key="1">Settings</Menu.Item>
+          <Menu.Item key="2">Dashboard</Menu.Item>
+          <Menu.Item key="3">Map</Menu.Item>
         </Menu>
       </Header>
       <Content style={{ padding: "0 50px", height: "100vh" }}>
@@ -29,14 +29,14 @@ function App() {
             </Col>
             <Col flex={4}>
               <div style={{ background: "#173F5F" }}>
-                <Row>
+                <Row style={{ alignContent: "center" }}>
                   <div>
                     <img src={tempIMG} alt="Empty img" />
                   </div>
                 </Row>
-                <Row>
+                {/* <Row>
                   <DataTable />
-                </Row>
+                </Row> */}
               </div>
             </Col>
             <Col flex={2}>
