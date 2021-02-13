@@ -1,56 +1,31 @@
-import React from "react";
-import { Layout, Menu, Row, Col, Divider } from "antd";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import DataTable from "./components/DataTable";
-import tempIMG from "./assets/640-480.png";
+import axios from "axios";
+import tempIMG from "./assets/480p.png";
+import { Flex, Button } from "@chakra-ui/react";
 
-const { Header, Content, Footer } = Layout;
+import Navbar2 from "./components/Navbar2";
+import NumberFormField from "./components/NumberFormField";
 
 function App() {
-  return (
-    <Layout className="layout">
-      <Header>
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-          <Menu.Item key="1">Settings</Menu.Item>
-          <Menu.Item key="2">Dashboard</Menu.Item>
-          <Menu.Item key="3">Map</Menu.Item>
-        </Menu>
-      </Header>
-      <Content style={{ padding: "0 50px", height: "100vh" }}>
-        <Divider orientation="left"></Divider>
+  const [data, setData] = useState(" ... ");
 
-        <div className="site-layout-content">
-          <Row>
-            <Col flex={2}>
-              <div style={{ background: "##3CAEA3" }}>
-                <DataTable />
-              </div>
-            </Col>
-            <Col flex={4}>
-              <div style={{ background: "#173F5F" }}>
-                <Row style={{ alignContent: "center" }}>
-                  <div>
-                    <img src={tempIMG} alt="Empty img" />
-                  </div>
-                </Row>
-                {/* <Row>
-                  <DataTable />
-                </Row> */}
-              </div>
-            </Col>
-            <Col flex={2}>
-              <div style={{ background: "#3CAEA3" }}>
-                <DataTable />
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </Content>
-      <Footer style={{ textAlign: "center", position: "sticky", bottom: "0" }}>
-        Towed ROV, 2021 @andreasoie
-      </Footer>
-    </Layout>
+  useEffect(() => {
+    let eventSource = new EventSource("http://localhost:8000/stream");
+    eventSource.addEventListener("stuff", (e) => setData(e.data));
+    eventSource.addEventListener("close", () => eventSource.close());
+    return () => eventSource.close();
+  }, []);
+
+  return (
+    <Flex bg="cyan" direction="column" align="center" justify="center">
+      <Navbar2 />
+      <img src="http://localhost:8000/video" alt="noVideo" />
+      <Flex margin="5">
+        <NumberFormField />
+      </Flex>
+      <pre>{data}</pre>
+    </Flex>
   );
 }
 export default App;
@@ -58,6 +33,7 @@ export default App;
 //  <JsonHandler />
 //<div><img src="http://localhost:8000/video" alt="nada" /></div>
 
+// <img src={tempIMG} alt="Empty img" />
 /* <Grid container className={classes.root}>
   <Grid item className={classes.item}>
     A Hello
@@ -69,3 +45,19 @@ export default App;
     C Hello
   </Grid>
 </Grid> */
+
+// <Content>
+// <Header />
+// <Main>
+//   <Box fontSize={["sm", "md", "lg", "xl"]}>Font Size</Box>
+//   {/* responsive margin */}
+//   <Box mt={["10px", "20px"]} width="full" height="24px" bg="tomato" />
+//   {/* responsive padding */}
+//   <Box bg="papayawhip" p={[2, 4, 6, 8]}>
+//     Padding
+//   </Box>
+//   <Text fontSize={{ base: "24px", md: "40px", lg: "56px" }}>
+//     This is responsive text
+//   </Text>
+// </Main>
+// </Content>
