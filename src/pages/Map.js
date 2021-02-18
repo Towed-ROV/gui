@@ -1,41 +1,28 @@
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
-import {
-  Box,
-  Image,
-  Badge,
-  Text,
-  Icon,
-  Flex,
-  Button,
-  useColorMode,
-} from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
 const Map = () => {
-  const pos = [1.45, 103.8];
+  const pos = [62.5, 6.2];
 
   return (
-    <Box
-      w="400px"
-      rounded="20px"
-      border="1px solid"
-      boxShadow="sm"
-      borderColor="gray.300"
-      overflow="hidden"
-    >
+    <Flex bg="rov.dark" color="rov.dark">
       <MapContainer
         className="map"
-        // @ts-ignore
         center={pos}
-        zoom={10}
-        style={{ height: 300, width: "100%" }}
+        zoom={12}
+        style={{
+          margin: 0,
+          height: "92vh",
+          width: "100vw",
+        }}
       >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
       </MapContainer>
-    </Box>
+    </Flex>
   );
 };
 

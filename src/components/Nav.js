@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  Box,
-  Heading,
-  Image,
-  Flex,
-  Text,
-  Button,
-  AspectRatio,
-} from "@chakra-ui/react";
+import { Box, Heading, Flex, Text, Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const MenuItems = ({ children }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
@@ -15,7 +8,7 @@ const MenuItems = ({ children }) => (
   </Text>
 );
 
-const Header = (props) => {
+const Nav = (props) => {
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
 
@@ -27,22 +20,15 @@ const Header = (props) => {
       justify="space-between"
       wrap="wrap"
       padding="1.5rem"
-      bg="teal.500"
-      color="white"
+      bg="rov.darker"
+      color="rov.light"
       {...props}
     >
       <Flex
         align="center"
         width={{ base: "100%", md: "auto" }}
         justifyContent={{ base: "space-between", md: "flex-start" }}
-      >
-        <Image
-          borderRadius="full"
-          boxSize="50px"
-          src="https://bit.ly/3qi6xXR"
-          alt="Segun Adebayo"
-        />
-      </Flex>
+      ></Flex>
 
       <Box
         display={{ base: "block", md: "flex" }}
@@ -51,27 +37,14 @@ const Header = (props) => {
         justifyContent="center"
       >
         <MenuItems>
-          <Heading as="button" size="lg" letterSpacing={"-.1rem"}>
-            Dashboard
-          </Heading>
+          <Link to="/dashboard">Dashboard</Link>
         </MenuItems>
         <MenuItems>
-          <Heading as="button" size="lg" letterSpacing={"-.1rem"}>
-            Map
-          </Heading>
+          <Link to="/map">Map</Link>
         </MenuItems>
-      </Box>
-
-      <Box
-        display={{ base: show ? "block" : "none", md: "block" }}
-        mt={{ base: 4, md: 0 }}
-      >
-        <Button bg="transparent" border="1px">
-          Settings
-        </Button>
       </Box>
     </Flex>
   );
 };
 
-export default Header;
+export default Nav;

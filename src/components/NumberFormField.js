@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Field, FieldProps, Form, Formik } from "formik";
+import React from "react";
+import { Field, Form, Formik } from "formik";
 import {
   Button,
   FormErrorMessage,
@@ -12,7 +12,7 @@ import axios from "axios";
 
 const postSome = async (url, number) => {
   const myCmd = {
-    name: "Temperature",
+    name: "temperature",
     value: 0,
   };
 
@@ -28,7 +28,7 @@ const postSome = async (url, number) => {
 };
 
 const NumberFormField = () => {
-  const CMD_URL = "http://localhost:8000/cmd";
+  const CMD_URL = "http://localhost:8000/commands/cmd";
 
   const validateInput = (value) => {
     let error;
@@ -56,6 +56,7 @@ const NumberFormField = () => {
             name="value"
             type="input"
             validate={validateInput}
+            height="100px"
           >
             {({ field, form }) => (
               <FormControl isInvalid={form.errors.value && form.touched.value}>

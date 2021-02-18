@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
 import axios from "axios";
-import tempIMG from "./assets/480p.png";
-import { Flex, Button } from "@chakra-ui/react";
-
-import Navbar2 from "./components/Navbar2";
+import {
+  Flex,
+  Button,
+  Box,
+  SimpleGrid,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import Nav from "./components/Nav";
 import NumberFormField from "./components/NumberFormField";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./App.css";
+import Dashboard from "./pages/Dashboard";
+import Map from "./pages/Map";
+import SensorDisplay from "./components/SensorDisplay";
+import Navbar from "./components/Navbar";
+import { SensorCard } from "./components/SensorCard";
 
 function App() {
-  const [data, setData] = useState(" ... ");
-
-  useEffect(() => {
-    let eventSource = new EventSource("http://localhost:8000/stream");
-    eventSource.addEventListener("stuff", (e) => setData(e.data));
-    eventSource.addEventListener("close", () => eventSource.close());
-    return () => eventSource.close();
-  }, []);
-
   return (
-    <Flex bg="cyan" direction="column" align="center" justify="center">
-      <Navbar2 />
-      <img src="http://localhost:8000/video" alt="noVideo" />
-      <Flex margin="5">
-        <NumberFormField />
+    <Router>
+      <Flex direction="column" align="center" justify="space-around">
+        <Nav />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/map" component={Map} />
+        </Switch>
       </Flex>
-      <pre>{data}</pre>
-    </Flex>
+    </Router>
   );
 }
+
+const Home = () => {
+  return <div>Homepage</div>;
+};
 export default App;
 
 //  <JsonHandler />
