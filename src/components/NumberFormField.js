@@ -45,7 +45,7 @@ const NumberFormField = () => {
       initialValues={{ value: "" }}
       onSubmit={(data, actions) => {
         var number = Number(data.value);
-        postSome(CMD_URL, number);
+        // postSome(CMD_URL, number);
         actions.resetForm();
       }}
     >

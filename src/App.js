@@ -12,6 +12,8 @@ import NumberFormField from "./components/NumberFormField";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
+
 import Map from "./pages/Map";
 import SensorDisplay from "./components/SensorDisplay";
 import Navbar from "./components/Navbar";
@@ -20,21 +22,16 @@ import { SensorCard } from "./components/SensorCard";
 function App() {
   return (
     <Router>
-      <Flex direction="column" align="center" justify="space-around">
-        <Nav />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/map" component={Map} />
-        </Switch>
-      </Flex>
+      <Navbar />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/map" component={Map} />
+      </Switch>
     </Router>
   );
 }
 
-const Home = () => {
-  return <div>Homepage</div>;
-};
 export default App;
 
 //  <JsonHandler />
