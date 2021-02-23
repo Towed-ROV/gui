@@ -4,7 +4,13 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "leaflet/dist/leaflet.css";
-import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  ColorModeScript,
+  CSSReset,
+  extendTheme,
+} from "@chakra-ui/react";
+import theme from "./theme";
 
 const rovTheme = extendTheme({
   colors: {
@@ -22,6 +28,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={rovTheme}>
       <CSSReset />
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <App />
     </ChakraProvider>
   </React.StrictMode>,

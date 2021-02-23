@@ -56,7 +56,6 @@ const NumberFormField = () => {
             name="value"
             type="input"
             validate={validateInput}
-            height="100px"
           >
             {({ field, form }) => (
               <FormControl isInvalid={form.errors.value && form.touched.value}>

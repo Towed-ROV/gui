@@ -1,14 +1,12 @@
 import {
-  AspectRatio,
-  Center,
   Flex,
   Grid,
   GridItem,
-  Text,
   Image,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import Navbar from "../components/Navbar";
 import Map from "./Map";
 
@@ -44,46 +42,58 @@ const jsonPlaceholder = [
   },
 ];
 
-const pos = [62.5, 6.2];
-
-const lol = { msg: "hello" };
-
 const Home = () => {
+  const textColor = useColorModeValue("grey.900", "gray.200");
+  const boxColor = useColorModeValue("gray.200", "gray.600");
+  const pos = [62.4698, 6.1872];
+
   return (
-    <Flex mx="20">
+    <Flex h="80vh" mx="2vw">
       <Grid
-        h="750px"
-        w="100%"
         templateRows="repeat(2, 1fr)"
         templateColumns="repeat(5, 1fr)"
         gap={4}
+        w="100%"
+        h="100%"
       >
-        <GridItem bg="rov.cyaner" rowSpan={2} colSpan={1}>
+        <GridItem
+          bg={boxColor}
+          boxShadow="dark-lg"
+          rounded="lg"
+          rowSpan={2}
+          colSpan={1}
+        >
           <pre>{JSON.stringify(jsonPlaceholder, null, 2)}</pre>
         </GridItem>
-        <GridItem colSpan={2}>
+        <GridItem bg={boxColor} boxShadow="dark-lg" rounded="lg" colSpan={2}>
           <Flex justify="center">
             <Image src={imgPlaceholder} alt="IMG EMPTY" />
           </Flex>
         </GridItem>
-        <GridItem colSpan={2} bg="rov.cyaner">
+        <GridItem bg={boxColor} boxShadow="dark-lg" rounded="lg" colSpan={2}>
           <MapContainer
             className="map"
             center={pos}
-            zoom={12}
+            zoom={16}
             style={{
               display: "flex",
               height: "100%",
               width: "100%",
             }}
           >
+            <Marker position={pos} />
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
           </MapContainer>
         </GridItem>
-        <GridItem colSpan={4} bg="rov.cyaner">
+        <GridItem bg={boxColor} boxShadow="dark-lg" rounded="lg" colSpan={2}>
+          <Flex p={12}>
+            <NumberFormField />
+          </Flex>
+        </GridItem>
+        <GridItem bg={boxColor} boxShadow="dark-lg" rounded="lg" colSpan={2}>
           <Flex p={12}>
             <NumberFormField />
           </Flex>

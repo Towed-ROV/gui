@@ -25,8 +25,8 @@ const SensorDisplay = () => {
   ];
 
   const [newData, setNewData] = useState([]);
-
-  const tempBG = useColorModeValue("gray.50", "gray.800");
+  const textColor = useColorModeValue("grey.900", "gray.200");
+  const boxColor = useColorModeValue("gray.200", "gray.600");
 
   const testParse = (stuff) => {
     try {
@@ -35,23 +35,23 @@ const SensorDisplay = () => {
       console.log(err);
     }
   };
-  useEffect(() => {
-    let eventSource = new EventSource("http://localhost:8000/sensors/data");
-    eventSource.addEventListener("data", (event) => {
-      try {
-        let data = JSON.parse(event.data);
-        setNewData(data.payload_data);
-      } catch (err) {
-        console.log(err);
-      }
-    });
-    eventSource.addEventListener("close", () => eventSource.close());
-    return () => eventSource.close();
-  }, []);
+  // useEffect(() => {
+  //   let eventSource = new EventSource("http://localhost:8000/sensors/data");
+  //   eventSource.addEventListener("data", (event) => {
+  //     try {
+  //       let data = JSON.parse(event.data);
+  //       setNewData(data.payload_data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   });
+  //   eventSource.addEventListener("close", () => eventSource.close());
+  //   return () => eventSource.close();
+  // }, []);
 
   return (
     <Flex height="100px">
-      <Box as="section" bg={tempBG} p="2">
+      <Box as="section" bg={boxColor} p="2">
         <Box maxW="7xl" mx="auto" px={{ base: "6", md: "8" }}>
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing="6">
             {newData.map((stat, idx) => (

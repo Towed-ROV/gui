@@ -1,48 +1,92 @@
 import React from "react";
 import {
   Flex,
-  Stack,
   Box,
+  Image,
+  Button,
+  Link,
   useColorMode,
   IconButton,
-  Image,
-  Text,
-  Button,
-  Avatar,
-  Link,
-  AspectRatio,
+  useColorModeValue,
 } from "@chakra-ui/react";
+import { Link as ReactRouterLink } from "react-router-dom";
 
 import ntnuLogo from "../assets/ntnu.png";
+import { SettingsIcon, SunIcon } from "@chakra-ui/icons";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const { toggleColorMode } = useColorMode();
+
+  const textColor = useColorModeValue("grey.900", "gray.200");
+  const boxColor = useColorModeValue("gray.200", "gray.600");
+
   return (
     <Flex
-      bg="rov.cyaner"
-      h="8em"
-      mx="20"
-      my="10"
+      as="nav"
+      bg={boxColor}
+      color={textColor}
+      boxShadow="dark-lg"
+      rounded="lg"
+      h="8vh"
+      mx="2vw"
+      my="2vh"
       align="center"
       justifyContent="space-between"
+      wrap="wrap"
+      {...props}
     >
-      <Box>
-        <Image h="3vh" src={ntnuLogo} alt="NTNU" />
+      <Box marginLeft={4}>
+        <IconButton
+          as={ReactRouterLink}
+          to="/settings"
+          size="lg"
+          aria-label="To settings"
+          icon={<SettingsIcon />}
+          bg={boxColor}
+          color={textColor}
+        />
       </Box>
       <Flex>
-        <Link fontWeight="bold" pr={16} fontSize="3xl">
+        <Link
+          as={ReactRouterLink}
+          to="/"
+          pr={16}
+          fontSize="3xl"
+          bg={boxColor}
+          color={textColor}
+        >
           Home
         </Link>
-        <Link fontWeight="bold" pr={16} fontSize="3xl">
+        <Link
+          as={ReactRouterLink}
+          to="/dashboard"
+          pr={16}
+          fontSize="3xl"
+          bg={boxColor}
+          color={textColor}
+        >
           Dashboard
         </Link>
-        <Link fontWeight="bold" pr={16} fontSize="3xl">
+        <Link
+          as={ReactRouterLink}
+          to="/map"
+          pr={16}
+          fontSize="3xl"
+          bg={boxColor}
+          color={textColor}
+        >
           Map
         </Link>
       </Flex>
-      <Flex>
-        <Button size="lg" bg="#000000" color="white" variant="solid">
-          Settings
-        </Button>
+      <Flex marginRight={4}>
+        <IconButton
+          size="lg"
+          aria-label="Change colormode"
+          onClick={toggleColorMode}
+          icon={<SunIcon />}
+          bg={boxColor}
+          color={textColor}
+        />
       </Flex>
     </Flex>
   );

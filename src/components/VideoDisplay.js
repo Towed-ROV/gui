@@ -1,4 +1,12 @@
-import { Box, Button, Image, Flex, Text, Switch } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Image,
+  Flex,
+  Text,
+  Switch,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import offlineImage from "../assets/offline.png";
@@ -29,6 +37,9 @@ const postSome = async (url) => {
 };
 
 const VideoDisplay = () => {
+  const textColor = useColorModeValue("grey.900", "gray.200");
+  const boxColor = useColorModeValue("gray.200", "gray.600");
+
   const VIDEO_STREAM = "http://localhost:8000/videos/video";
   const [isConnected, setIsConnected] = useState(false);
   const [source, setSource] = useState(offlineImage);
@@ -42,7 +53,7 @@ const VideoDisplay = () => {
 
   return (
     <Flex>
-      <Box p="2" bg="rov.cyaner">
+      <Box p="2" bg={boxColor}>
         <Box
           display="flex"
           justifyContent="space-between"
@@ -53,7 +64,7 @@ const VideoDisplay = () => {
           letterSpacing="wide"
           bg="rov.light"
         >
-          <Text fontSize="xl" color="rov.dark">
+          <Text fontSize="xl" color={textColor}>
             Connection: {isConnected.toString()}
           </Text>
           <Button onClick={takeSnapshot}>Snap</Button>
