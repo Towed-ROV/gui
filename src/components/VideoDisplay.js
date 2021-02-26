@@ -57,6 +57,8 @@ const VideoDisplay = () => {
         bg="gray.600"
         display="flex"
         justifyContent="space-between"
+        borderTopLeftRadius="5px"
+        borderTopRightRadius="5px"
         alignItems="center"
         d="flex"
         mt="2"

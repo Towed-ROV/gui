@@ -14,6 +14,7 @@ export const SensorCard = (props) => {
       bg={mode("white", "gray.700")}
       shadow="base"
       rounded="lg"
+      bg={props.enabled ? "green.300" : "red.400"}
     >
       <StatLabel
         fontWeight="medium"

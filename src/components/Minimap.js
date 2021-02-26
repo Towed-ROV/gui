@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import {
   MapContainer,
   TileLayer,
@@ -36,25 +36,29 @@ function LocationMarker() {
 }
 
 const Minimap = () => {
+  const textColor = useColorModeValue("blackAlpha.900", "gray.200");
+  const boxColor = useColorModeValue("gray.200", "gray.600");
+
   const pos = [62.4698, 6.1872];
 
   return (
-    <MapContainer
-      className="map"
-      center={pos}
-      zoom={16}
-      style={{
-        display: "flex",
-        height: "100%",
-        width: "100%",
-      }}
-    >
-      <Marker position={pos} />
-      <TileLayer
-        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-    </MapContainer>
+    <>
+      <MapContainer
+        className="map"
+        center={pos}
+        zoom={16}
+        style={{
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <Marker position={pos} />
+        <TileLayer
+          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+      </MapContainer>
+    </>
   );
 };
 

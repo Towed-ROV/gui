@@ -99,11 +99,8 @@ const Settings = () => {
 
   const updateSensorEnabledState = (id, state) => {
     let updatedSettings = [];
-    console.log("ID: ", id);
-    console.log("ST: ", state.toString());
-
     sensorSettings.forEach((user) => {
-      if (user["id"] === id) {
+      if (user.id === id) {
         user["enabled"] = state;
       }
       updatedSettings.push(user);

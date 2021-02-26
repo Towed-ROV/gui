@@ -12,6 +12,8 @@ export const SettingsProvider = (props) => {
   const [sensorSettings, setSensorSettings] = useState([]);
 
   const addSensorToSettings = (sensor) => {
+    console.log(JSON.stringify(sensor, null, 2));
+    // setSensorSettings([...sensorSettings, sensor]);
     setSensorSettings((oldSettings) => [...oldSettings, sensor]);
   };
 
