@@ -90,7 +90,6 @@ const Home = () => {
             icon={<ExternalLinkIcon />}
           />
         </Link>
-        <pre>{JSON.stringify(sensorSettings, null, 2)}</pre>
       </VStack>
     </Flex>
   );
