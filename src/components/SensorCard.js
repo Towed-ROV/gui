@@ -7,7 +7,6 @@ import {
 import * as React from "react";
 
 export const SensorCard = (props) => {
-  const { name, value } = props.data;
   return (
     <Stat
       px={{ base: 4, sm: 6 }}
@@ -21,14 +20,14 @@ export const SensorCard = (props) => {
         isTruncated
         color={mode("gray.500", "gray.400")}
       >
-        {name}
+        {props.name}
       </StatLabel>
       <StatNumber
         fontSize="3xl"
         fontWeight="medium"
         color={mode("gray.900", "white")}
       >
-        {value}
+        {props.id}
       </StatNumber>
     </Stat>
   );

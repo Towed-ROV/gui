@@ -1,104 +1,97 @@
 import {
   Flex,
-  Grid,
-  GridItem,
-  Image,
+  IconButton,
   useColorModeValue,
+  VStack,
+  HStack,
+  Stack,
+  Text,
+  Link,
+  Button,
+  Divider,
+  CheckboxGroup,
+  Checkbox,
+  useCheckboxGroup,
+  Input,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
 } from "@chakra-ui/react";
-import React from "react";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
-import Navbar from "../components/Navbar";
-import Map from "./Map";
+import React, { useContext, useEffect, useState } from "react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import {
+  SettingsContext,
+  SettingsProvider,
+} from "../components/SettingsProvider";
 
-import imgPlaceholder from "../assets/offline.png";
-import NumberFormField from "../components/NumberFormField";
+import api from "../services/api";
+import { Field, Form, Formik } from "formik";
 
-const jsonPlaceholder = [
+const db = [
   {
-    connection: "on",
-    window: {
-      title: "123123",
-      name: "123123",
-      width: 500,
-      height: 500,
-    },
-    image: {
-      src: "Images/Sun.png",
-      name: "sun1",
-      hOffset: 250,
-      vOffset: 250,
-      alignment: "center",
-    },
-    text: {
-      data: "Click Here",
-      size: 36,
-      style: "bold",
-      name: "text1",
-      hOffset: 250,
-      vOffset: 100,
-      alignment: "center",
-      onMouseUp: "0.111111111",
-    },
+    id: 3,
+    name: "Temperature",
+    origin: "Arduino 1",
+    role: "PUB",
+    port: "A5",
+    enabled: false,
+  },
+  {
+    id: 22,
+    name: "Pressure",
+    origin: "Arduino 2",
+    role: "PUBSUB",
+    port: "COM4",
+    enabled: false,
+  },
+  {
+    id: 1,
+    name: "Humidity",
+    origin: "Arduino 3",
+    role: "SUB",
+    port: "D11",
+    enabled: false,
+  },
+  {
+    id: 99,
+    name: "Oxygen",
+    origin: "Arduino 1",
+    role: "PUB",
+    port: "A0",
+    enabled: false,
   },
 ];
 
 const Home = () => {
   const textColor = useColorModeValue("grey.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
-  const pos = [62.4698, 6.1872];
+
+  const { sensorSettings } = useContext(SettingsContext);
 
   return (
-    <Flex h="80vh" mx="2vw">
-      <Grid
-        templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(5, 1fr)"
-        gap={4}
-        w="100%"
-        h="100%"
-      >
-        <GridItem
-          bg={boxColor}
-          boxShadow="dark-lg"
-          rounded="lg"
-          rowSpan={2}
-          colSpan={1}
-        >
-          <pre>{JSON.stringify(jsonPlaceholder, null, 2)}</pre>
-        </GridItem>
-        <GridItem bg={boxColor} boxShadow="dark-lg" rounded="lg" colSpan={2}>
-          <Flex justify="center">
-            <Image src={imgPlaceholder} alt="IMG EMPTY" />
-          </Flex>
-        </GridItem>
-        <GridItem bg={boxColor} boxShadow="dark-lg" rounded="lg" colSpan={2}>
-          <MapContainer
-            className="map"
-            center={pos}
-            zoom={16}
-            style={{
-              display: "flex",
-              height: "100%",
-              width: "100%",
-            }}
-          >
-            <Marker position={pos} />
-            <TileLayer
-              attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-          </MapContainer>
-        </GridItem>
-        <GridItem bg={boxColor} boxShadow="dark-lg" rounded="lg" colSpan={2}>
-          <Flex p={12}>
-            <NumberFormField />
-          </Flex>
-        </GridItem>
-        <GridItem bg={boxColor} boxShadow="dark-lg" rounded="lg" colSpan={2}>
-          <Flex p={12}>
-            <NumberFormField />
-          </Flex>
-        </GridItem>
-      </Grid>
+    <Flex
+      h="80vh"
+      mx="2vw"
+      boxShadow="dark-lg"
+      rounded="lg"
+      color={textColor}
+      bg={boxColor}
+      align="center"
+      justify="center"
+    >
+      <VStack>
+        <Text fontSize="2xl">TOWED ROV 2021</Text>
+        <Link isExternal={true} href="https://github.com/Towed-ROV">
+          <IconButton
+            colorScheme="teal"
+            aria-label="Github"
+            size="lg"
+            href="www.google.no"
+            icon={<ExternalLinkIcon />}
+          />
+        </Link>
+        <pre>{JSON.stringify(sensorSettings, null, 2)}</pre>
+      </VStack>
     </Flex>
   );
 };

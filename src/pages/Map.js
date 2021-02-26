@@ -49,10 +49,9 @@ function LocationMarker() {
 
 const Map = () => {
   const x = 62.4698;
-  const y = 6.1872;
   const textColor = useColorModeValue("grey.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
-  const [newY, setnewY] = useState(y);
+  const [y, setY] = useState(6.1872);
 
   // React.useEffect(() => {
   //   const timer = setInterval(() => {
@@ -68,7 +67,7 @@ const Map = () => {
     <Flex h="80vh" mx="2vw" bg={boxColor} color={textColor}>
       <MapContainer
         className="map"
-        center={[x, newY]}
+        center={[x, y]}
         zoom={18}
         style={{
           height: "100%",
@@ -79,7 +78,7 @@ const Map = () => {
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[x, newY]} />
+        <Marker position={[x, y]} />
       </MapContainer>
     </Flex>
   );

@@ -6,6 +6,8 @@ import {
   Input,
   FormLabel,
   FormControl,
+  Flex,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 import axios from "axios";
@@ -28,6 +30,9 @@ const postSome = async (url, number) => {
 };
 
 const NumberFormField = () => {
+  const textColor = useColorModeValue("blackAlpha.900", "gray.200");
+  const boxColor = useColorModeValue("gray.200", "gray.600");
+
   const CMD_URL = "http://localhost:8000/commands/cmd";
 
   const validateInput = (value) => {
@@ -41,46 +46,52 @@ const NumberFormField = () => {
   };
 
   return (
-    <Formik
-      initialValues={{ value: "" }}
-      onSubmit={(data, actions) => {
-        var number = Number(data.value);
-        // postSome(CMD_URL, number);
-        actions.resetForm();
-      }}
-    >
-      {(props) => (
-        <Form>
-          <Field
-            placeholder="value"
-            name="value"
-            type="input"
-            validate={validateInput}
-          >
-            {({ field, form }) => (
-              <FormControl isInvalid={form.errors.value && form.touched.value}>
-                <FormLabel htmlFor="value">Value</FormLabel>
-                <Input
-                  {...field}
-                  id="value"
-                  placeholder="value"
-                  autoComplete="off"
-                />
-                <FormErrorMessage>{form.errors.value}</FormErrorMessage>
-              </FormControl>
-            )}
-          </Field>
-          <Button
-            mt={4}
-            colorScheme="teal"
-            isLoading={props.isSubmitting}
-            type="submit"
-          >
-            Submit
-          </Button>
-        </Form>
-      )}
-    </Formik>
+    <Flex p={12}>
+      <Formik
+        initialValues={{ value: "" }}
+        onSubmit={(data, actions) => {
+          var number = Number(data.value);
+          // postSome(CMD_URL, number);
+          actions.resetForm();
+        }}
+      >
+        {(props) => (
+          <Form>
+            <Field
+              placeholder="value"
+              name="value"
+              type="input"
+              validate={validateInput}
+            >
+              {({ field, form }) => (
+                <FormControl
+                  isInvalid={form.errors.value && form.touched.value}
+                >
+                  <FormLabel color={textColor} htmlFor="value">
+                    Value
+                  </FormLabel>
+                  <Input
+                    {...field}
+                    id="value"
+                    placeholder="value"
+                    autoComplete="off"
+                  />
+                  <FormErrorMessage>{form.errors.value}</FormErrorMessage>
+                </FormControl>
+              )}
+            </Field>
+            <Button
+              mt={4}
+              colorScheme="teal"
+              isLoading={props.isSubmitting}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </Flex>
   );
 };
 

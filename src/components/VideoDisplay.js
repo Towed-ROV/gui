@@ -37,7 +37,7 @@ const postSome = async (url) => {
 };
 
 const VideoDisplay = () => {
-  const textColor = useColorModeValue("grey.900", "gray.200");
+  const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
   const VIDEO_STREAM = "http://localhost:8000/videos/video";
@@ -52,32 +52,38 @@ const VideoDisplay = () => {
   };
 
   return (
-    <Flex>
-      <Box p="2" bg={boxColor}>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          d="flex"
-          mt="2"
-          p="2"
-          letterSpacing="wide"
-          bg="rov.light"
+    <Box m={8} bg={boxColor}>
+      <Box
+        bg="gray.600"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        d="flex"
+        mt="2"
+        p="2"
+        letterSpacing="wide"
+      >
+        <Text color={textColor} fontSize="xl">
+          Connection {isConnected.toString()}
+        </Text>
+        <Button
+          colorScheme="teal"
+          isDisabled={!isConnected}
+          onClick={takeSnapshot}
         >
-          <Text fontSize="xl" color={textColor}>
-            Connection: {isConnected.toString()}
-          </Text>
-          <Button onClick={takeSnapshot}>Snap</Button>
-          <Switch onChange={handleConnection} size="lg" colorScheme="green">
-            Connect
-          </Switch>
-        </Box>
-        <Flex w="640px" h="480px">
-          <Image src={source} fallbackSrc={loadIMG} alt="noVideo" />
-        </Flex>
+          Snap
+        </Button>
+        <Switch onChange={handleConnection} size="lg" colorScheme="green">
+          Connect
+        </Switch>
       </Box>
-    </Flex>
+      <Flex align="center" justifyContent="center" bg="blackAlpha.900">
+        <Image src={source} fallbackSrc={loadIMG} alt="noVideo" />
+      </Flex>
+    </Box>
   );
 };
 
 export default VideoDisplay;
+
+// <Flex align="center" justifyContent="center" w="640px" h="480px"></Flex>

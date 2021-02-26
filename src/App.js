@@ -7,17 +7,22 @@ import Map from "./pages/Map";
 import Navbar from "./components/Navbar";
 import Settings from "./pages/Settings";
 import Footer from "./components/Footer";
+import { SettingsProvider } from "./components/SettingsProvider";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
     <Router>
-      <Navbar />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/map" component={Map} />
-        <Route path="/settings" component={Settings} />
-      </Switch>
+      <SettingsProvider>
+        <Navbar />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/map" component={Map} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </SettingsProvider>
       <Footer />
     </Router>
   );

@@ -25,7 +25,7 @@ const SensorDisplay = () => {
   ];
 
   const [newData, setNewData] = useState([]);
-  const textColor = useColorModeValue("grey.900", "gray.200");
+  const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
   const testParse = (stuff) => {
@@ -54,8 +54,8 @@ const SensorDisplay = () => {
       <Box as="section" bg={boxColor} p="2">
         <Box maxW="7xl" mx="auto" px={{ base: "6", md: "8" }}>
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing="6">
-            {newData.map((stat, idx) => (
-              <SensorCard key={idx} data={stat} />
+            {newData.map((sensor, idx) => (
+              <SensorCard key={idx} sensor={sensor} />
             ))}
           </SimpleGrid>
         </Box>
