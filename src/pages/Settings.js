@@ -43,41 +43,6 @@ import api from "../services/api";
 
 const initialFormData = undefined;
 
-const dummyData = [
-  {
-    id: 3,
-    name: "Temperature",
-    origin: "Arduino 1",
-    role: "PUB",
-    port: "A5",
-    enabled: false,
-  },
-  {
-    id: 22,
-    name: "Pressure",
-    origin: "Arduino 2",
-    role: "PUBSUB",
-    port: "COM4",
-    enabled: false,
-  },
-  {
-    id: 1,
-    name: "Humidity",
-    origin: "Arduino 3",
-    role: "SUB",
-    port: "D11",
-    enabled: true,
-  },
-  {
-    id: 99,
-    name: "Oxygen",
-    origin: "Arduino 1",
-    role: "PUB",
-    port: "A0",
-    enabled: false,
-  },
-];
-
 const Settings = () => {
   const textColor = useColorModeValue("grey.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
@@ -90,12 +55,12 @@ const Settings = () => {
     setNewSettings,
   } = useContext(SettingsContext);
 
-  const addDummyData = () => {
-    dummyData.map((data) => {
-      addSensorToSettings(data);
-    });
-    console.log("Loaded dummydata.");
-  };
+  // const addDummyData = () => {
+  //   dummyData.map((data) => {
+  //     addSensorToSettings(data);
+  //   });
+  //   console.log("Loaded dummydata.");
+  // };
 
   const updateSensorEnabledState = (id, state) => {
     let updatedSettings = [];
@@ -109,7 +74,7 @@ const Settings = () => {
   };
 
   useEffect(() => {
-    addDummyData();
+    // addDummyData();
   }, []);
 
   const deleteSensor = (id) => {

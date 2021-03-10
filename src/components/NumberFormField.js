@@ -5,35 +5,16 @@ import {
   FormErrorMessage,
   Input,
   FormLabel,
+  Select,
   FormControl,
   Flex,
   useColorModeValue,
 } from "@chakra-ui/react";
-
-import axios from "axios";
-
-const postSome = async (url, number) => {
-  const myCmd = {
-    name: "temperature",
-    value: 0,
-  };
-
-  myCmd.value = number;
-
-  try {
-    const response = await axios.post(url, myCmd);
-    const data = await response.data;
-    console.log(await JSON.stringify(data, null, 2));
-  } catch (err) {
-    console.log(err);
-  }
-};
+import { sendCommand } from "../fake_db/utils";
 
 const NumberFormField = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
-
-  const CMD_URL = "http://localhost:8000/commands/cmd";
 
   const validateInput = (value) => {
     let error;
@@ -48,15 +29,31 @@ const NumberFormField = () => {
   return (
     <Flex p={12}>
       <Formik
-        initialValues={{ value: "" }}
+        initialValues={{ name: "", value: "" }}
         onSubmit={(data, actions) => {
-          var number = Number(data.value);
-          // postSome(CMD_URL, number);
+          // var number = Number(data.value);
+          sendCommand(data.name, data.value);
           actions.resetForm();
         }}
       >
         {(props) => (
           <Form>
+            <FormLabel color={textColor} htmlFor="name">
+              Name
+            </FormLabel>
+            <Select
+              name="name"
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              style={{ display: "block" }}
+              placeholder="Select name"
+              color={textColor}
+              id="name"
+            >
+              <option value="set_point" label="set_point" />
+              <option value="camera_tilt" label="camera_tilt" />
+              <option value="pid_depth_p" label="pid_depth_p" />
+            </Select>
             <Field
               placeholder="value"
               name="value"
@@ -75,6 +72,7 @@ const NumberFormField = () => {
                     id="value"
                     placeholder="value"
                     autoComplete="off"
+                    color={textColor}
                   />
                   <FormErrorMessage>{form.errors.value}</FormErrorMessage>
                 </FormControl>
@@ -82,9 +80,10 @@ const NumberFormField = () => {
             </Field>
             <Button
               mt={4}
-              colorScheme="teal"
+              bg="teal"
               isLoading={props.isSubmitting}
               type="submit"
+              color={textColor}
             >
               Submit
             </Button>

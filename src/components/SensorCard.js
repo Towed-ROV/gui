@@ -3,32 +3,27 @@ import {
   StatLabel,
   StatNumber,
   useColorModeValue as mode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
 
 export const SensorCard = (props) => {
+  const textColor = useColorModeValue("blackAlpha.900", "gray.200");
+  const boxColor = useColorModeValue("gray.200", "gray.600");
   return (
     <Stat
-      px={{ base: 4, sm: 6 }}
-      py="5"
-      bg={mode("white", "gray.700")}
-      shadow="base"
+      px={{ base: 2, sm: 2 }}
+      py="2"
+      color={textColor}
+      boxShadow="dark-lg"
       rounded="lg"
-      bg={props.enabled ? "green.300" : "red.400"}
+      w="150px"
     >
-      <StatLabel
-        fontWeight="medium"
-        isTruncated
-        color={mode("gray.500", "gray.400")}
-      >
-        {props.name}
+      <StatLabel fontWeight="large" fontSize="xl" isTruncated color={textColor}>
+        {props.sensor.name}
       </StatLabel>
-      <StatNumber
-        fontSize="3xl"
-        fontWeight="medium"
-        color={mode("gray.900", "white")}
-      >
-        {props.id}
+      <StatNumber fontSize="xl" fontWeight="medium" color={textColor}>
+        {props.sensor.origin}
       </StatNumber>
     </Stat>
   );

@@ -66,7 +66,7 @@ const VideoDisplay = () => {
         letterSpacing="wide"
       >
         <Text color={textColor} fontSize="xl">
-          Connection {isConnected.toString()}
+          Connection: {isConnected.toString()}
         </Text>
         <Button
           colorScheme="teal"
@@ -79,7 +79,13 @@ const VideoDisplay = () => {
           Connect
         </Switch>
       </Box>
-      <Flex align="center" justifyContent="center" bg="blackAlpha.900">
+      <Flex
+        align="center"
+        justifyContent="center"
+        bg="blackAlpha.900"
+        maxW="640px"
+        maxH="480px"
+      >
         <Image src={source} fallbackSrc={loadIMG} alt="noVideo" />
       </Flex>
     </Box>

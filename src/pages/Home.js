@@ -60,6 +60,38 @@ const db = [
     port: "A0",
     enabled: false,
   },
+  {
+    id: 33,
+    name: "Oxygen",
+    origin: "Arduino 1",
+    role: "PUB",
+    port: "A0",
+    enabled: false,
+  },
+  {
+    id: 13,
+    name: "Oxygen",
+    origin: "Arduino 1",
+    role: "PUB",
+    port: "A0",
+    enabled: false,
+  },
+  {
+    id: 6,
+    name: "Oxygen",
+    origin: "Arduino 1",
+    role: "PUB",
+    port: "A0",
+    enabled: false,
+  },
+  {
+    id: 66,
+    name: "Oxygen",
+    origin: "Arduino 1",
+    role: "PUB",
+    port: "A0",
+    enabled: false,
+  },
 ];
 
 const Home = () => {

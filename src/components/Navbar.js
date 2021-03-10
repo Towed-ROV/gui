@@ -29,7 +29,7 @@ const Navbar = (props) => {
       color={textColor}
       boxShadow="dark-lg"
       rounded="lg"
-      h="8vh"
+      h="6vh"
       mx="2vw"
       my="2vh"
       align="center"
