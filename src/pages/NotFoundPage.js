@@ -14,8 +14,9 @@ const NotFoundPage = () => {
   const boxColor = useColorModeValue("gray.200", "gray.600");
   return (
     <Flex
-      h="80vh"
-      mx="2vw"
+      h="92vh"
+      mx="1vw"
+      my="1vh"
       boxShadow="dark-lg"
       rounded="lg"
       color={textColor}

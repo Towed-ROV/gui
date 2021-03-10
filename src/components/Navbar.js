@@ -29,9 +29,9 @@ const Navbar = (props) => {
       color={textColor}
       boxShadow="dark-lg"
       rounded="lg"
-      h="6vh"
-      mx="2vw"
-      my="2vh"
+      h="4vh"
+      mx="1vw"
+      my="1vh"
       align="center"
       justifyContent="space-between"
       wrap="wrap"
@@ -41,20 +41,19 @@ const Navbar = (props) => {
         <IconButton
           as={ReactRouterLink}
           to="/settings"
-          size="lg"
+          size="md"
           aria-label="To settings"
           icon={<SettingsIcon />}
           bg={boxColor}
           color={textColor}
         />
-        Loaded: [{sensorSettings ? sensorSettings.length : 0}]
       </Box>
       <Flex>
         <Link
           as={ReactRouterLink}
           to="/"
           pr={16}
-          fontSize="3xl"
+          fontSize="2xl"
           bg={boxColor}
           color={textColor}
         >
@@ -64,7 +63,7 @@ const Navbar = (props) => {
           as={ReactRouterLink}
           to="/dashboard"
           pr={16}
-          fontSize="3xl"
+          fontSize="2xl"
           bg={boxColor}
           color={textColor}
         >
@@ -74,16 +73,26 @@ const Navbar = (props) => {
           as={ReactRouterLink}
           to="/map"
           pr={16}
-          fontSize="3xl"
+          fontSize="2xl"
           bg={boxColor}
           color={textColor}
         >
           Map
         </Link>
+        <Link
+          as={ReactRouterLink}
+          to="/test"
+          pr={16}
+          fontSize="2xl"
+          bg={boxColor}
+          color={textColor}
+        >
+          Test
+        </Link>
       </Flex>
       <Flex marginRight={4}>
         <IconButton
-          size="lg"
+          size="md"
           aria-label="Change colormode"
           onClick={toggleColorMode}
           icon={<SunIcon />}

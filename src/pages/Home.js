@@ -102,8 +102,9 @@ const Home = () => {
 
   return (
     <Flex
-      h="80vh"
-      mx="2vw"
+      h="92vh"
+      mx="1vw"
+      my="1vh"
       boxShadow="dark-lg"
       rounded="lg"
       color={textColor}

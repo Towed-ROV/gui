@@ -19,11 +19,12 @@ export const SensorCard = (props) => {
       rounded="lg"
       w="150px"
     >
-      <StatLabel fontWeight="large" fontSize="xl" isTruncated color={textColor}>
+      
+      <StatLabel fontWeight="large" fontSize="md" isTruncated color={textColor}>
         {props.sensor.name}
       </StatLabel>
-      <StatNumber fontSize="xl" fontWeight="medium" color={textColor}>
-        {props.sensor.origin}
+      <StatNumber fontSize="md" fontWeight="large" color={textColor}>
+        {props.sensor.value}
       </StatNumber>
     </Stat>
   );

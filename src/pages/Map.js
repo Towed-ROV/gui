@@ -64,7 +64,12 @@ const Map = () => {
   // }, [newY]); // Pass in empty array to run effect only once!
 
   return (
-    <Flex h="80vh" mx="2vw" bg={boxColor} color={textColor}>
+    <Flex 
+      h="92vh"
+      mx="1vw"
+      my="1vh"
+      bg={boxColor}
+      color={textColor}>
       <MapContainer
         className="map"
         center={[x, y]}

@@ -16,37 +16,37 @@ const dummyData = [
     name: "Temperature",
     origin: 0.1337,
     role: "PUB",
-    port: "A5",
+    value: "A5",
   },
   {
     name: "Pressure",
     origin: 1337,
     role: "PUBSUB",
-    port: "COM4",
+    value: "COM4",
   },
   {
     name: "Humidity",
     origin: "Arduino 3",
     role: "SUB",
-    port: "D11",
+    value: "D11",
   },
   {
     name: "PER",
     origin: 0.1337,
     role: "PUB",
-    port: "123",
+    value: "123",
   },
   {
     name: "PÅ",
     origin: 0.1337,
     role: "PUB",
-    port: "343",
+    value: "343",
   },
   {
     name: "Oxygen",
     origin: 0.1337,
     role: "PUB",
-    port: "A0",
+    value: "A0",
   },
 ];
 
@@ -83,13 +83,13 @@ const SensorDisplay = () => {
   // }, []);
 
   return (
-    <Flex justify="space-evenly" p={4} bg="blue" w="100%" h="100%">
-      <VStack bg="red" w="100%">
-        <Box>
+    <Flex justify="space-evenly" p={4}  w="100%" h="100%">
+      <VStack  w="100%">
+        {/* <Box>
           <Badge fontSize="2em" colorScheme={isConnected ? "green" : "red"}>
             {isConnectedText}
           </Badge>
-        </Box>
+        </Box> */}
 
         <VStack spacing="6px">
           {dummyData.map((sensor, idx) => (

@@ -27,7 +27,7 @@ const NumberFormField = () => {
   };
 
   return (
-    <Flex p={12}>
+    <Flex p={4}>
       <Formik
         initialValues={{ name: "", value: "" }}
         onSubmit={(data, actions) => {
