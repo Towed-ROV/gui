@@ -32,7 +32,7 @@ const Test = () => {
       my="1vh"
       // bg={boxColor} color={textColor}
       >
-      <Grid
+      {/* <Grid
         templateRows="repeat(8, 1fr)"
         templateColumns="repeat(14, 1fr)"
         gap={2}
@@ -132,7 +132,7 @@ const Test = () => {
         CHART DISPLAY
         </Flex>
       </GridItem>
-      </Grid>
+      </Grid> */}
     </Flex>
   );
 };

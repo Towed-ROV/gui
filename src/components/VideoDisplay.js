@@ -6,6 +6,8 @@ import {
   Text,
   Switch,
   useColorModeValue,
+  Badge,
+  HStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -42,6 +44,8 @@ const VideoDisplay = () => {
 
   const VIDEO_STREAM = "http://localhost:8000/videos/video";
   const [isConnected, setIsConnected] = useState(false);
+  const [isConnectedText, setIsConnectedText] = useState("Disconnected");
+
   const [source, setSource] = useState(offlineImage);
 
   const handleConnection = async (e) => {
@@ -51,33 +55,50 @@ const VideoDisplay = () => {
     if (isConnected) setSource(offlineImage);
   };
 
+  useEffect(() => {
+    if(isConnected) {
+      setIsConnectedText("Connected");
+    } else {
+      setIsConnectedText("Disconnected");
+    }
+  }, [isConnected])
+
   return (
-    <Box m={8} bg={boxColor}>
+    <Box m={4} bg={boxColor}>
       <Box
-        bg="gray.600"
+        bg={boxColor}
         display="flex"
-        justifyContent="space-between"
         borderTopLeftRadius="5px"
         borderTopRightRadius="5px"
-        alignItems="center"
+        align="center"
+        justifyContent="space-between"
         d="flex"
         mt="2"
         p="2"
-        letterSpacing="wide"
       >
-        <Text color={textColor} fontSize="xl">
-          Connection: {isConnected.toString()}
-        </Text>
+        <Flex align="center">
+          <Badge color={textColor} minWidth="8em" fontSize="1em" colorScheme={isConnected ? "green" : "red"}>
+            {isConnectedText}
+          </Badge>
+        </Flex>
+        <Flex>
         <Button
-          colorScheme="teal"
-          isDisabled={!isConnected}
-          onClick={takeSnapshot}
-        >
-          Snap
-        </Button>
-        <Switch onChange={handleConnection} size="lg" colorScheme="green">
-          Connect
-        </Switch>
+            colorScheme="teal"
+            isDisabled={!isConnected}
+            onClick={takeSnapshot}
+            mr={14}
+            color={textColor}
+          >
+            Snap
+          </Button>
+        </Flex>
+        <Flex>
+        <Switch color={textColor} onChange={handleConnection} size="lg" colorScheme="green">
+            Connect
+          </Switch>
+        </Flex>
+
+       
       </Box>
       <Flex
         align="center"

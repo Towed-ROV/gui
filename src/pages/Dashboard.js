@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import {
@@ -16,6 +16,8 @@ import {
   Switch,
   VStack,
   Text,
+  FormLabel,
+  Badge,
 } from "@chakra-ui/react";
 import VideoDisplay from "../components/VideoDisplay";
 import SensorDisplay from "../components/SensorDisplay";
@@ -24,6 +26,8 @@ import Minimap from "../components/Minimap";
 import { SettingsContext } from "../components/SettingsProvider";
 import { SensorCard } from "../components/SensorCard";
 import axios from "axios";
+
+import { sendCommand } from "../fake_db/utils";
 
 const ddd = [
   {
@@ -76,8 +80,14 @@ const Dashboard = () => {
   // const { sensorSettings } = useContext(SettingsContext);
 
   const [elapsedTime, setElapsedTime] = useState(0);
+  
   const [isRecording, setIsRecording] = useState(false);
-  const [isConnected, setisConnected] = useState(false);
+
+  const [isSystemConnected, setIsSystemConnected] = useState(false);
+  const [systemConnectionText, setSystemConnectionText] = useState("Disconnected");
+
+
+
 
   const postSome = async (url) => {
     try {
@@ -93,6 +103,17 @@ const Dashboard = () => {
     var url = "http://localhost:8000/sensors/toggle_recording";
     await postSome(url);
   };
+
+  const toggleRemoteConnection = async () => {
+    var name = "start_system";
+    let value = !isSystemConnected;
+    await sendCommand(name, value);
+    setIsSystemConnected(value)
+  };
+
+  useEffect(() => {
+    // 
+  }, [])
 
   return (
     <Flex
@@ -119,19 +140,15 @@ const Dashboard = () => {
         rowSpan={5}>
         <HStack p={6} justifyContent="space-evenly">
             <VStack>
-              <Text color={textColor}>Connection</Text>
-              <Spacer />
+                <Button color={textColor} onClick={toggleRemoteConnection} bg={isSystemConnected ? "red.200" : "green.200"} size="md" >
+                  {isSystemConnected ? "Disconnect" : "Connect"}
+                </Button>
+
               <HStack>
-                <Button color={textColor} size="md" bg="teal">
-                  START
-                </Button>
-                <Button color={textColor} size="md" bg="teal">
-                  STOP
-                </Button>
               </HStack>
             </VStack>
             <VStack>
-              <Text color={textColor}>Recording</Text>
+              <Text color={textColor}>Logging</Text>
               <Spacer />
               <Switch
                 name="Status"
@@ -163,9 +180,13 @@ const Dashboard = () => {
         p={2}
         colSpan={4}
         rowSpan={5}>
-          <VStack w="100%" h="60%">
+          <VStack p={2} w="100%" h="60%">
               <Text color={textColor}>Messages</Text>
-              <Flex w="100%" h="100%" border="2px" borderColor="gray.400" color={textColor}>MESSAGE BOX</Flex>
+              <Flex p={2} w="100%" h="100%" border="2px" borderColor="gray.400" color={textColor}>
+                <div>
+                Text
+                </div>
+              </Flex>
           </VStack>
           <NumberFormField />
       </GridItem>
@@ -204,16 +225,10 @@ const Dashboard = () => {
               width={200}
               height={100}
               data={ddd}
-              margin={{
-                top: 5,
-                right: 15,
-                left: 10,
-                bottom: 5,
-              }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
+              <XAxis stroke={textColor === "blackAlpha.900" ? "black" : "white"} dataKey="name" />
+              <YAxis stroke={textColor === "blackAlpha.900" ? "black" : "white"} />
               <Tooltip />
               <Legend />
               <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />

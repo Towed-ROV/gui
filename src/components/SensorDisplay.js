@@ -7,6 +7,8 @@ import {
   Text,
   useColorModeValue,
   VStack,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { SensorCard } from "./SensorCard";
@@ -48,6 +50,54 @@ const dummyData = [
     role: "PUB",
     value: "A0",
   },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  }
 ];
 
 const SensorDisplay = () => {
@@ -83,21 +133,15 @@ const SensorDisplay = () => {
   // }, []);
 
   return (
-    <Flex justify="space-evenly" p={4}  w="100%" h="100%">
-      <VStack  w="100%">
-        {/* <Box>
-          <Badge fontSize="2em" colorScheme={isConnected ? "green" : "red"}>
-            {isConnectedText}
-          </Badge>
-        </Box> */}
-
-        <VStack spacing="6px">
-          {dummyData.map((sensor, idx) => (
+    <Wrap justify="space-evenly"   w="100%" >
+      {dummyData.map((sensor, idx) => (
+          <WrapItem>
             <SensorCard key={idx} sensor={sensor} />
-          ))}
-        </VStack>
-      </VStack>
-    </Flex>
+          </WrapItem>
+      ))}
+    </Wrap>
+
+    
   );
 };
 

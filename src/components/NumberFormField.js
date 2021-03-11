@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 import {
   Button,
@@ -12,7 +12,20 @@ import {
 } from "@chakra-ui/react";
 import { sendCommand } from "../fake_db/utils";
 
-const NumberFormField = () => {
+const availableControlNames = [
+  { name: "target_distance"},
+  { name: "camera_offset_angle"},
+  { name: "pid_depth_p"},
+  { name: "pid_depth_i"},
+  { name: "pid_depth_d"},
+  { name: "pid_roll_p"},
+  { name: "pid_roll_i"},
+  { name: "pid_roll_d"},
+  { name: "depth_beneath_rov_offset"},
+  { name: "depth_rov_offset"}
+];
+
+const NumberFormField = (props) => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
@@ -26,13 +39,19 @@ const NumberFormField = () => {
     return error;
   };
 
+  useEffect(() => {
+    //
+  }, []);
+
   return (
     <Flex p={4}>
       <Formik
         initialValues={{ name: "", value: "" }}
         onSubmit={(data, actions) => {
           // var number = Number(data.value);
-          sendCommand(data.name, data.value);
+          // sendCommand(data.name, data.value);
+          console.log(actions)
+          actions.setFieldValue()
           actions.resetForm();
         }}
       >
@@ -46,13 +65,13 @@ const NumberFormField = () => {
               onChange={props.handleChange}
               onBlur={props.handleBlur}
               style={{ display: "block" }}
-              placeholder="Select name"
               color={textColor}
               id="name"
             >
-              <option value="set_point" label="set_point" />
-              <option value="camera_tilt" label="camera_tilt" />
-              <option value="pid_depth_p" label="pid_depth_p" />
+              <option hidden value="">Placeholder</option>
+              {availableControlNames.map((data, index) => {
+                  return <option value={data.name}>{data.name}</option>
+              })}
             </Select>
             <Field
               placeholder="value"
