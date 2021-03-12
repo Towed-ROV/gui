@@ -97,7 +97,7 @@ const dummyData = [
     origin: 0.1337,
     role: "PUB",
     value: "A0",
-  }
+  },
 ];
 
 const SensorDisplay = () => {
@@ -133,33 +133,14 @@ const SensorDisplay = () => {
   // }, []);
 
   return (
-    <Wrap justify="space-evenly"   w="100%" >
+    <Wrap justify="space-evenly" w="100%">
       {dummyData.map((sensor, idx) => (
-          <WrapItem>
-            <SensorCard key={idx} sensor={sensor} />
-          </WrapItem>
+        <WrapItem key={idx}>
+          <SensorCard sensor={sensor} />
+        </WrapItem>
       ))}
     </Wrap>
-
-    
   );
 };
 
 export default SensorDisplay;
-
-// {dummyData.map((sensor, idx) => (
-//   <li key={idx}>
-//     Name: {sensor.name} - Value: {sensor.port}
-//   </li>
-// ))}
-// {}
-
-{
-  /* <Box as="section" bg={boxColor} p="2">
-  <SimpleGrid columns={{ base: 1, md: 3 }} spacing="6">
-    {newData.map((sensor, idx) => (
-      <SensorCard key={idx} sensor={sensor} />
-    ))}
-  </SimpleGrid>
-</Box> */
-}
