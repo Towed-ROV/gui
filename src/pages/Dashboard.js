@@ -36,9 +36,9 @@ import VideoDisplay from "../components/VideoDisplay";
 import SensorDisplay from "../components/SensorDisplay";
 import NumberFormField from "../components/NumberFormField";
 import axios from "axios";
+import { CommandResponseProvider } from "../components/CommandResponseProvider"; 
 
 import { sendCommand } from "../fake_db/utils";
-import useToggle from "../helpers/toggle";
 
 const ddd = [
   {
@@ -122,6 +122,14 @@ const Dashboard = () => {
     sendCommand("camera_offset_angle", cameraAngle);
   };
 
+  const lightsOn = () => {
+    sendCommand("lights_on_off", true);
+  };
+
+  const lightsOff = () => {
+    sendCommand("lights_on_off", false);
+  };
+
   return (
     <Flex
       h="92vh"
@@ -196,7 +204,9 @@ const Dashboard = () => {
               </Switch>
             </VStack>
           </HStack>
-          <SensorDisplay />
+          <CommandResponseProvider>
+            <SensorDisplay />
+          </CommandResponseProvider>
         </GridItem>
         <GridItem
           bg={boxColor}
@@ -218,7 +228,9 @@ const Dashboard = () => {
           colSpan={4}
           rowSpan={5}
         >
-          <NumberFormField />
+          <CommandResponseProvider>
+            <NumberFormField />
+          </CommandResponseProvider>
         </GridItem>
         <GridItem
           bg={boxColor}
@@ -250,11 +262,14 @@ const Dashboard = () => {
                 <Text fontSize="2xl" color={textColor}>
                   Lights
                 </Text>
-                <Switch size="lg" />
+                <HStack>
+                  <Button bg="green.500" onClick={lightsOn}>On</Button>
+                  <Button bg="red.500" onClick={lightsOff}>Off</Button>
+                </HStack>
                 <Text fontSize="2xl" color={textColor}>
                   Camera angle
                 </Text>
-                <Slider
+                {/* <Slider
                   id="camera-angle-slider"
                   aria-label="adjust-camera-angle"
                   onChangeEnd={sendCameraAngle}
@@ -270,8 +285,8 @@ const Dashboard = () => {
                     <SliderFilledTrack bg="tomato" />
                   </SliderTrack>
                   <SliderThumb boxSize={6} />
-                </Slider>
-                <Text>{cameraAngle}</Text>
+                </Slider> */}
+                {/* <Text>{cameraAngle}</Text> */}
               </VStack>
             </Flex>
           </HStack>

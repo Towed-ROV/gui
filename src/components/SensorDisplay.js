@@ -1,6 +1,7 @@
 import {
   Badge,
   Box,
+  Button,
   Flex,
   SimpleGrid,
   Spacer,
@@ -10,7 +11,8 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { CommandResponseContext } from "./CommandResponseProvider";
 import { SensorCard } from "./SensorCard";
 
 const dummyData = [
@@ -49,55 +51,7 @@ const dummyData = [
     origin: 0.1337,
     role: "PUB",
     value: "A0",
-  },
-  {
-    name: "Oxygen",
-    origin: 0.1337,
-    role: "PUB",
-    value: "A0",
-  },
-  {
-    name: "Oxygen",
-    origin: 0.1337,
-    role: "PUB",
-    value: "A0",
-  },
-  {
-    name: "Oxygen",
-    origin: 0.1337,
-    role: "PUB",
-    value: "A0",
-  },
-  {
-    name: "Oxygen",
-    origin: 0.1337,
-    role: "PUB",
-    value: "A0",
-  },
-  {
-    name: "Oxygen",
-    origin: 0.1337,
-    role: "PUB",
-    value: "A0",
-  },
-  {
-    name: "Oxygen",
-    origin: 0.1337,
-    role: "PUB",
-    value: "A0",
-  },
-  {
-    name: "Oxygen",
-    origin: 0.1337,
-    role: "PUB",
-    value: "A0",
-  },
-  {
-    name: "Oxygen",
-    origin: 0.1337,
-    role: "PUB",
-    value: "A0",
-  },
+  }
 ];
 
 const SensorDisplay = () => {
@@ -106,6 +60,8 @@ const SensorDisplay = () => {
   const boxColor = useColorModeValue("gray.200", "gray.600");
   const [isConnected, setIsConnected] = useState(false);
   const [isConnectedText, setIsConnectedText] = useState("Disconnected");
+
+  const { addReponse } = useContext(CommandResponseContext);
 
   // useEffect(() => {
   //   let eventSource = new EventSource("http://localhost:8000/sensors/data");
@@ -118,8 +74,14 @@ const SensorDisplay = () => {
 
   //   eventSource.addEventListener("data", (event) => {
   //     try {
-  //       let data = JSON.parse(event.data);
-  //       setNewData(data.payload_data);
+  //       let payload = JSON.parse(event.data);
+  //       let name = payload.payload_name;
+  //       let data = payload.payload_data;
+  //       if (name === "sensor_data") {
+  //         setNewData(data.payload_data);
+  //       } else if (name === "response") {
+  //         console.log("FROM ROV: ", data);
+  //       }
   //     } catch (err) {
   //       console.log(err);
   //     }
@@ -132,14 +94,28 @@ const SensorDisplay = () => {
   //   return () => eventSource.close();
   // }, []);
 
+  const testAddResponse = (response) => {
+    let r = {
+      name: "Temp",
+      success: false
+    }
+    addReponse(r);
+  };
+
   return (
-    <Wrap justify="space-evenly" w="100%">
-      {dummyData.map((sensor, idx) => (
-        <WrapItem key={idx}>
-          <SensorCard sensor={sensor} />
-        </WrapItem>
-      ))}
-    </Wrap>
+    <Flex w="100%">
+      <Button onClick={testAddResponse} bg="teal">Add</Button>
+      <Wrap justify="space-evenly" w="100%">
+        {newData ? 
+        newData.map((sensor, idx) => (
+          <WrapItem key={idx}>
+            <SensorCard sensor={sensor} />
+          </WrapItem>
+        )) : <Text color={textColor}>Empty</Text>
+      
+      }
+      </Wrap>
+    </Flex>
   );
 };
 

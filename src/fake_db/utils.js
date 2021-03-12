@@ -9,10 +9,11 @@ export const sendCommand = async (name, value) => {
     value: value,
   };
   try {
-    // const resp = api.post(URL, cmd);
+    // const resp = await api.post(URL, cmd);
     // const response = await resp.data;
     console.log("SENT: ", JSON.stringify(cmd, null, 2));
     // console.log("RECV: ", JSON.stringify(response, null, 2));
+
   } catch (err) {
     console.log(err);
   }

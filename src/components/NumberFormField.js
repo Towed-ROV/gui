@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 
 import {
@@ -24,6 +24,7 @@ import {
   Th,
 } from "@chakra-ui/react";
 import { sendCommand } from "../fake_db/utils";
+import { CommandResponseContext } from "./CommandResponseProvider";
 
 const availableControlNames = [
   { name: "target_distance", id: 0 },
@@ -77,7 +78,9 @@ const dummy = [
 const NumberFormField = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
-  const [messages, setMessages] = useState(dummy);
+  const [messages, setMessages] = useState([]);
+
+  const { commandAndResponses, addCommand } = useContext(CommandResponseContext);
 
   const validateInput = (value) => {
     let error;
@@ -90,20 +93,16 @@ const NumberFormField = () => {
   };
 
   const addMessage = (name, value) => {
-    let id = Math.floor(Math.random() * 1000);
     let dummyMSG = {
-      id: id,
-      command: {
         name: name,
         value: value,
-      },
-      response: {
-        name: name,
-        success: false,
-      },
     };
-    setMessages((oldMessages) => [...oldMessages, dummyMSG]);
+    addCommand(dummyMSG)
   };
+
+  useEffect(() => {
+    setMessages(commandAndResponses);
+  }, [commandAndResponses]);
 
   return (
     <VStack p={4} w="100%" h="100%">
@@ -113,7 +112,7 @@ const NumberFormField = () => {
           borderColor="blackAlpha.800"
           p={2}
           w="100%"
-          h="400px"
+          h="350px"
           style={{ overflowY: "auto" }}
         >
           <Text fontSize="2xl" color={textColor}>
@@ -127,16 +126,17 @@ const NumberFormField = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {messages
+              {messages && messages
                 .map((msg) => (
                   <Tr key={msg.id}>
                     <Td style={{ textAlign: "left" }} color={textColor}>
                       {msg.command.name} to {msg.command.value}
                     </Td>
-                    <Td style={{ textAlign: "right" }} color={textColor}>
+                    {Object.keys(msg.response).length > 0 ? <Td style={{ textAlign: "right" }} color={textColor}>
                       {msg.response.name} [
                       {msg.response.success ? "Success" : "Failed"}]
-                    </Td>
+                    </Td> : <Td style={{ textAlign: "left" }} color={textColor}></Td>
+                    }
                   </Tr>
                 ))
                 .reverse()}
@@ -149,7 +149,7 @@ const NumberFormField = () => {
           initialValues={{ name: "", value: "" }}
           onSubmit={(data, actions) => {
             var number = Number(data.value);
-            // sendCommand(data.name, data.value);
+            // sendCommand(data.name, number);
             // console.log(data);
             addMessage(data.name, number);
             actions.resetForm();
