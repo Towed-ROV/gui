@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Field, Form, Formik } from "formik";
 
 import {
@@ -22,6 +22,14 @@ import {
   Td,
   Thead,
   Th,
+  Box,
+  Portal,
+  HStack,
+  Grid,
+  GridItem,
+  SimpleGrid,
+  Spacer,
+  Badge,
 } from "@chakra-ui/react";
 import { sendCommand } from "../fake_db/utils";
 import { CommandResponseContext } from "./CommandResponseProvider";
@@ -78,9 +86,10 @@ const dummy = [
 const NumberFormField = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
-  const [messages, setMessages] = useState([]);
 
-  const { commandAndResponses, addCommand } = useContext(CommandResponseContext);
+  const { commands, responses, addCommand } = useContext(
+    CommandResponseContext
+  );
 
   const validateInput = (value) => {
     let error;
@@ -94,54 +103,80 @@ const NumberFormField = () => {
 
   const addMessage = (name, value) => {
     let dummyMSG = {
-        name: name,
-        value: value,
+      name: name,
+      value: value,
     };
-    addCommand(dummyMSG)
+    addCommand(dummyMSG);
   };
 
   useEffect(() => {
-    setMessages(commandAndResponses);
-  }, [commandAndResponses]);
+    console.log(responses);
+    console.log(commands);
+  }, []);
 
   return (
     <VStack p={4} w="100%" h="100%">
-      <Flex w="100%">
+      <Flex w="100%" h="100%">
         <VStack
           border="1px"
           borderColor="blackAlpha.800"
           p={2}
-          w="100%"
-          h="350px"
           style={{ overflowY: "auto" }}
+          w="100%"
+          h="100%"
+          maxH="400px"
         >
-          <Text fontSize="2xl" color={textColor}>
-            Messages
-          </Text>
-          <Table variant="striped" colorScheme="blackAlpha">
-            <Thead>
-              <Tr>
-                <Th style={{ width: "50px", textAlign: "left" }}>Commands</Th>
-                <Th style={{ width: "50px", textAlign: "right" }}>Responses</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {messages && messages
-                .map((msg) => (
-                  <Tr key={msg.id}>
-                    <Td style={{ textAlign: "left" }} color={textColor}>
-                      {msg.command.name} to {msg.command.value}
-                    </Td>
-                    {Object.keys(msg.response).length > 0 ? <Td style={{ textAlign: "right" }} color={textColor}>
-                      {msg.response.name} [
-                      {msg.response.success ? "Success" : "Failed"}]
-                    </Td> : <Td style={{ textAlign: "left" }} color={textColor}></Td>
-                    }
-                  </Tr>
-                ))
-                .reverse()}
-            </Tbody>
-          </Table>
+          <HStack p={2} w="100%" fontSize="2xl">
+            <Text variant="solid" color={textColor}>
+              COMMANDS
+            </Text>
+            <Spacer />
+            <Text variant="solid" color={textColor}>
+              RESPONSES
+            </Text>
+          </HStack>
+          <SimpleGrid w="100%" h="100%" columns={2}>
+            <GridItem>
+              {commands ? (
+                commands
+                  .map((cmd, idx) => (
+                    <Flex key={idx} my={4} justifyContent="flex-start">
+                      <Text fontSize="xl" color={textColor} my={8}>
+                        {cmd.name} to {cmd.value}
+                      </Text>
+                    </Flex>
+                  ))
+                  .reverse()
+              ) : (
+                <Text float="left" color={textColor}>
+                  EMPTY
+                </Text>
+              )}
+            </GridItem>
+            <GridItem>
+              {responses ? (
+                responses
+                  .map((resp, idx) => (
+                    <Flex key={idx} my={4} justifyContent="flex-end">
+                      <Badge
+                        my={8}
+                        float="right"
+                        variant="solid"
+                        fontSize="xl"
+                        colorScheme={resp.success ? "green" : "red"}
+                      >
+                        {resp.name}
+                      </Badge>
+                    </Flex>
+                  ))
+                  .reverse()
+              ) : (
+                <Text float="right" color={textColor}>
+                  EMPTY
+                </Text>
+              )}
+            </GridItem>
+          </SimpleGrid>
         </VStack>
       </Flex>
       <Flex w="100%">
@@ -235,3 +270,18 @@ const NumberFormField = () => {
 };
 
 export default NumberFormField;
+
+//   responses ? (
+//     responses
+//       .map((res, idx) => (
+//         <Tr key={idx}>
+//           <Td style={{ textAlign: "left" }} color={textColor}>
+//             {res.name} [{res.value}]
+//           </Td>
+//         </Tr>
+//       ))
+//       .reverse()
+//   ) : (
+//     <Text color={textColor}>EMPTY</Text>
+//   );
+// }

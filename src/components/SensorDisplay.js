@@ -51,7 +51,7 @@ const dummyData = [
     origin: 0.1337,
     role: "PUB",
     value: "A0",
-  }
+  },
 ];
 
 const SensorDisplay = () => {
@@ -61,7 +61,7 @@ const SensorDisplay = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isConnectedText, setIsConnectedText] = useState("Disconnected");
 
-  const { addReponse } = useContext(CommandResponseContext);
+  const { addResponse } = useContext(CommandResponseContext);
 
   // useEffect(() => {
   //   let eventSource = new EventSource("http://localhost:8000/sensors/data");
@@ -94,26 +94,29 @@ const SensorDisplay = () => {
   //   return () => eventSource.close();
   // }, []);
 
-  const testAddResponse = (response) => {
+  const testAddResponse = () => {
     let r = {
-      name: "Temp",
-      success: false
-    }
-    addReponse(r);
+      name: "target_distance",
+      success: true,
+    };
+    addResponse(r);
   };
 
   return (
     <Flex w="100%">
-      <Button onClick={testAddResponse} bg="teal">Add</Button>
+      <Button onClick={testAddResponse} bg="teal">
+        Add
+      </Button>
       <Wrap justify="space-evenly" w="100%">
-        {newData ? 
-        newData.map((sensor, idx) => (
-          <WrapItem key={idx}>
-            <SensorCard sensor={sensor} />
-          </WrapItem>
-        )) : <Text color={textColor}>Empty</Text>
-      
-      }
+        {dummyData ? (
+          dummyData.map((sensor, idx) => (
+            <WrapItem key={idx}>
+              <SensorCard sensor={sensor} />
+            </WrapItem>
+          ))
+        ) : (
+          <Text color={textColor}>Empty</Text>
+        )}
       </Wrap>
     </Flex>
   );

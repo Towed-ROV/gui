@@ -36,7 +36,7 @@ import VideoDisplay from "../components/VideoDisplay";
 import SensorDisplay from "../components/SensorDisplay";
 import NumberFormField from "../components/NumberFormField";
 import axios from "axios";
-import { CommandResponseProvider } from "../components/CommandResponseProvider"; 
+import { CommandResponseProvider } from "../components/CommandResponseProvider";
 
 import { sendCommand } from "../fake_db/utils";
 
@@ -139,137 +139,138 @@ const Dashboard = () => {
       alignContent="center"
       justifyContent="center"
     >
-      <Grid
-        templateRows="repeat(8, 1fr)"
-        templateColumns="repeat(14, 1fr)"
-        gap={2}
-        w="100%"
-        h="100%"
-      >
-        <GridItem
-          bg={boxColor}
-          boxShadow="dark-lg"
-          rounded="lg"
-          p={2}
-          colSpan={4}
-          rowSpan={5}
+      <CommandResponseProvider>
+        <Grid
+          templateRows="repeat(8, 1fr)"
+          templateColumns="repeat(14, 1fr)"
+          gap={2}
+          w="100%"
+          h="100%"
         >
-          <HStack p={6} justifyContent="space-evenly">
-            <VStack>
-              <Button
-                id="connection-button"
-                color={textColor}
-                onClick={startRemoteConnection}
-                bg="green.400"
-                colorScheme="teal"
-                size="md"
-              >
-                On
-              </Button>
-              <Button
-                id="connection-button"
-                color={textColor}
-                onClick={stopRemoteConnection}
-                bg="red.400"
-                colorScheme="teal"
-                size="md"
-              >
-                Off
-              </Button>
+          <GridItem
+            bg={boxColor}
+            boxShadow="dark-lg"
+            rounded="lg"
+            p={2}
+            colSpan={4}
+            rowSpan={5}
+          >
+            <HStack p={6} justifyContent="space-evenly">
+              <VStack>
+                <Button
+                  id="connection-button"
+                  color={textColor}
+                  onClick={startRemoteConnection}
+                  bg="green.400"
+                  colorScheme="teal"
+                  size="md"
+                >
+                  On
+                </Button>
+                <Button
+                  id="connection-button"
+                  color={textColor}
+                  onClick={stopRemoteConnection}
+                  bg="red.400"
+                  colorScheme="teal"
+                  size="md"
+                >
+                  Off
+                </Button>
 
-              <HStack></HStack>
-            </VStack>
-            <VStack>
-              <Button
-                id="reset-button"
-                color={textColor}
-                onClick={sendResetCommand}
-                bg="yellow.200"
-                size="md"
-              >
-                Reset
-              </Button>
-              <HStack></HStack>
-            </VStack>
-            <VStack>
-              <Text color={textColor}>Logging</Text>
-              <Spacer />
-              <Switch
-                name="Status"
-                onChange={toggleRecording}
-                size="lg"
-                colorScheme="green"
-              >
-                Connect
-              </Switch>
-            </VStack>
-          </HStack>
-          <CommandResponseProvider>
+                <HStack></HStack>
+              </VStack>
+              <VStack>
+                <Button
+                  id="reset-button"
+                  color={textColor}
+                  onClick={sendResetCommand}
+                  bg="yellow.200"
+                  size="md"
+                >
+                  Reset
+                </Button>
+                <HStack></HStack>
+              </VStack>
+              <VStack>
+                <Text color={textColor}>Logging</Text>
+                <Spacer />
+                <Switch
+                  name="Status"
+                  onChange={toggleRecording}
+                  size="lg"
+                  colorScheme="green"
+                >
+                  Connect
+                </Switch>
+              </VStack>
+            </HStack>
             <SensorDisplay />
-          </CommandResponseProvider>
-        </GridItem>
-        <GridItem
-          bg={boxColor}
-          boxShadow="dark-lg"
-          rounded="lg"
-          p={2}
-          colSpan={6}
-          rowSpan={5}
-        >
-          <Flex justify="center" align="center">
-            <VideoDisplay />
-          </Flex>
-        </GridItem>
-        <GridItem
-          bg={boxColor}
-          boxShadow="dark-lg"
-          rounded="lg"
-          p={2}
-          colSpan={4}
-          rowSpan={5}
-        >
-          <CommandResponseProvider>
+          </GridItem>
+          <GridItem
+            bg={boxColor}
+            boxShadow="dark-lg"
+            rounded="lg"
+            p={2}
+            colSpan={6}
+            rowSpan={5}
+          >
+            <Flex justify="center" align="center">
+              <VideoDisplay />
+            </Flex>
+          </GridItem>
+          <GridItem
+            bg={boxColor}
+            boxShadow="dark-lg"
+            rounded="lg"
+            p={2}
+            colSpan={4}
+            rowSpan={5}
+          >
             <NumberFormField />
-          </CommandResponseProvider>
-        </GridItem>
-        <GridItem
-          bg={boxColor}
-          boxShadow="dark-lg"
-          rounded="lg"
-          p={2}
-          colSpan={7}
-          rowSpan={3}
-        >
-          <HStack h="100%" p={12} justify="space-evenly">
-            <Flex p={4}>
-              <VStack>
-                <Text fontSize="2xl" color={textColor}>
-                  AUTO MODE
-                </Text>
-                <Switch size="lg" />
-              </VStack>
-            </Flex>
-            <Flex>
-              <VStack>
-                <Text fontSize="2xl" color={textColor}>
-                  DEPTH REGULATION
-                </Text>
-                <Switch size="lg" />
-              </VStack>
-            </Flex>
-            <Flex>
-              <VStack>
-                <Text fontSize="2xl" color={textColor}>
-                  Lights
-                </Text>
-                <HStack>
-                  <Button bg="green.500" onClick={lightsOn}>On</Button>
-                  <Button bg="red.500" onClick={lightsOff}>Off</Button>
-                </HStack>
-                <Text fontSize="2xl" color={textColor}>
-                  Camera angle
-                </Text>
-                {/* <Slider
+          </GridItem>
+          <GridItem
+            bg={boxColor}
+            boxShadow="dark-lg"
+            rounded="lg"
+            p={2}
+            colSpan={7}
+            rowSpan={3}
+          >
+            <HStack h="100%" p={12} justify="space-evenly">
+              <Flex p={4}>
+                <VStack>
+                  <Text fontSize="2xl" color={textColor}>
+                    AUTO MODE
+                  </Text>
+                  <Switch size="lg" />
+                </VStack>
+              </Flex>
+              <Flex>
+                <VStack>
+                  <Text fontSize="2xl" color={textColor}>
+                    DEPTH REGULATION
+                  </Text>
+                  <Switch size="lg" />
+                </VStack>
+              </Flex>
+              <Flex>
+                <VStack>
+                  <Text fontSize="2xl" color={textColor}>
+                    Lights
+                  </Text>
+                  <HStack>
+                    <Button bg="green.500" onClick={lightsOn}>
+                      On
+                    </Button>
+                    <Button bg="red.500" onClick={lightsOff}>
+                      Off
+                    </Button>
+                  </HStack>
+                  <Text fontSize="2xl" color={textColor}>
+                    Camera angle
+                  </Text>
+                  {/* <Slider
                   id="camera-angle-slider"
                   aria-label="adjust-camera-angle"
                   onChangeEnd={sendCameraAngle}
@@ -286,42 +287,43 @@ const Dashboard = () => {
                   </SliderTrack>
                   <SliderThumb boxSize={6} />
                 </Slider> */}
-                {/* <Text>{cameraAngle}</Text> */}
-              </VStack>
-            </Flex>
-          </HStack>
-        </GridItem>
-        <GridItem
-          bg={boxColor}
-          boxShadow="dark-lg"
-          rounded="lg"
-          p={2}
-          colSpan={7}
-          rowSpan={3}
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart width={200} height={100} data={ddd}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                stroke={textColor === "blackAlpha.900" ? "black" : "white"}
-                dataKey="name"
-              />
-              <YAxis
-                stroke={textColor === "blackAlpha.900" ? "black" : "white"}
-              />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="pv"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
-              />
-              <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-            </LineChart>
-          </ResponsiveContainer>
-        </GridItem>
-      </Grid>
+                  {/* <Text>{cameraAngle}</Text> */}
+                </VStack>
+              </Flex>
+            </HStack>
+          </GridItem>
+          <GridItem
+            bg={boxColor}
+            boxShadow="dark-lg"
+            rounded="lg"
+            p={2}
+            colSpan={7}
+            rowSpan={3}
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart width={200} height={100} data={ddd}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  stroke={textColor === "blackAlpha.900" ? "black" : "white"}
+                  dataKey="name"
+                />
+                <YAxis
+                  stroke={textColor === "blackAlpha.900" ? "black" : "white"}
+                />
+                <Tooltip />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="pv"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+                <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+              </LineChart>
+            </ResponsiveContainer>
+          </GridItem>
+        </Grid>
+      </CommandResponseProvider>
     </Flex>
   );
 };
