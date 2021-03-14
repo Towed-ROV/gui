@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 
 export const CommandResponseContext = createContext(null);
 
-const testCommand = [{ name: "Temp", value: 0.5 }];
+const testCommand = [];
 const testResponses = [];
 
 export const CommandResponseProvider = (props) => {

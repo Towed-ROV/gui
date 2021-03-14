@@ -33,9 +33,10 @@ import {
 } from "@chakra-ui/react";
 import { sendCommand } from "../fake_db/utils";
 import { CommandResponseContext } from "./CommandResponseProvider";
+import { validateInput } from "../helpers/validate";
 
 const availableControlNames = [
-  { name: "target_distance", id: 0 },
+  { name: "set_point_depth", id: 0 },
   { name: "camera_offset_angle", id: 1 },
   { name: "pid_depth_p", id: 2 },
   { name: "pid_depth_i", id: 3 },
@@ -44,44 +45,10 @@ const availableControlNames = [
   { name: "pid_roll_i", id: 6 },
   { name: "pid_roll_d", id: 7 },
   { name: "depth_beneath_rov_offset", id: 8 },
-  { name: "depth_rov_offset", id: 9 },
+  { name: "manual_wing_pos", id: 9 },
+  { name: "depth_rov_offset", id: 10 },
 ];
 
-const dummy = [
-  {
-    id: 0,
-    command: {
-      name: "target_distance",
-      value: 0.5,
-    },
-    response: {
-      name: "target_distance",
-      success: true,
-    },
-  },
-  {
-    id: 1,
-    command: {
-      name: "pid_roll_p",
-      value: 0.5,
-    },
-    response: {
-      name: "pid_roll_p",
-      success: true,
-    },
-  },
-  {
-    id: 2,
-    command: {
-      name: "depth_rov_offset",
-      value: 0.5,
-    },
-    response: {
-      name: "depth_rov_offset",
-      success: true,
-    },
-  },
-];
 
 const NumberFormField = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
@@ -91,16 +58,6 @@ const NumberFormField = () => {
     CommandResponseContext
   );
 
-  const validateInput = (value) => {
-    let error;
-    if (!value) {
-      error = "Value is required";
-    } else if (isNaN(value)) {
-      error = "Not a number";
-    }
-    return error;
-  };
-
   const addMessage = (name, value) => {
     let dummyMSG = {
       name: name,
@@ -108,11 +65,6 @@ const NumberFormField = () => {
     };
     addCommand(dummyMSG);
   };
-
-  useEffect(() => {
-    console.log(responses);
-    console.log(commands);
-  }, []);
 
   return (
     <VStack p={4} w="100%" h="100%">
@@ -123,8 +75,7 @@ const NumberFormField = () => {
           p={2}
           style={{ overflowY: "auto" }}
           w="100%"
-          h="100%"
-          maxH="400px"
+          maxH="350px"
         >
           <HStack p={2} w="100%" fontSize="2xl">
             <Text variant="solid" color={textColor}>
@@ -141,8 +92,8 @@ const NumberFormField = () => {
                 commands
                   .map((cmd, idx) => (
                     <Flex key={idx} my={4} justifyContent="flex-start">
-                      <Text fontSize="xl" color={textColor} my={8}>
-                        {cmd.name} to {cmd.value}
+                      <Text fontSize="sm" color={textColor} my={2}>
+                        {cmd.name} to {cmd.value.toString()}
                       </Text>
                     </Flex>
                   ))
@@ -159,10 +110,10 @@ const NumberFormField = () => {
                   .map((resp, idx) => (
                     <Flex key={idx} my={4} justifyContent="flex-end">
                       <Badge
-                        my={8}
+                        my={2}
                         float="right"
                         variant="solid"
-                        fontSize="xl"
+                        fontSize="sm"
                         colorScheme={resp.success ? "green" : "red"}
                       >
                         {resp.name}
@@ -184,8 +135,7 @@ const NumberFormField = () => {
           initialValues={{ name: "", value: "" }}
           onSubmit={(data, actions) => {
             var number = Number(data.value);
-            // sendCommand(data.name, number);
-            // console.log(data);
+            sendCommand(data.name, number);
             addMessage(data.name, number);
             actions.resetForm();
           }}
@@ -199,6 +149,7 @@ const NumberFormField = () => {
               <Select
                 name="name"
                 onChange={props.handleChange}
+                variant="outline"
                 onBlur={props.handleBlur}
                 style={{ display: "block" }}
                 value={props.values.name}
@@ -216,7 +167,6 @@ const NumberFormField = () => {
                   );
                 })}
               </Select>
-
               <Field
                 placeholder="value"
                 name="value"

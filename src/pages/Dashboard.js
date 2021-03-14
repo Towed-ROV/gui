@@ -32,103 +32,58 @@ import {
   SliderFilledTrack,
   SliderThumb,
 } from "@chakra-ui/react";
+
 import VideoDisplay from "../components/VideoDisplay";
 import SensorDisplay from "../components/SensorDisplay";
 import NumberFormField from "../components/NumberFormField";
 import axios from "axios";
 import { CommandResponseProvider } from "../components/CommandResponseProvider";
-
 import { sendCommand } from "../fake_db/utils";
+import SystemControl from "../components/SystemControl";
 
 const ddd = [
   {
     name: "Page A",
     uv: 4000,
     pv: 2400,
-    amt: 2400,
   },
   {
     name: "Page B",
     uv: 3000,
     pv: 1398,
-    amt: 2210,
   },
   {
     name: "Page C",
     uv: 2000,
     pv: 9800,
-    amt: 2290,
   },
   {
     name: "Page D",
     uv: 2780,
     pv: 3908,
-    amt: 2000,
   },
   {
     name: "Page E",
     uv: 1890,
     pv: 4800,
-    amt: 2181,
   },
   {
     name: "Page F",
     uv: 2390,
     pv: 3800,
-    amt: 2500,
   },
   {
     name: "Page G",
     uv: 3490,
     pv: 4300,
-    amt: 2100,
   },
 ];
 
-const postSome = async (url) => {
-  try {
-    const response = await axios.get(url);
-    const data = await response.data;
-    console.log(await JSON.stringify(data, null, 2));
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 const Dashboard = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
   // const { sensorSettings } = useContext(SettingsContext);
-  const [cameraAngle, setCameraAngle] = useState(90);
-
-  const toggleRecording = async () => {
-    var url = "http://localhost:8000/sensors/toggle_recording";
-    await postSome(url);
-  };
-
-  const startRemoteConnection = () => {
-    sendCommand("start_system", true);
-  };
-
-  const stopRemoteConnection = () => {
-    sendCommand("start_system", false);
-  };
-
-  const sendResetCommand = () => {
-    sendCommand("reset", true);
-  };
-
-  const sendCameraAngle = () => {
-    sendCommand("camera_offset_angle", cameraAngle);
-  };
-
-  const lightsOn = () => {
-    sendCommand("lights_on_off", true);
-  };
-
-  const lightsOff = () => {
-    sendCommand("lights_on_off", false);
-  };
 
   return (
     <Flex
@@ -155,57 +110,7 @@ const Dashboard = () => {
             colSpan={4}
             rowSpan={5}
           >
-            <HStack p={6} justifyContent="space-evenly">
-              <VStack>
-                <Button
-                  id="connection-button"
-                  color={textColor}
-                  onClick={startRemoteConnection}
-                  bg="green.400"
-                  colorScheme="teal"
-                  size="md"
-                >
-                  On
-                </Button>
-                <Button
-                  id="connection-button"
-                  color={textColor}
-                  onClick={stopRemoteConnection}
-                  bg="red.400"
-                  colorScheme="teal"
-                  size="md"
-                >
-                  Off
-                </Button>
-
-                <HStack></HStack>
-              </VStack>
-              <VStack>
-                <Button
-                  id="reset-button"
-                  color={textColor}
-                  onClick={sendResetCommand}
-                  bg="yellow.200"
-                  size="md"
-                >
-                  Reset
-                </Button>
-                <HStack></HStack>
-              </VStack>
-              <VStack>
-                <Text color={textColor}>Logging</Text>
-                <Spacer />
-                <Switch
-                  name="Status"
-                  onChange={toggleRecording}
-                  size="lg"
-                  colorScheme="green"
-                >
-                  Connect
-                </Switch>
-              </VStack>
-            </HStack>
-            <SensorDisplay />
+            <SystemControl/>
           </GridItem>
           <GridItem
             bg={boxColor}
@@ -237,60 +142,7 @@ const Dashboard = () => {
             colSpan={7}
             rowSpan={3}
           >
-            <HStack h="100%" p={12} justify="space-evenly">
-              <Flex p={4}>
-                <VStack>
-                  <Text fontSize="2xl" color={textColor}>
-                    AUTO MODE
-                  </Text>
-                  <Switch size="lg" />
-                </VStack>
-              </Flex>
-              <Flex>
-                <VStack>
-                  <Text fontSize="2xl" color={textColor}>
-                    DEPTH REGULATION
-                  </Text>
-                  <Switch size="lg" />
-                </VStack>
-              </Flex>
-              <Flex>
-                <VStack>
-                  <Text fontSize="2xl" color={textColor}>
-                    Lights
-                  </Text>
-                  <HStack>
-                    <Button bg="green.500" onClick={lightsOn}>
-                      On
-                    </Button>
-                    <Button bg="red.500" onClick={lightsOff}>
-                      Off
-                    </Button>
-                  </HStack>
-                  <Text fontSize="2xl" color={textColor}>
-                    Camera angle
-                  </Text>
-                  {/* <Slider
-                  id="camera-angle-slider"
-                  aria-label="adjust-camera-angle"
-                  onChangeEnd={sendCameraAngle}
-                  onChange={(val) => setCameraAngle(val)}
-                  defaultValue={90}
-                  min={0}
-                  max={180}
-                  step={5}
-                  w="100px"
-                >
-                  <SliderTrack bg="red.100">
-                    <Box position="relative" right={10} />
-                    <SliderFilledTrack bg="tomato" />
-                  </SliderTrack>
-                  <SliderThumb boxSize={6} />
-                </Slider> */}
-                  {/* <Text>{cameraAngle}</Text> */}
-                </VStack>
-              </Flex>
-            </HStack>
+            <SensorDisplay />
           </GridItem>
           <GridItem
             bg={boxColor}
@@ -310,7 +162,6 @@ const Dashboard = () => {
                 <YAxis
                   stroke={textColor === "blackAlpha.900" ? "black" : "white"}
                 />
-                <Tooltip />
                 <Legend />
                 <Line
                   type="monotone"
