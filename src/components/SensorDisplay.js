@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   Flex,
+  Heading,
+  HStack,
   SimpleGrid,
   Spacer,
   Text,
@@ -12,6 +14,7 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useContext } from "react";
+import { ChartDataContext } from "./ChartDataProvider";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { SensorCard } from "./SensorCard";
 
@@ -52,6 +55,54 @@ const dummyData = [
     role: "PUB",
     value: "A0",
   },
+  {
+    name: "PÅ",
+    origin: 0.1337,
+    role: "PUB",
+    value: "343",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
+  {
+    name: "PÅ",
+    origin: 0.1337,
+    role: "PUB",
+    value: "343",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
+  {
+    name: "PÅ",
+    origin: 0.1337,
+    role: "PUB",
+    value: "343",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
+  {
+    name: "PÅ",
+    origin: 0.1337,
+    role: "PUB",
+    value: "343",
+  },
+  {
+    name: "Oxygen",
+    origin: 0.1337,
+    role: "PUB",
+    value: "A0",
+  },
 ];
 
 const SensorDisplay = () => {
@@ -62,6 +113,26 @@ const SensorDisplay = () => {
   const [isConnectedText, setIsConnectedText] = useState("Disconnected");
 
   const { addResponse } = useContext(CommandResponseContext);
+  const { addChartData } = useContext(ChartDataContext);
+
+  const chartNames = ["temperature"];
+
+  const dispatchChartData = (data) => {
+    // data.map((sensor, index) => {
+    //   if (chartNames.includes(sensor.name)) {
+    //     addChartData(sensor);
+    //   }
+    // });
+    // TODO:
+    /**
+     * Check if name is in chartNames
+     * store name
+     * store value
+     * create common obj
+     * put obj in chartList, display chartList
+     * create a Area pr name
+     */
+  };
 
   // useEffect(() => {
   //   let eventSource = new EventSource("http://localhost:8000/sensors/data");
@@ -103,7 +174,20 @@ const SensorDisplay = () => {
   };
 
   return (
-    <Flex w="100%">
+    <VStack w="100%">
+      <HStack my={4} ml={16} float="left" color={textColor} w="100%">
+        <Heading>Datastream</Heading>
+        <Badge
+          my={2}
+          float="right"
+          variant="solid"
+          fontSize="sm"
+          colorScheme={isConnected ? "green" : "red"}
+        >
+          {isConnectedText}
+        </Badge>
+      </HStack>
+      <Text></Text>
       <Wrap justify="space-evenly" w="100%">
         {dummyData ? (
           dummyData.map((sensor, idx) => (
@@ -115,7 +199,7 @@ const SensorDisplay = () => {
           <Text color={textColor}>Empty</Text>
         )}
       </Wrap>
-    </Flex>
+    </VStack>
   );
 };
 

@@ -42,7 +42,7 @@ const Minimap = () => {
   const pos = [62.4698, 6.1872];
 
   return (
-    <>
+    <Flex w="100%" h="100%">
       <MapContainer
         className="map"
         center={pos}
@@ -58,7 +58,7 @@ const Minimap = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
       </MapContainer>
-    </>
+    </Flex>
   );
 };
 

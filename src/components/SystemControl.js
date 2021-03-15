@@ -89,7 +89,7 @@ const SystemControl = () => {
   };
 
   return (
-    <VStack p={6} justifyContent="space-evenly">
+    <VStack p={6} justifyContent="space-evenly" h="100%">
       <Heading color={textColor}>SYSTEM</Heading>
       <HStack>
         <Button
@@ -112,8 +112,6 @@ const SystemControl = () => {
         >
           Off
         </Button>
-
-        <HStack></HStack>
       </HStack>
       <HStack>
         <Button
@@ -134,12 +132,10 @@ const SystemControl = () => {
         >
           E-STOP
         </Button>
-        <HStack></HStack>
       </HStack>
       <Text fontSize="xl" color={textColor}>
         Logging
       </Text>
-      <Spacer />
       <Switch
         name="Status"
         onChange={toggleRecording}

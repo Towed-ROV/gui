@@ -46,7 +46,7 @@ const VideoDisplay = () => {
 
   const [source, setSource] = useState(offlineImage);
 
-  const handleConnection = async (e) => {
+  const handleVideoConnection = async (e) => {
     setIsConnected(!isConnected);
     await toggleVideo(!isConnected);
     if (!isConnected) setSource(VIDEO_STREAM);
@@ -63,17 +63,7 @@ const VideoDisplay = () => {
 
   return (
     <Box m={4} bg={boxColor}>
-      <Box
-        bg={boxColor}
-        display="flex"
-        borderTopLeftRadius="5px"
-        borderTopRightRadius="5px"
-        align="center"
-        justifyContent="space-between"
-        d="flex"
-        mt="2"
-        p="2"
-      >
+      <Flex bg="blue" align="center" justifyContent="space-between" mb={4}>
         <Flex align="center">
           <Badge
             color={textColor}
@@ -98,21 +88,15 @@ const VideoDisplay = () => {
         <Flex>
           <Switch
             color={textColor}
-            onChange={handleConnection}
+            onChange={handleVideoConnection}
             size="lg"
             colorScheme="green"
           >
             Connect
           </Switch>
         </Flex>
-      </Box>
-      <Flex
-        align="center"
-        justifyContent="center"
-        bg="blackAlpha.900"
-        maxW="640px"
-        maxH="480px"
-      >
+      </Flex>
+      <Flex align="center" justifyContent="center" bg="blue">
         <Image src={source} fallbackSrc={loadIMG} alt="noVideo" />
       </Flex>
     </Box>
