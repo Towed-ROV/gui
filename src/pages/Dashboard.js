@@ -36,9 +36,7 @@ import {
 import VideoDisplay from "../components/VideoDisplay";
 import SensorDisplay from "../components/SensorDisplay";
 import NumberFormField from "../components/NumberFormField";
-import axios from "axios";
 import { CommandResponseProvider } from "../components/CommandResponseProvider";
-import { sendCommand } from "../fake_db/utils";
 import SystemControl from "../components/SystemControl";
 
 const ddd = [
@@ -79,7 +77,6 @@ const ddd = [
   },
 ];
 
-
 const Dashboard = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
@@ -110,7 +107,7 @@ const Dashboard = () => {
             colSpan={4}
             rowSpan={5}
           >
-            <SystemControl/>
+            <SystemControl />
           </GridItem>
           <GridItem
             bg={boxColor}

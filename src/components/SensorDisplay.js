@@ -63,38 +63,38 @@ const SensorDisplay = () => {
 
   const { addResponse } = useContext(CommandResponseContext);
 
-  useEffect(() => {
-    let eventSource = new EventSource("http://localhost:8000/sensors/data");
+  // useEffect(() => {
+  //   let eventSource = new EventSource("http://localhost:8000/sensors/data");
 
-    eventSource.addEventListener("open", (e) => {
-      setIsConnected(true);
-      setIsConnectedText("Connected");
-      console.log("The connection has been established.");
-    });
+  //   eventSource.addEventListener("open", (e) => {
+  //     setIsConnected(true);
+  //     setIsConnectedText("Connected");
+  //     console.log("The connection has been established.");
+  //   });
 
-    eventSource.addEventListener("data", (event) => {
-      try {
-        let payload = JSON.parse(event.data);
-        let name = payload.payload_name;
-        let data = payload.payload_data;
-        if (name === "sensor_data") {
-          setNewData(data);
-        } else if (name === "response") {
-          handleAddResponse(data);
-        } else {
-          // pass
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    });
-    eventSource.addEventListener("close", (e) => {
-      setIsConnected(false);
-      setIsConnectedText("Disconnected");
-      eventSource.close();
-    });
-    return () => eventSource.close();
-  }, []);
+  //   eventSource.addEventListener("data", (event) => {
+  //     try {
+  //       let payload = JSON.parse(event.data);
+  //       let name = payload.payload_name;
+  //       let data = payload.payload_data;
+  //       if (name === "sensor_data") {
+  //         setNewData(data);
+  //       } else if (name === "response") {
+  //         handleAddResponse(data);
+  //       } else {
+  //         // pass
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   });
+  //   eventSource.addEventListener("close", (e) => {
+  //     setIsConnected(false);
+  //     setIsConnectedText("Disconnected");
+  //     eventSource.close();
+  //   });
+  //   return () => eventSource.close();
+  // }, []);
 
   const handleAddResponse = (payload_data) => {
     payload_data.map((resp) => {
@@ -105,8 +105,8 @@ const SensorDisplay = () => {
   return (
     <Flex w="100%">
       <Wrap justify="space-evenly" w="100%">
-        {newData ? (
-          newData.map((sensor, idx) => (
+        {dummyData ? (
+          dummyData.map((sensor, idx) => (
             <WrapItem key={idx}>
               <SensorCard sensor={sensor} />
             </WrapItem>

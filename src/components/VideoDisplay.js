@@ -3,11 +3,9 @@ import {
   Button,
   Image,
   Flex,
-  Text,
   Switch,
   useColorModeValue,
   Badge,
-  HStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -56,12 +54,12 @@ const VideoDisplay = () => {
   };
 
   useEffect(() => {
-    if(isConnected) {
+    if (isConnected) {
       setIsConnectedText("Connected");
     } else {
       setIsConnectedText("Disconnected");
     }
-  }, [isConnected])
+  }, [isConnected]);
 
   return (
     <Box m={4} bg={boxColor}>
@@ -77,12 +75,17 @@ const VideoDisplay = () => {
         p="2"
       >
         <Flex align="center">
-          <Badge color={textColor} minWidth="8em" fontSize="1em" colorScheme={isConnected ? "green" : "red"}>
+          <Badge
+            color={textColor}
+            minWidth="8em"
+            fontSize="1em"
+            colorScheme={isConnected ? "green" : "red"}
+          >
             {isConnectedText}
           </Badge>
         </Flex>
         <Flex>
-        <Button
+          <Button
             colorScheme="teal"
             isDisabled={!isConnected}
             onClick={takeSnapshot}
@@ -93,12 +96,15 @@ const VideoDisplay = () => {
           </Button>
         </Flex>
         <Flex>
-        <Switch color={textColor} onChange={handleConnection} size="lg" colorScheme="green">
+          <Switch
+            color={textColor}
+            onChange={handleConnection}
+            size="lg"
+            colorScheme="green"
+          >
             Connect
           </Switch>
         </Flex>
-
-       
       </Box>
       <Flex
         align="center"

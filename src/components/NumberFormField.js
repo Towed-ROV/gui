@@ -12,20 +12,7 @@ import {
   useColorModeValue,
   VStack,
   Text,
-  Divider,
-  Stat,
-  StatLabel,
-  StatHelpText,
-  Table,
-  Tbody,
-  Tr,
-  Td,
-  Thead,
-  Th,
-  Box,
-  Portal,
   HStack,
-  Grid,
   GridItem,
   SimpleGrid,
   Spacer,
@@ -48,7 +35,6 @@ const availableControlNames = [
   { name: "manual_wing_pos", id: 9 },
   { name: "depth_rov_offset", id: 10 },
 ];
-
 
 const NumberFormField = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
@@ -145,7 +131,6 @@ const NumberFormField = () => {
               <FormLabel color={textColor} htmlFor="name">
                 Name
               </FormLabel>
-
               <Select
                 name="name"
                 onChange={props.handleChange}
@@ -220,18 +205,3 @@ const NumberFormField = () => {
 };
 
 export default NumberFormField;
-
-//   responses ? (
-//     responses
-//       .map((res, idx) => (
-//         <Tr key={idx}>
-//           <Td style={{ textAlign: "left" }} color={textColor}>
-//             {res.name} [{res.value}]
-//           </Td>
-//         </Tr>
-//       ))
-//       .reverse()
-//   ) : (
-//     <Text color={textColor}>EMPTY</Text>
-//   );
-// }

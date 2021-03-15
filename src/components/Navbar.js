@@ -1,26 +1,20 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Flex,
   Box,
-  Image,
-  Button,
   Link,
   useColorMode,
   IconButton,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
-
-import ntnuLogo from "../assets/ntnu.png";
 import { SettingsIcon, SunIcon } from "@chakra-ui/icons";
-import { SettingsContext } from "./SettingsProvider";
 
 const Navbar = (props) => {
   const { toggleColorMode } = useColorMode();
 
   const textColor = useColorModeValue("grey.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
-  const { sensorSettings } = useContext(SettingsContext);
 
   return (
     <Flex
@@ -78,16 +72,6 @@ const Navbar = (props) => {
           color={textColor}
         >
           Map
-        </Link>
-        <Link
-          as={ReactRouterLink}
-          to="/test"
-          pr={16}
-          fontSize="2xl"
-          bg={boxColor}
-          color={textColor}
-        >
-          Test
         </Link>
       </Flex>
       <Flex marginRight={4}>
