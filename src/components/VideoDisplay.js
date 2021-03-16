@@ -63,7 +63,7 @@ const VideoDisplay = () => {
 
   return (
     <Box m={4} bg={boxColor}>
-      <Flex bg="blue" align="center" justifyContent="space-between" mb={4}>
+      <Flex align="center" justifyContent="space-between" mb={4}>
         <Flex align="center">
           <Badge
             color={textColor}

@@ -44,8 +44,10 @@ import NumberFormField from "../components/NumberFormField";
 import { CommandResponseProvider } from "../components/CommandResponseProvider";
 import SystemControl from "../components/SystemControl";
 import ChartDisplay from "../components/ChartDisplay";
+import { ChartDataProvider } from "../components/ChartDataProvider";
 
 const Dashboard = () => {
+
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
@@ -54,7 +56,6 @@ const Dashboard = () => {
       h="92vh"
       mx="1vw"
       my="1vh"
-      bg="blue"
       color={boxColor}
       alignContent="center"
       justifyContent="center"
@@ -98,26 +99,28 @@ const Dashboard = () => {
           >
             <NumberFormField />
           </GridItem>
-          <GridItem
-            bg={boxColor}
-            boxShadow="dark-lg"
-            rounded="lg"
-            p={2}
-            colSpan={7}
-            rowSpan={3}
-          >
-            <SensorDisplay />
-          </GridItem>
-          <GridItem
-            bg={boxColor}
-            boxShadow="dark-lg"
-            rounded="lg"
-            p={2}
-            colSpan={7}
-            rowSpan={3}
-          >
-            <ChartDisplay />
-          </GridItem>
+          {/* <ChartDataProvider> */}
+            <GridItem
+              bg={boxColor}
+              boxShadow="dark-lg"
+              rounded="lg"
+              p={2}
+              colSpan={7}
+              rowSpan={3}
+              >
+              <SensorDisplay />
+            </GridItem>
+            <GridItem
+              bg={boxColor}
+              boxShadow="dark-lg"
+              rounded="lg"
+              p={2}
+              colSpan={7}
+              rowSpan={3}
+              >
+              {/* <ChartDisplay /> */}
+            </GridItem>
+          {/* </ChartDataProvider> */}
         </Grid>
       </CommandResponseProvider>
     </Flex>
