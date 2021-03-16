@@ -21,6 +21,7 @@ import {
 import { sendCommand } from "../fake_db/utils";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { validateInput } from "../helpers/validate";
+import { ChartContext } from "./ChartProvider";
 
 const availableControlNames = [
   { name: "set_point_depth", id: 0 },
@@ -44,12 +45,18 @@ const NumberFormField = () => {
     CommandResponseContext
   );
 
-  const addMessage = (name, value) => {
-    let dummyMSG = {
+  const { changeConstant } = useContext(ChartContext);
+
+
+  const displayCommand = (name, value) => {
+    let cmd = {
       name: name,
       value: value,
     };
-    addCommand(dummyMSG);
+    addCommand(cmd);
+    if (name == "set_point_depth") {
+      changeConstant(name, value);
+    }
   };
 
   return (
@@ -122,7 +129,7 @@ const NumberFormField = () => {
           onSubmit={(data, actions) => {
             var number = Number(data.value);
             sendCommand(data.name, number);
-            addMessage(data.name, number);
+            displayCommand(data.name, number);
             actions.resetForm();
           }}
         >

@@ -44,7 +44,7 @@ import NumberFormField from "../components/NumberFormField";
 import { CommandResponseProvider } from "../components/CommandResponseProvider";
 import SystemControl from "../components/SystemControl";
 import ChartDisplay from "../components/ChartDisplay";
-import { ChartDataProvider } from "../components/ChartDataProvider";
+import { ChartProvider } from "../components/ChartProvider";
 
 const Dashboard = () => {
 
@@ -53,75 +53,75 @@ const Dashboard = () => {
 
   return (
     <Flex
-      h="92vh"
-      mx="1vw"
-      my="1vh"
-      color={boxColor}
-      alignContent="center"
-      justifyContent="center"
+    h="92vh"
+    mx="1vw"
+    my="1vh"
+    color={boxColor}
+    alignContent="center"
+    justifyContent="center"
     >
       <CommandResponseProvider>
-        <Grid
-          templateRows="repeat(8, 1fr)"
-          templateColumns="repeat(14, 1fr)"
-          gap={2}
-          w="100%"
-          h="100%"
-        >
-          <GridItem
-            bg={boxColor}
-            boxShadow="dark-lg"
-            rounded="lg"
-            p={2}
-            colSpan={4}
-            rowSpan={5}
+        <ChartProvider>
+          <Grid
+            templateRows="repeat(8, 1fr)"
+            templateColumns="repeat(14, 1fr)"
+            gap={2}
+            w="100%"
+            h="100%"
           >
-            <SystemControl />
-          </GridItem>
-          <GridItem
-            bg={boxColor}
-            boxShadow="dark-lg"
-            rounded="lg"
-            colSpan={6}
-            rowSpan={5}
-          >
-            <Flex justify="center" align="center">
-              <VideoDisplay />
-            </Flex>
-          </GridItem>
-          <GridItem
-            bg={boxColor}
-            boxShadow="dark-lg"
-            rounded="lg"
-            p={2}
-            colSpan={4}
-            rowSpan={5}
-          >
-            <NumberFormField />
-          </GridItem>
-          {/* <ChartDataProvider> */}
             <GridItem
               bg={boxColor}
               boxShadow="dark-lg"
               rounded="lg"
               p={2}
-              colSpan={7}
-              rowSpan={3}
-              >
-              <SensorDisplay />
+              colSpan={4}
+              rowSpan={5}
+            >
+              <SystemControl />
+            </GridItem>
+            <GridItem
+              bg={boxColor}
+              boxShadow="dark-lg"
+              rounded="lg"
+              colSpan={6}
+              rowSpan={5}
+            >
+              <Flex justify="center" align="center">
+                <VideoDisplay />
+              </Flex>
             </GridItem>
             <GridItem
               bg={boxColor}
               boxShadow="dark-lg"
               rounded="lg"
               p={2}
-              colSpan={7}
-              rowSpan={3}
-              >
-              {/* <ChartDisplay /> */}
+              colSpan={4}
+              rowSpan={5}
+            >
+              <NumberFormField />
             </GridItem>
-          {/* </ChartDataProvider> */}
-        </Grid>
+              <GridItem
+                bg={boxColor}
+                boxShadow="dark-lg"
+                rounded="lg"
+                p={2}
+                colSpan={7}
+                rowSpan={3}
+                >
+                <SensorDisplay />
+              </GridItem>
+              <GridItem
+                bg={boxColor}
+                boxShadow="dark-lg"
+                rounded="lg"
+                p={2}
+                colSpan={7}
+                rowSpan={3}
+                >
+                <ChartDisplay />
+              </GridItem>
+          </Grid>
+        </ChartProvider>
       </CommandResponseProvider>
     </Flex>
   );

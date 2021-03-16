@@ -10,9 +10,9 @@ export const sendCommand = async (name, value, toSystem = false) => {
     toSystem: toSystem,
   };
   try {
-    const resp = await api.post(URL, cmd);
-    const response = await resp.data;
-    // console.log(cmd);
+    // const resp = await api.post(URL, cmd);
+    // const response = await resp.data;
+    console.log(cmd);
   } catch (err) {
     console.log(err);
   }

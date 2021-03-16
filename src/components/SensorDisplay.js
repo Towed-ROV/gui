@@ -5,8 +5,11 @@ import {
   Flex,
   Heading,
   HStack,
+  Radio,
+  RadioGroup,
   SimpleGrid,
   Spacer,
+  Stack,
   Text,
   useColorModeValue,
   VStack,
@@ -14,19 +17,12 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useContext } from "react";
-import { ChartDataContext } from "./ChartDataProvider";
+import { ChartContext } from "./ChartProvider";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { SensorCard } from "./SensorCard";
 
-const dummyData = [
-  {
-    name: "temperature",
-    value: 0
-  }
-];
-
 const singleData = (v) => {
-  return {name: "temperature", value: v}
+  return {name: "roll", value: v*(-1)}
 };
 
 const SensorDisplay = () => {
@@ -37,16 +33,28 @@ const SensorDisplay = () => {
   const [isConnectedText, setIsConnectedText] = useState("Disconnected");
 
   const { addResponse } = useContext(CommandResponseContext);
-  // const { addChartData } = useContext(ChartDataContext);
+  const { changeConstant, addChartData } = useContext(ChartContext);
 
-  const chartNames = ["temperature"];
-
+  const rollMode = "depth";
+  const depthMode = "roll";
+  const defaultMode = "default";
+  const [optionMode, setOptionMode] = useState(defaultMode);
+  
   const dispatchChartData = (data) => {
-    // data.map((sensor, index) => {
-    //   if (chartNames.includes(sensor.name)) {
-    //     addChartData(sensor);
-    //   }
-    // });
+    data.map((sensor, index) => {
+      if (optionMode == defaultMode) {
+        // pass
+      } else if (optionMode === rollMode) {
+        if (sensor.name === rollMode) {
+          
+          addChartData(sensor);
+        }
+      } else if (optionMode === depthMode) {
+        if (sensor.name === depthMode) {
+          addChartData(sensor);
+        }
+      };
+    });
     // TODO:
     /**
      * Check if name is in chartNames
@@ -58,53 +66,55 @@ const SensorDisplay = () => {
      */
   };
 
-  // const [tick, setTick] = useState(0);
+  const [tick, setTick] = useState(0);
 
-  //   useEffect(() => {
-  //     const timer = setInterval(() => {
-  //       setTick(tick => tick + 1);
-  //       let obj = singleData(tick);
-  //       addChartData(obj);
-  //       setNewData([obj]);
-  //     }, 1000);
+    
 
-  //     return () => {
-  //       clearInterval(timer);
-  //     };
-  //   }, [tick]);
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setTick(tick => tick + 1);
+        let obj = singleData(tick);
+        addChartData(obj);
+        setNewData([obj]);
+      }, 1000);
 
-  useEffect(() => {
-    let eventSource = new EventSource("http://localhost:8000/sensors/data");
+      return () => {
+        clearInterval(timer);
+      };
+    }, [tick]);
 
-    eventSource.addEventListener("open", (e) => {
-      setIsConnected(true);
-      setIsConnectedText("Connected");
-      console.log("The connection has been established.");
-    });
+  // useEffect(() => {
+  //   let eventSource = new EventSource("http://localhost:8000/sensors/data");
 
-    eventSource.addEventListener("data", (event) => {
-      try {
-        let payload = JSON.parse(event.data);
-        let name = payload.payload_name;
-        let data = payload.payload_data;
-        if (name === "sensor_data") {
-          setNewData(data);
-        } else if (name === "response") {
-          handleAddResponse(data);
-        } else {
-          // pass
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    });
-    eventSource.addEventListener("close", (e) => {
-      setIsConnected(false);
-      setIsConnectedText("Disconnected");
-      eventSource.close();
-    });
-    return () => eventSource.close();
-  }, []);
+  //   eventSource.addEventListener("open", (e) => {
+  //     setIsConnected(true);
+  //     setIsConnectedText("Connected");
+  //     console.log("The connection has been established.");
+  //   });
+
+  //   eventSource.addEventListener("data", (event) => {
+  //     try {
+  //       let payload = JSON.parse(event.data);
+  //       let name = payload.payload_name;
+  //       let data = payload.payload_data;
+  //       if (name === "sensor_data") {
+  //         setNewData(data);
+  //       } else if (name === "response") {
+  //         handleAddResponse(data);
+  //       } else {
+  //         // pass
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   });
+  //   eventSource.addEventListener("close", (e) => {
+  //     setIsConnected(false);
+  //     setIsConnectedText("Disconnected");
+  //     eventSource.close();
+  //   });
+  //   return () => eventSource.close();
+  // }, []);
 
   const handleAddResponse = (payload_data) => {
     payload_data.map((resp) => {
@@ -114,7 +124,7 @@ const SensorDisplay = () => {
 
   return (
     <VStack w="100%">
-      <HStack my={4} ml={16} float="left" color={textColor} w="100%">
+      <HStack  my={4} ml={16} float="left" color={textColor} w="80%">
         <Heading>Datastream</Heading>
         <Badge
           my={2}
@@ -125,6 +135,21 @@ const SensorDisplay = () => {
         >
           {isConnectedText}
         </Badge>
+        <Spacer />
+        <Badge
+          variant="solid"
+          fontSize="md"
+          colorScheme="teal"
+        >
+          CHARTs 
+        </Badge>
+        <RadioGroup bg={boxColor} color={textColor} onChange={setOptionMode} value={optionMode}>
+          <Stack direction="row">
+            <Radio isInvalid colorScheme="red" value={defaultMode}>None</Radio>
+            <Radio isInvalid colorScheme="red" value={depthMode}>Depth</Radio>
+            <Radio isInvalid colorScheme="red" value={rollMode}>Roll</Radio>
+          </Stack>
+        </RadioGroup>
       </HStack>
       <Text></Text>
       <Wrap justify="space-evenly" w="100%">
