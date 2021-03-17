@@ -22,66 +22,86 @@ import { CommandResponseContext } from "./CommandResponseProvider";
 import { SensorCard } from "./SensorCard";
 
 const singleData = (v) => {
-  return {name: "roll", value: v*(-1)}
+  return [{name: "depth", value: v*(-1)}, {name: "roll", value: v*(-1)}]
 };
 
 const SensorDisplay = () => {
-  const [newData, setNewData] = useState([]);
+
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
+  
   const [isConnected, setIsConnected] = useState(false);
   const [isConnectedText, setIsConnectedText] = useState("Disconnected");
-
+  
+  const [tick, setTick] = useState(0);
+  const [newData, setNewData] = useState([]);
+  const [counter, setCounter] = useState(0);
+  
   const { addResponse } = useContext(CommandResponseContext);
-  const { changeConstant, addChartData } = useContext(ChartContext);
-
-  const rollMode = "depth";
-  const depthMode = "roll";
+  const { changeReference, addChartData, resetChartData, clearAndSetChartMode} = useContext(ChartContext);
+  
+  const rollMode = "roll";
+  const depthMode = "depth";
   const defaultMode = "default";
   const [optionMode, setOptionMode] = useState(defaultMode);
   
   const dispatchChartData = (data) => {
-    data.map((sensor, index) => {
-      if (optionMode == defaultMode) {
-        // pass
-      } else if (optionMode === rollMode) {
+    for (let i = 0; i < data.length; i++) {
+      const sensor = data[i];
+      if (optionMode === rollMode) {
         if (sensor.name === rollMode) {
-          
+          sensor.counter = counter;
           addChartData(sensor);
         }
       } else if (optionMode === depthMode) {
         if (sensor.name === depthMode) {
+          sensor.counter = counter;
           addChartData(sensor);
         }
-      };
-    });
-    // TODO:
-    /**
-     * Check if name is in chartNames
-     * store name
-     * store value
-     * create common obj
-     * put obj in chartList, display chartList
-     * create a Area pr name
-     */
+      }
+    }
   };
+      
+  useEffect(() => {
+    switch (optionMode) {
 
-  const [tick, setTick] = useState(0);
+      case defaultMode:
+        clearAndSetChartMode("default");
+        break;
 
+      case rollMode:
+        clearAndSetChartMode("surface");
+        changeReference("surface", 0)
+        break;
+
+      case depthMode:
+        clearAndSetChartMode("set_point_depth");
+        changeReference("set_point_depth", -10);
+        break;
     
+      default:
+        break;
+    }
+  }, [optionMode])
 
-    useEffect(() => {
-      const timer = setInterval(() => {
-        setTick(tick => tick + 1);
-        let obj = singleData(tick);
-        addChartData(obj);
-        setNewData([obj]);
-      }, 1000);
 
-      return () => {
-        clearInterval(timer);
-      };
-    }, [tick]);
+  useEffect(() => {
+      const timer = setInterval(() => setCounter(counter + 1), 1000);
+      return () => clearInterval(timer);
+  }, [counter]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTick(tick => tick + 1);
+      let objs = singleData(tick);
+      setNewData(objs);
+      dispatchChartData(objs);
+    }, 100);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [tick]);
 
   // useEffect(() => {
   //   let eventSource = new EventSource("http://localhost:8000/sensors/data");
@@ -97,12 +117,18 @@ const SensorDisplay = () => {
   //       let payload = JSON.parse(event.data);
   //       let name = payload.payload_name;
   //       let data = payload.payload_data;
-  //       if (name === "sensor_data") {
-  //         setNewData(data);
-  //       } else if (name === "response") {
-  //         handleAddResponse(data);
-  //       } else {
-  //         // pass
+  //       switch (name) {
+
+  //         case "sensor_data":
+  //           setNewData(data);
+  //           break;
+          
+  //         case "response":
+  //           addNewResponse(data);
+  //           break;
+        
+  //         default:
+  //           break;
   //       }
   //     } catch (err) {
   //       console.log(err);
@@ -116,7 +142,7 @@ const SensorDisplay = () => {
   //   return () => eventSource.close();
   // }, []);
 
-  const handleAddResponse = (payload_data) => {
+  const addNewResponse = (payload_data) => {
     payload_data.map((resp) => {
       addResponse(resp);
     });

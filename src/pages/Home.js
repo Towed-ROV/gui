@@ -100,6 +100,7 @@ const Home = () => {
 
   const { sensorSettings } = useContext(SettingsContext);
 
+
   return (
     <Flex
       h="92vh"

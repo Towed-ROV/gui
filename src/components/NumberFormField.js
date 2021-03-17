@@ -45,7 +45,7 @@ const NumberFormField = () => {
     CommandResponseContext
   );
 
-  const { changeConstant } = useContext(ChartContext);
+  const { changeReference } = useContext(ChartContext);
 
 
   const displayCommand = (name, value) => {
@@ -55,7 +55,7 @@ const NumberFormField = () => {
     };
     addCommand(cmd);
     if (name == "set_point_depth") {
-      changeConstant(name, value);
+      changeReference(name, value);
     }
   };
 

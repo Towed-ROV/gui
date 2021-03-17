@@ -4,7 +4,7 @@
   "description": "Control Application for the Towed ROV 2021",
   "author": "andreasoie",
   "main": "public/electron.js",
-  "homepage": "./",
+  "homepage": "./home",
   "private": true,
   "build": {
     "win": {

@@ -88,6 +88,11 @@ const SystemControl = () => {
     addCommand({ name: "depth_or_seafloor", value: !isDepthMode });
   };
 
+  const searchComPorts = () => {
+    sendCommand("com_port_search", true, true);
+    addCommand({ name: "com_port_search", value: true });
+  };
+
   return (
     <VStack p={6} justifyContent="space-evenly" h="100%">
       <Heading color={textColor}>SYSTEM</Heading>
@@ -122,6 +127,15 @@ const SystemControl = () => {
           size="md"
         >
           Reset
+        </Button>
+        <Button
+          id="reset-button"
+          color={textColor}
+          onClick={searchComPorts}
+          bg="orange.200"
+          size="md"
+        >
+          Find ports
         </Button>
         <Button
           id="kill-button"
