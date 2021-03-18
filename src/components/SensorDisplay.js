@@ -22,7 +22,7 @@ import { CommandResponseContext } from "./CommandResponseProvider";
 import { SensorCard } from "./SensorCard";
 
 const singleData = (v) => {
-  return [{name: "depth", value: v*(-1)}, {name: "roll", value: v*(-1)}]
+  return [{name: "depth", value: v}, {name: "roll", value: v}]
 };
 
 const SensorDisplay = () => {
@@ -34,49 +34,43 @@ const SensorDisplay = () => {
   const [isConnectedText, setIsConnectedText] = useState("Disconnected");
   
   const [tick, setTick] = useState(0);
-  const [newData, setNewData] = useState([]);
   const [counter, setCounter] = useState(0);
   
+  const [newData, setNewData] = useState([]);
+  const [chartData, setChartData] = useState([]);
   const { addResponse } = useContext(CommandResponseContext);
-  const { changeReference, addChartData, resetChartData, clearAndSetChartMode} = useContext(ChartContext);
+  const { changeReference, addChartData, clearAndSetChartMode} = useContext(ChartContext);
   
-  const rollMode = "roll";
-  const depthMode = "depth";
-  const defaultMode = "default";
-  const [optionMode, setOptionMode] = useState(defaultMode);
+  const ROLL_MODE = "roll";
+  const DEPTH_MODE = "depth";
+  const DEFAULT_MODE = "default";
+  const [optionMode, setOptionMode] = useState(DEFAULT_MODE);
   
   const dispatchChartData = (data) => {
-    for (let i = 0; i < data.length; i++) {
-      const sensor = data[i];
-      if (optionMode === rollMode) {
-        if (sensor.name === rollMode) {
-          sensor.counter = counter;
-          addChartData(sensor);
-        }
-      } else if (optionMode === depthMode) {
-        if (sensor.name === depthMode) {
-          sensor.counter = counter;
-          addChartData(sensor);
-        }
-      }
+    let item = undefined;
+    if (optionMode === ROLL_MODE) {
+      item = data.filter(sensor => sensor.name == ROLL_MODE)[0];
+    } else if (optionMode === DEPTH_MODE) {
+      item = data.filter(sensor => sensor.name == DEPTH_MODE)[0];
     }
+    if (item) { addChartData(item); }
   };
       
   useEffect(() => {
     switch (optionMode) {
 
-      case defaultMode:
+      case DEFAULT_MODE:
         clearAndSetChartMode("default");
         break;
 
-      case rollMode:
+      case ROLL_MODE:
         clearAndSetChartMode("surface");
         changeReference("surface", 0)
         break;
 
-      case depthMode:
+      case DEPTH_MODE:
         clearAndSetChartMode("set_point_depth");
-        changeReference("set_point_depth", -10);
+        changeReference("set_point_depth", 10);
         break;
     
       default:
@@ -90,57 +84,67 @@ const SensorDisplay = () => {
       return () => clearInterval(timer);
   }, [counter]);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTick(tick => tick + 1);
-      let objs = singleData(tick);
-      setNewData(objs);
-      dispatchChartData(objs);
-    }, 100);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [tick]);
-
   // useEffect(() => {
-  //   let eventSource = new EventSource("http://localhost:8000/sensors/data");
+  //   const timer = setInterval(() => {
+  //     setTick(tick => tick + 1);
+  //     let objs = singleData(tick);
+  //     setNewData(objs);
+  //     dispatchChartData(objs);
+  //   }, 100);
 
-  //   eventSource.addEventListener("open", (e) => {
-  //     setIsConnected(true);
-  //     setIsConnectedText("Connected");
-  //     console.log("The connection has been established.");
-  //   });
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, [tick]);
 
-  //   eventSource.addEventListener("data", (event) => {
-  //     try {
-  //       let payload = JSON.parse(event.data);
-  //       let name = payload.payload_name;
-  //       let data = payload.payload_data;
-  //       switch (name) {
+  useEffect(() => {
+    let eventSource = new EventSource("http://localhost:8000/sensors/data");
 
-  //         case "sensor_data":
-  //           setNewData(data);
-  //           break;
+    eventSource.addEventListener("open", (e) => {
+      setIsConnected(true);
+      setIsConnectedText("Connected");
+      console.log("The connection has been established.");
+    });
+
+    eventSource.addEventListener("data", (event) => {
+      try {
+        let payload = JSON.parse(event.data);
+        let name = payload.payload_name;
+        let data = payload.payload_data;
+        switch (name) {
+
+          case "sensor_data":
+            setNewData(data);
+            if (optionMode === ROLL_MODE) {
+              let item = data.filter(sensor => sensor.name == ROLL_MODE)[0];
+              item.counter = counter;
+              addChartData(item)
+            } else if (optionMode === DEPTH_MODE) {
+              let item = data.filter(sensor => sensor.name == DEPTH_MODE)[0];
+              item.counter = counter;
+
+              addChartData({...item, ["counter"]: counter})
+            }
+            break;
           
-  //         case "response":
-  //           addNewResponse(data);
-  //           break;
+          case "response":
+            addNewResponse(data);
+            break;
         
-  //         default:
-  //           break;
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   });
-  //   eventSource.addEventListener("close", (e) => {
-  //     setIsConnected(false);
-  //     setIsConnectedText("Disconnected");
-  //     eventSource.close();
-  //   });
-  //   return () => eventSource.close();
-  // }, []);
+          default:
+            break;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    });
+    eventSource.addEventListener("close", (e) => {
+      setIsConnected(false);
+      setIsConnectedText("Disconnected");
+      eventSource.close();
+    });
+    return () => eventSource.close();
+  }, [optionMode]);
 
   const addNewResponse = (payload_data) => {
     payload_data.map((resp) => {
@@ -151,7 +155,7 @@ const SensorDisplay = () => {
   return (
     <VStack w="100%">
       <HStack  my={4} ml={16} float="left" color={textColor} w="80%">
-        <Heading>Datastream</Heading>
+        <Heading>Sensordisplay</Heading>
         <Badge
           my={2}
           float="right"
@@ -171,13 +175,12 @@ const SensorDisplay = () => {
         </Badge>
         <RadioGroup bg={boxColor} color={textColor} onChange={setOptionMode} value={optionMode}>
           <Stack direction="row">
-            <Radio isInvalid colorScheme="red" value={defaultMode}>None</Radio>
-            <Radio isInvalid colorScheme="red" value={depthMode}>Depth</Radio>
-            <Radio isInvalid colorScheme="red" value={rollMode}>Roll</Radio>
+            <Radio isInvalid colorScheme="red" value={DEFAULT_MODE}>None</Radio>  
+            <Radio isInvalid colorScheme="red" value={DEPTH_MODE}>Depth</Radio>
+            <Radio isInvalid colorScheme="red" value={ROLL_MODE}>Roll</Radio>
           </Stack>
         </RadioGroup>
       </HStack>
-      <Text></Text>
       <Wrap justify="space-evenly" w="100%">
         {newData ? (
           newData.map((sensor, idx) => (

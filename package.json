@@ -1,8 +1,8 @@
 {
   "name": "control-app",
   "version": "0.1.0",
-  "description": "Control Application for the Towed ROV 2021",
-  "author": "andreasoie",
+  "description": "Control Application, Towed ROV 2021",
+  "author": "Andreas Øie",
   "main": "public/electron.js",
   "homepage": "./home",
   "private": true,
