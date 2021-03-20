@@ -20,7 +20,6 @@ import Minimap from "./Minimap";
 import { ChartContext } from "./ChartProvider";
 import Chart from "./Chart";
 
-
 const singleData = (clock) => {
   return { name: clock, value: clock };
 };
@@ -28,7 +27,7 @@ const singleData = (clock) => {
 const ChartDisplay = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
 
-   return (
+  return (
     <Flex w="100%" h="100%">
       <Tabs variant="solid-rounded" colorScheme="green" w="100%">
         <TabList>
@@ -37,7 +36,7 @@ const ChartDisplay = () => {
         </TabList>
         <TabPanels h="100%" w="100%">
           <TabPanel color={textColor} w="100%" h="90%">
-            <Chart/>
+            {/* <Chart/> */}
           </TabPanel>
           <TabPanel w="100%" h="90%">
             <Flex color={textColor}>

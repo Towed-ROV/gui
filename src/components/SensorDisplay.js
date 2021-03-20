@@ -22,66 +22,70 @@ import { CommandResponseContext } from "./CommandResponseProvider";
 import { SensorCard } from "./SensorCard";
 
 const singleData = (v) => {
-  return [{name: "depth", value: v}, {name: "roll", value: v}]
+  return [
+    { name: "depth", value: v },
+    { name: "roll", value: v },
+  ];
 };
 
 const SensorDisplay = () => {
-
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
-  
+
   const [isConnected, setIsConnected] = useState(false);
   const [isConnectedText, setIsConnectedText] = useState("Disconnected");
-  
+
   const [tick, setTick] = useState(0);
   const [counter, setCounter] = useState(0);
-  
+
   const [newData, setNewData] = useState([]);
   const [chartData, setChartData] = useState([]);
   const { addResponse } = useContext(CommandResponseContext);
-  const { changeReference, addChartData, clearAndSetChartMode} = useContext(ChartContext);
-  
+  const { changeReference, addChartData, clearAndSetChartMode } = useContext(
+    ChartContext
+  );
+
   const ROLL_MODE = "roll";
   const DEPTH_MODE = "depth";
   const DEFAULT_MODE = "default";
   const [optionMode, setOptionMode] = useState(DEFAULT_MODE);
-  
-  const dispatchChartData = (data) => {
-    let item = undefined;
-    if (optionMode === ROLL_MODE) {
-      item = data.filter(sensor => sensor.name == ROLL_MODE)[0];
-    } else if (optionMode === DEPTH_MODE) {
-      item = data.filter(sensor => sensor.name == DEPTH_MODE)[0];
-    }
-    if (item) { addChartData(item); }
-  };
-      
+
+  // const dispatchChartData = (data) => {
+  //   let item = undefined;
+  //   if (optionMode === ROLL_MODE) {
+  //     item = data.filter((sensor) => sensor.name == ROLL_MODE)[0];
+  //   } else if (optionMode === DEPTH_MODE) {
+  //     item = data.filter((sensor) => sensor.name == DEPTH_MODE)[0];
+  //   }
+  //   if (item) {
+  //     addChartData(item);
+  //   }
+  // };
+
   useEffect(() => {
     switch (optionMode) {
-
       case DEFAULT_MODE:
         clearAndSetChartMode("default");
         break;
 
       case ROLL_MODE:
         clearAndSetChartMode("surface");
-        changeReference("surface", 0)
+        changeReference("surface", 0);
         break;
 
       case DEPTH_MODE:
         clearAndSetChartMode("set_point_depth");
         changeReference("set_point_depth", 10);
         break;
-    
+
       default:
         break;
     }
-  }, [optionMode])
-
+  }, [optionMode]);
 
   useEffect(() => {
-      const timer = setInterval(() => setCounter(counter + 1), 1000);
-      return () => clearInterval(timer);
+    const timer = setInterval(() => setCounter(counter + 1), 1000);
+    return () => clearInterval(timer);
   }, [counter]);
 
   // useEffect(() => {
@@ -112,25 +116,24 @@ const SensorDisplay = () => {
         let name = payload.payload_name;
         let data = payload.payload_data;
         switch (name) {
-
           case "sensor_data":
             setNewData(data);
             if (optionMode === ROLL_MODE) {
-              let item = data.filter(sensor => sensor.name == ROLL_MODE)[0];
+              let item = data.filter((sensor) => sensor.name === ROLL_MODE)[0];
               item.counter = counter;
-              addChartData(item)
+              addChartData(item);
             } else if (optionMode === DEPTH_MODE) {
-              let item = data.filter(sensor => sensor.name == DEPTH_MODE)[0];
+              let item = data.filter((sensor) => sensor.name === DEPTH_MODE)[0];
               item.counter = counter;
 
-              addChartData({...item, ["counter"]: counter})
+              addChartData({ ...item, counter: counter });
             }
             break;
-          
+
           case "response":
-            addNewResponse(data);
+            data.map((resp) => addResponse(resp));
             break;
-        
+
           default:
             break;
         }
@@ -146,15 +149,9 @@ const SensorDisplay = () => {
     return () => eventSource.close();
   }, [optionMode]);
 
-  const addNewResponse = (payload_data) => {
-    payload_data.map((resp) => {
-      addResponse(resp);
-    });
-  };
-
   return (
     <VStack w="100%">
-      <HStack  my={4} ml={16} float="left" color={textColor} w="80%">
+      <HStack my={4} ml={16} float="left" color={textColor} w="80%">
         <Heading>Sensordisplay</Heading>
         <Badge
           my={2}
@@ -166,18 +163,25 @@ const SensorDisplay = () => {
           {isConnectedText}
         </Badge>
         <Spacer />
-        <Badge
-          variant="solid"
-          fontSize="md"
-          colorScheme="teal"
-        >
-          CHARTs 
+        <Badge variant="solid" fontSize="md" colorScheme="teal">
+          CHARTs
         </Badge>
-        <RadioGroup bg={boxColor} color={textColor} onChange={setOptionMode} value={optionMode}>
+        <RadioGroup
+          bg={boxColor}
+          color={textColor}
+          onChange={setOptionMode}
+          value={optionMode}
+        >
           <Stack direction="row">
-            <Radio isInvalid colorScheme="red" value={DEFAULT_MODE}>None</Radio>  
-            <Radio isInvalid colorScheme="red" value={DEPTH_MODE}>Depth</Radio>
-            <Radio isInvalid colorScheme="red" value={ROLL_MODE}>Roll</Radio>
+            <Radio isInvalid colorScheme="red" value={DEFAULT_MODE}>
+              None
+            </Radio>
+            <Radio isInvalid colorScheme="red" value={DEPTH_MODE}>
+              Depth
+            </Radio>
+            <Radio isInvalid colorScheme="red" value={ROLL_MODE}>
+              Roll
+            </Radio>
           </Stack>
         </RadioGroup>
       </HStack>

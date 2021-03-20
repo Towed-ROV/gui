@@ -3,16 +3,16 @@ import api from "../services/api";
 const types = [];
 
 export const sendCommand = async (name, value, toSystem = false) => {
-  let URL = "/commands";
+  let URL = "/commands/";
   let cmd = {
     name: name,
     value: value,
     toSystem: toSystem,
   };
   try {
-    // const resp = await api.post(URL, cmd);
-    // const response = await resp.data;
-    console.log(cmd);
+    const resp = await api.post(URL, cmd);
+    const response = await resp.data;
+    // console.log(cmd);
   } catch (err) {
     console.log(err);
   }
