@@ -1,51 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  HStack,
-  SimpleGrid,
-  Spacer,
-  useColorModeValue,
-  Switch,
-  VStack,
-  Text,
-  FormLabel,
-  Badge,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-} from "@chakra-ui/react";
-
+import React from "react";
+import { Flex, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
 import VideoDisplay from "../components/VideoDisplay";
-import SensorDisplay from "../components/SensorDisplay";
 import NumberFormField from "../components/NumberFormField";
 import { CommandResponseProvider } from "../components/CommandResponseProvider";
 import SystemControl from "../components/SystemControl";
-import ChartDisplay from "../components/ChartDisplay";
-import { ChartProvider } from "../components/ChartProvider";
-import SensorDisplay2 from "../components/SensorDisplay2";
+import LiveDisplay from "../components/LiveDisplay";
 
 const Dashboard = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
@@ -99,25 +58,8 @@ const Dashboard = () => {
           >
             <NumberFormField />
           </GridItem>
-          <GridItem
-            bg={boxColor}
-            boxShadow="dark-lg"
-            rounded="lg"
-            p={2}
-            colSpan={7}
-            rowSpan={3}
-          >
-            <SensorDisplay2 />
-          </GridItem>
-          <GridItem
-            bg={boxColor}
-            boxShadow="dark-lg"
-            rounded="lg"
-            p={2}
-            colSpan={7}
-            rowSpan={3}
-          >
-            <ChartDisplay />
+          <GridItem boxShadow="dark-lg" rounded="lg" colSpan={14} rowSpan={3}>
+            <LiveDisplay />
           </GridItem>
         </Grid>
       </CommandResponseProvider>

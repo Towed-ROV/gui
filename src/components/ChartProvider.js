@@ -4,9 +4,11 @@ export const ChartContext = createContext(null);
 
 export const ChartProvider = (props) => {
   const [chartData, setChartData] = useState([]);
-  const [referenceLines, setReferenceLines] = useState({ set_point_depth: 0, surface: 0 });
+  const [referenceLines, setReferenceLines] = useState({
+    set_point_depth: 0,
+    surface: 0,
+  });
   const [chartMode, setChartMode] = useState("default");
-
   const addChartData = (data) => {
     if (chartData.length > 100) {
       handleRemove();
@@ -21,7 +23,7 @@ export const ChartProvider = (props) => {
   };
 
   const changeReference = (name, value) => {
-    setReferenceLines({...referenceLines, [name]: value});
+    setReferenceLines({ ...referenceLines, [name]: value });
   };
 
   const handleRemove = () => {
@@ -38,7 +40,7 @@ export const ChartProvider = (props) => {
         changeReference,
         chartData,
         addChartData,
-        clearAndSetChartMode
+        clearAndSetChartMode,
       }}
     >
       {props.children}

@@ -15,7 +15,6 @@ const Navbar = (props) => {
 
   const textColor = useColorModeValue("grey.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
-
   return (
     <Flex
       as="nav"

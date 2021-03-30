@@ -27,7 +27,6 @@ const SystemControl = () => {
   const [isDepthMode, setIsDepthMode] = useState(false);
   const [cameraAngle, setCameraAngle] = useState(0);
   const [canSendAngle, setCanSendAngle] = useState(false);
-
   const startCanSendAngle = () => {
     setCanSendAngle(true);
   };
@@ -62,7 +61,7 @@ const SystemControl = () => {
   };
 
   const sendCameraAngle = (angle) => {
-    sendCommand("camera_offset_angle", angle, true);
+    sendCommand("camera_offset_angle", angle, false);
     addCommand({ name: "camera_offset_angle", value: angle });
   };
 

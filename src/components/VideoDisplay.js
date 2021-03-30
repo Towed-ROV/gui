@@ -53,12 +53,18 @@ const VideoDisplay = () => {
     if (isConnected) setSource(offlineImage);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (isConnected) {
       setIsConnectedText("Connected");
     } else {
       setIsConnectedText("Disconnected");
     }
+
+    return async () => {
+      setSource(offlineImage);
+      setIsConnected(false);
+      await toggleVideo(false);
+    };
   }, [isConnected]);
 
   return (
@@ -96,7 +102,7 @@ const VideoDisplay = () => {
           </Switch>
         </Flex>
       </Flex>
-      <Flex align="center" justifyContent="center" bg="blue">
+      <Flex align="center" justifyContent="center" maxW="640px" bg="blue">
         <Image src={source} fallbackSrc={loadIMG} alt="noVideo" />
       </Flex>
     </Box>

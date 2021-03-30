@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext } from "react";
 import { Field, Form, Formik } from "formik";
 
 import {
@@ -21,31 +21,14 @@ import {
 import { sendCommand } from "../fake_db/utils";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { validateInput } from "../helpers/validate";
-import { ChartContext } from "./ChartProvider";
-
-const availableControlNames = [
-  { name: "set_point_depth", id: 0 },
-  { name: "camera_offset_angle", id: 1 },
-  { name: "pid_depth_p", id: 2 },
-  { name: "pid_depth_i", id: 3 },
-  { name: "pid_depth_d", id: 4 },
-  { name: "pid_roll_p", id: 5 },
-  { name: "pid_roll_i", id: 6 },
-  { name: "pid_roll_d", id: 7 },
-  { name: "depth_beneath_rov_offset", id: 8 },
-  { name: "manual_wing_pos", id: 9 },
-  { name: "depth_rov_offset", id: 10 },
-];
+import { rovControlNames } from "../fake_db/settings";
 
 const NumberFormField = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
-  const boxColor = useColorModeValue("gray.200", "gray.600");
 
-  const { commands, responses, addCommand } = useContext(
+  const { commands, responses, addCommand, setReferenceLine } = useContext(
     CommandResponseContext
   );
-
-  // const { changeReference } = useContext(ChartContext);
 
   const displayCommand = (name, value) => {
     let cmd = {
@@ -53,9 +36,11 @@ const NumberFormField = () => {
       value: value,
     };
     addCommand(cmd);
-    // if (name == "set_point_depth") {
-    //   changeReference(name, value);
-    // }
+
+    // UI Chart Feature
+    if (name === "set_point_depth") {
+      setReferenceLine(value);
+    }
   };
 
   return (
@@ -84,7 +69,7 @@ const NumberFormField = () => {
                 commands
                   .map((cmd, idx) => (
                     <Flex key={idx} my={4} justifyContent="flex-start">
-                      <Text fontSize="sm" color={textColor} my={2}>
+                      <Text fontSize="md" color={textColor} my={2}>
                         {cmd.name} to {cmd.value.toString()}
                       </Text>
                     </Flex>
@@ -126,10 +111,13 @@ const NumberFormField = () => {
         <Formik
           initialValues={{ name: "", value: "" }}
           onSubmit={(data, actions) => {
-            var number = Number(data.value);
-            sendCommand(data.name, number);
-            displayCommand(data.name, number);
-            actions.resetForm();
+            actions.setSubmitting(true);
+            var name = data.name;
+            var value = Number(data.value);
+            sendCommand(name, value);
+            displayCommand(name, value);
+            actions.setFieldValue("value", "", false);
+            actions.setSubmitting(false);
           }}
         >
           {(props) => (
@@ -150,7 +138,7 @@ const NumberFormField = () => {
                 <option hidden value="">
                   Name
                 </option>
-                {availableControlNames.map((nameObj) => {
+                {rovControlNames.map((nameObj) => {
                   return (
                     <option key={nameObj.id} value={nameObj.name}>
                       {nameObj.name}

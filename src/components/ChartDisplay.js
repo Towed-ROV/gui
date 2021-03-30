@@ -1,42 +1,22 @@
 import { Flex, useColorModeValue } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
-
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
-
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  AreaChart,
-  YAxis,
-  Tooltip,
-  Area,
-  ReferenceLine,
-} from "recharts";
-import Minimap from "./Minimap";
 import { ChartContext } from "./ChartProvider";
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
+import Minimap from "./Minimap";
 import Chart from "./Chart";
 
-const singleData = (clock) => {
-  return { name: clock, value: clock };
-};
-
-const ChartDisplay = () => {
+const ChartDisplay = ({ sensorData, chartMode }) => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
-
   return (
-    <Flex w="100%" h="100%">
-      <Tabs variant="solid-rounded" colorScheme="green" w="100%">
-        <TabList>
-          <Tab color={textColor}>Charts</Tab>
-          <Tab color={textColor}>Maps</Tab>
+    <Flex my={4}>
+      <Tabs variant="solid-rounded" colorScheme="teal" w="100%">
+        <TabList ml={32}>
+          <Tab color={textColor}>Chart</Tab>
+          <Tab color={textColor}>Map</Tab>
         </TabList>
         <TabPanels h="100%" w="100%">
           <TabPanel color={textColor} w="100%" h="90%">
-            {/* <Chart/> */}
+            <Chart sensorData={sensorData} chartMode={chartMode} />
           </TabPanel>
           <TabPanel w="100%" h="90%">
             <Flex color={textColor}>
