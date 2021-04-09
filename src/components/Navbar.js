@@ -72,6 +72,16 @@ const Navbar = (props) => {
         >
           Map
         </Link>
+        <Link
+          as={ReactRouterLink}
+          to="/test"
+          pr={16}
+          fontSize="2xl"
+          bg={boxColor}
+          color={textColor}
+        >
+          Test
+        </Link>
       </Flex>
       <Flex marginRight={4}>
         <IconButton

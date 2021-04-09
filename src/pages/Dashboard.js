@@ -1,5 +1,12 @@
 import React from "react";
-import { Flex, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react";
 import VideoDisplay from "../components/VideoDisplay";
 import NumberFormField from "../components/NumberFormField";
 import { CommandResponseProvider } from "../components/CommandResponseProvider";
@@ -11,14 +18,7 @@ const Dashboard = () => {
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
   return (
-    <Flex
-      h="92vh"
-      mx="1vw"
-      my="1vh"
-      color={boxColor}
-      alignContent="center"
-      justifyContent="center"
-    >
+    <VStack h="92vh" mx="1vw" my="1vh" color={boxColor}>
       <CommandResponseProvider>
         <Grid
           templateRows="repeat(8, 1fr)"
@@ -63,7 +63,7 @@ const Dashboard = () => {
           </GridItem>
         </Grid>
       </CommandResponseProvider>
-    </Flex>
+    </VStack>
   );
 };
 

@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Settings from "./pages/Settings";
 import { SettingsProvider } from "./components/SettingsProvider";
 import NotFoundPage from "./pages/NotFoundPage";
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/settings" component={Settings} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/map" component={Map} />
+          <Route path="/test" component={Test} />
           <Route component={NotFoundPage} />
         </Switch>
       </SettingsProvider>
