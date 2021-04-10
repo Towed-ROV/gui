@@ -10,7 +10,10 @@ export const getEmptyArray = (MAX_ELEMENTS) => {
   return data;
 };
 
-function distanceTest(lat1, lon1, lat2, lon2) {
+export const distanceBetweenLatLong = (p1, p2) => {
+  var [lat1, lon1] = p1;
+  var [lat2, lon2] = p2;
+
   // metres
   var R = 6371e3;
 
@@ -28,4 +31,4 @@ function distanceTest(lat1, lon1, lat2, lon2) {
 
   // in metres
   return R * c;
-}
+};

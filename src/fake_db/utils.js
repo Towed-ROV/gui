@@ -19,6 +19,23 @@ export const sendCommand = async (name, value, toSystem = false) => {
   }
 };
 
+export const saveWaypoint = async (sessionId, latLng, sensorData) => {
+  let URL = "/waypoint/";
+  let payload = {
+    session_id: sessionId,
+    latitude: latLng[0],
+    longitude: latLng[1],
+    sensors: sensorData,
+  };
+  try {
+    console.log(payload);
+    // const resp = await api.post(URL, payload);
+    // return await resp.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const toggleRecording = async () => {
   const URL = "http://localhost:8000/sensors/toggle_recording";
   try {
