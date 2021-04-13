@@ -30,6 +30,7 @@ const LiveDisplay = () => {
     });
     eventSource.addEventListener("stream", (event) => {
       try {
+        // @ts-ignore
         let payload = JSON.parse(event.data);
         let name = payload.payload_name;
         let data = payload.payload_data;
@@ -59,65 +60,6 @@ const LiveDisplay = () => {
   const DEPTH_MODE = "depth";
   const DEFAULT_MODE = "None";
   const [optionMode, setOptionMode] = useState(DEFAULT_MODE);
-
-  // const stopCanSendAngle = () => {
-  //   if (canSendAngle) {
-  //     sendCameraAngle(cameraAngle);
-  //   }
-  //   setCanSendAngle(false);
-  // };
-
-  // const startRemoteConnection = () => {
-  //   sendCommand("start_system", true, true);
-  //   addCommand({ name: "start_system", value: true });
-  // };
-
-  // const stopRemoteConnection = () => {
-  //   sendCommand("start_system", false, true);
-  //   addCommand({ name: "start_system", value: false });
-  // };
-
-  // const sendResetCommand = () => {
-  //   sendCommand("reset", true, true);
-  //   addCommand({ name: "reset", value: true });
-  // };
-
-  // const sendKillCommand = () => {
-  //   sendCommand("emergency_surface", true, true);
-  //   addCommand({ name: "emergency_surface", value: true });
-  // };
-
-  // const sendCameraAngle = (angle) => {
-  //   sendCommand("camera_offset_angle", angle, false);
-  //   addCommand({ name: "camera_offset_angle", value: angle });
-  // };
-
-  // const lightsOn = () => {
-  //   sendCommand("lights_on_off", true, true);
-  //   addCommand({ name: "lights_on_off", value: true });
-  // };
-
-  // const lightsOff = () => {
-  //   sendCommand("lights_on_off", false, true);
-  //   addCommand({ name: "lights_on_off", value: false });
-  // };
-
-  // const toggleAutoMode = () => {
-  //   setAutoMode(!autoMode);
-  //   sendCommand("auto_mode", !autoMode, true);
-  //   addCommand({ name: "auto_mode", value: !autoMode });
-  // };
-
-  // const toggleDepthOrFloor = () => {
-  //   setIsDepthMode(!isDepthMode);
-  //   sendCommand("depth_or_seafloor", !isDepthMode, true);
-  //   addCommand({ name: "depth_or_seafloor", value: !isDepthMode });
-  // };
-
-  // const searchComPorts = () => {
-  //   sendCommand("com_port_search", true, true);
-  //   addCommand({ name: "com_port_search", value: true });
-  // };
 
   return (
     <Flex h="100%" w="100%">

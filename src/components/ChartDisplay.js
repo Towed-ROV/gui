@@ -11,7 +11,7 @@ const ChartDisplay = ({ sensorData, chartMode }) => {
   const tabTextColor = useColorModeValue("gray.200", "blackAlpha.900");
   const boxColor = useColorModeValue("gray.600", "gray.200");
   return (
-    <Flex my={4} bg="blue">
+    <Flex my={4}>
       <Tabs
         colorScheme="teal"
         w="100%"
@@ -20,12 +20,12 @@ const ChartDisplay = ({ sensorData, chartMode }) => {
         onChange={(index) => console.log(index)}
       >
         <TabList ml={32}>
-          <Tab
+          {/* <Tab
             color={textColor}
             _selected={{ color: tabTextColor, bg: "teal" }}
           >
             Stream
-          </Tab>
+          </Tab> */}
           <Tab
             color={textColor}
             _selected={{ color: tabTextColor, bg: "teal" }}
@@ -40,9 +40,9 @@ const ChartDisplay = ({ sensorData, chartMode }) => {
           </Tab>
         </TabList>
         <TabPanels h="100%" w="100%">
-          <TabPanel color={textColor} w="100%" h="90%">
+          {/* <TabPanel color={textColor} w="100%" h="90%">
             <SensorDisplay sensorData={sensorData} />
-          </TabPanel>
+          </TabPanel> */}
           <TabPanel color={textColor} w="100%" h="90%">
             <Chart sensorData={sensorData} chartMode={chartMode} />
           </TabPanel>

@@ -1,3 +1,13 @@
+export const extractWaypointIntoDict = (wp) => {
+  if (wp === undefined) return;
+  return {
+    id: wp.id,
+    img_name: wp.img_name,
+    latitude: wp.latitude,
+    longitude: wp.longitude,
+  };
+};
+
 export const getEmptyArray = (MAX_ELEMENTS) => {
   var data = [];
   var time = new Date().getTime();
@@ -31,4 +41,24 @@ export const distanceBetweenLatLong = (p1, p2) => {
 
   // in metres
   return R * c;
+};
+
+export const isLatLongDistanceValid = (latLng1, latLng2, validDistance = 2) => {
+  let calculatedDistance = distanceBetweenLatLong(latLng1, latLng2);
+  if (calculatedDistance > validDistance) {
+    return true;
+  }
+  return false;
+};
+
+export const createLatLng = (sensorData) => {
+  var newLatLng = [undefined, undefined];
+  sensorData.forEach((sensor) => {
+    if (sensor.name === "latitude") {
+      newLatLng[0] = sensor.value;
+    } else if (sensor.name === "longitude") {
+      newLatLng[1] = sensor.value;
+    }
+  });
+  return newLatLng;
 };

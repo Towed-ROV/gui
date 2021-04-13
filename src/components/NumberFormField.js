@@ -18,7 +18,7 @@ import {
   Spacer,
   Badge,
 } from "@chakra-ui/react";
-import { sendCommand } from "../fake_db/utils";
+import { sendCommand } from "../fake_db/crud";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { validateInput } from "../helpers/validate";
 import { rovControlNames } from "../fake_db/settings";

@@ -53,18 +53,12 @@ const VideoDisplay = () => {
     if (isConnected) setSource(offlineImage);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (isConnected) {
       setIsConnectedText("Connected");
     } else {
       setIsConnectedText("Disconnected");
     }
-
-    return async () => {
-      setSource(offlineImage);
-      setIsConnected(false);
-      await toggleVideo(false);
-    };
   }, [isConnected]);
 
   return (

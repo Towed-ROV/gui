@@ -14,7 +14,7 @@ import {
   SliderThumb,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
-import { sendCommand, toggleRecording } from "../fake_db/utils";
+import { sendCommand, toggleRecording } from "../fake_db/crud";
 import { CommandResponseContext } from "./CommandResponseProvider";
 
 const SystemControl = () => {

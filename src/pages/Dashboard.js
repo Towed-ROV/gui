@@ -18,7 +18,7 @@ const Dashboard = () => {
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
   return (
-    <VStack h="92vh" mx="1vw" my="1vh" color={boxColor}>
+    <Flex h="92vh" mx="1vw" my="1vh" color={boxColor}>
       <CommandResponseProvider>
         <Grid
           templateRows="repeat(8, 1fr)"
@@ -63,7 +63,7 @@ const Dashboard = () => {
           </GridItem>
         </Grid>
       </CommandResponseProvider>
-    </VStack>
+    </Flex>
   );
 };
 

@@ -16,6 +16,10 @@ export const validateStringInput = (value) => {
     error = " That's a bit short, isn't it?";
   } else if (value.length > 30) {
     error = "WOW, easy there tiger! A bit long?";
+  } else {
+    // let userExist = false;
+    // const r =
   }
+  console.log("validating ..");
   return error;
 };
