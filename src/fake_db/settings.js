@@ -12,30 +12,45 @@ export const rovControlNames = [
   { name: "depth_rov_offset", id: 10 },
 ];
 
-const dummyData = [
+export const dummyData = [
   {
-    name: "Temperature",
-    origin: "Arduino 1",
-    role: "PUB",
-    port: "A5",
+    id: 0,
+    name: "temperature",
+    value: 123,
   },
   {
-    id: 22,
-    name: "Pressure",
-    origin: "Arduino 2",
-    role: "PUBSUB",
-    port: "COM4",
+    id: 1,
+    name: "depth",
+    value: 3,
   },
   {
-    name: "Humidity",
-    origin: "Arduino 3",
-    role: "SUB",
-    port: "D11",
+    id: 2,
+    name: "roll",
+    value: 0.123,
   },
   {
-    name: "Oxygen",
-    origin: "Arduino 1",
-    role: "PUB",
-    port: "A0",
+    id: 3,
+    name: "pitch",
+    value: 100002,
+  },
+  {
+    id: 4,
+    name: "yaw",
+    value: 1003.111,
+  },
+  {
+    id: 5,
+    name: "pid_depth_p",
+    value: 1,
+  },
+  {
+    id: 6,
+    name: "pid_depth_i",
+    value: 333,
+  },
+  {
+    id: 7,
+    name: "pid_depth_d",
+    value: 0.0055,
   },
 ];

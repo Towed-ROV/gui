@@ -1,4 +1,4 @@
-import { useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import Highcharts from "highcharts";
@@ -17,9 +17,9 @@ const Chart = ({ sensorData, chartMode }) => {
     chart: {
       style: {
         color: textColor,
+        // height: "300px",
+        // width: "300px",
       },
-      width: 800,
-      height: 300,
       backgroundColor: boxColor,
       animation: false,
       legend: false,
@@ -56,11 +56,9 @@ const Chart = ({ sensorData, chartMode }) => {
       enabled: false,
     },
     title: {
-      text: "None",
-      style: {
-        color: textColor,
-      },
+      text: null,
     },
+
     series: [
       {
         name: "",
@@ -82,11 +80,7 @@ const Chart = ({ sensorData, chartMode }) => {
         },
         backgroundColor: boxColor,
       },
-      title: {
-        style: {
-          color: textColor,
-        },
-      },
+
       xAxis: {
         labels: {
           style: {
@@ -106,11 +100,6 @@ const Chart = ({ sensorData, chartMode }) => {
 
   useEffect(() => {
     let seriesSettings = {};
-    let titleSettings = {
-      title: {
-        text: chartMode,
-      },
-    };
 
     switch (chartMode) {
       case "None":
@@ -169,7 +158,7 @@ const Chart = ({ sensorData, chartMode }) => {
     }
 
     // @ts-ignore
-    setChartOptions({ ...titleSettings, ...seriesSettings });
+    setChartOptions({ ...seriesSettings });
   }, [chartMode, referenceLine]);
 
   useEffect(() => {
@@ -187,12 +176,15 @@ const Chart = ({ sensorData, chartMode }) => {
   }, [sensorData, chartMode]);
 
   return (
-    <HighchartsReact
-      containerProps={{ style: { height: "100%", width: "100%" } }}
-      ref={chartComponent}
-      highcharts={Highcharts}
-      options={chartOptions}
-    />
+    <Flex w="100%" h="100%">
+      <HighchartsReact
+        highcharts={Highcharts}
+        containerProps={{ style: { height: "100%", width: "100%" } }}
+        ref={chartComponent}
+        options={chartOptions}
+        oneToOne={true}
+      />
+    </Flex>
   );
 };
 

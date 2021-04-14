@@ -26,6 +26,7 @@ import {
   Marker,
   Popup,
   useMapEvents,
+  ZoomControl,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import offlineImage from "../assets/offline.png";
@@ -115,17 +116,11 @@ const Map = () => {
   };
 
   return (
-    <Flex h="92vh" mx="1vw" my="1vh" bg={boxColor} color={textColor}>
-      <Grid templateColumns="repeat(3, 1fr)" gap={2} w="100%" h="100%">
-        <GridItem
-          bg={boxColor}
-          boxShadow="dark-lg"
-          rounded="lg"
-          w="100%"
-          colStart={1}
-          colEnd={3}
-        >
+    <Flex h="100vh">
+      <Grid templateColumns="repeat(3, 1fr)" w="100%" h="100%">
+        <GridItem w="100%" colStart={1} colEnd={3}>
           <MapContainer
+            zoomControl={false}
             className="map"
             center={[62.38384575, 6.97875625]}
             zoom={16}
@@ -134,6 +129,7 @@ const Map = () => {
               width: "100%",
             }}
           >
+            <ZoomControl position="topright" />
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -152,13 +148,7 @@ const Map = () => {
               ))}
           </MapContainer>
         </GridItem>
-        <GridItem
-          bg={boxColor}
-          boxShadow="dark-lg"
-          rounded="lg"
-          colStart={3}
-          colEnd={3}
-        >
+        <GridItem bg={boxColor} colStart={3} colEnd={3}>
           <VStack p={6} h="100%" align="stretch">
             <Heading>Mapping</Heading>
             <Flex>

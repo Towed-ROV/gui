@@ -62,8 +62,8 @@ const VideoDisplay = () => {
   }, [isConnected]);
 
   return (
-    <Box m={4} bg={boxColor}>
-      <Flex align="center" justifyContent="space-between" mb={4}>
+    <Box bg={boxColor} h="100%" w="100%">
+      <Flex align="center" justifyContent="space-between">
         <Flex align="center">
           <Badge
             color={textColor}
@@ -96,9 +96,14 @@ const VideoDisplay = () => {
           </Switch>
         </Flex>
       </Flex>
-      <Flex align="center" justifyContent="center" maxW="640px" bg="blue">
-        <Image src={source} fallbackSrc={loadIMG} alt="noVideo" />
-      </Flex>
+      <Box align="center" h="100%" w="100%">
+        <Image
+          objectFit="cover"
+          src={source}
+          fallbackSrc={loadIMG}
+          alt="noVideo"
+        />
+      </Box>
     </Box>
   );
 };

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  useColorModeValue,
-  VStack,
-} from "@chakra-ui/react";
+import { Flex, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
 import VideoDisplay from "../components/VideoDisplay";
 import NumberFormField from "../components/NumberFormField";
 import { CommandResponseProvider } from "../components/CommandResponseProvider";
@@ -18,47 +11,24 @@ const Dashboard = () => {
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
   return (
-    <Flex h="92vh" mx="1vw" my="1vh" color={boxColor}>
+    <Flex h="100vh" color={boxColor} bg={boxColor}>
       <CommandResponseProvider>
         <Grid
           templateRows="repeat(8, 1fr)"
           templateColumns="repeat(14, 1fr)"
-          gap={2}
           w="100%"
           h="100%"
         >
-          <GridItem
-            bg={boxColor}
-            boxShadow="dark-lg"
-            rounded="lg"
-            p={2}
-            colSpan={4}
-            rowSpan={5}
-          >
+          <GridItem p={2} bg={boxColor} colSpan={4} rowSpan={5}>
             <SystemControl />
           </GridItem>
-          <GridItem
-            bg={boxColor}
-            boxShadow="dark-lg"
-            rounded="lg"
-            colSpan={6}
-            rowSpan={5}
-          >
-            <Flex justify="center" align="center">
-              <VideoDisplay />
-            </Flex>
+          <GridItem p={2} bg={boxColor} colSpan={6} rowSpan={5}>
+            <VideoDisplay />
           </GridItem>
-          <GridItem
-            bg={boxColor}
-            boxShadow="dark-lg"
-            rounded="lg"
-            p={2}
-            colSpan={4}
-            rowSpan={5}
-          >
+          <GridItem p={2} bg={boxColor} colSpan={4} rowSpan={5}>
             <NumberFormField />
           </GridItem>
-          <GridItem boxShadow="dark-lg" rounded="lg" colSpan={14} rowSpan={3}>
+          <GridItem p={2} bg={boxColor} colSpan={14} rowSpan={3}>
             <LiveDisplay />
           </GridItem>
         </Grid>

@@ -93,7 +93,7 @@ const SystemControl = () => {
   };
 
   return (
-    <VStack p={6} justifyContent="space-evenly" h="100%">
+    <VStack p={6} justifyContent="space-evenly" h="100%" bg={boxColor}>
       <Heading color={textColor}>SYSTEM</Heading>
       <HStack>
         <Button

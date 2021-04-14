@@ -35,28 +35,57 @@ function LocationMarker() {
   );
 }
 
+let data = [
+  {
+    id: 0,
+    latitude: 62.383713,
+    longitude: 6.977545,
+  },
+  {
+    id: 1,
+    latitude: 62.383713,
+    longitude: 6.977545 + 0.001,
+  },
+  {
+    id: 2,
+    latitude: 62.383713,
+    longitude: 6.977545 + 0.002,
+  },
+  {
+    id: 3,
+    latitude: 62.383713,
+    longitude: 6.977545 + 0.003,
+  },
+];
+
 const Minimap = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
+  const [waypoints, setWaypoints] = useState(data);
   const pos = [62.4698, 6.1872];
 
   return (
-    <Flex w="100%" h="100%">
+    <Flex w="100%" h="100%" bg="yellow.200">
       <MapContainer
         className="map"
-        center={pos}
+        center={[62.38384575, 6.97875625]}
         zoom={16}
         style={{
           height: "100%",
           width: "100%",
         }}
       >
-        <Marker position={pos} />
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        {waypoints &&
+          waypoints.map((wp) => (
+            <Marker key={wp.id} position={[wp.latitude, wp.longitude]}>
+              <Popup>ID: {wp.id}</Popup>
+            </Marker>
+          ))}
       </MapContainer>
     </Flex>
   );

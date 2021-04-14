@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 
 import {
@@ -17,18 +17,68 @@ import {
   SimpleGrid,
   Spacer,
   Badge,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
+  Alert,
+  AlertIcon,
+  Box,
 } from "@chakra-ui/react";
 import { sendCommand } from "../fake_db/crud";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { validateInput } from "../helpers/validate";
 import { rovControlNames } from "../fake_db/settings";
+import { ChevronRightIcon } from "@chakra-ui/icons";
+
+const fakeCMD = [
+  {
+    name: "temperature",
+    value: 20.53,
+  },
+  {
+    name: "heat",
+    value: 1.02,
+  },
+  {
+    name: "oxygen",
+    value: 0.1004,
+  },
+  {
+    name: "depth",
+    value: 104,
+  },
+];
+
+const fakeRES = [
+  {
+    name: "Temperature",
+    success: true,
+  },
+  {
+    name: "Temperature",
+    success: false,
+  },
+  {
+    name: "Temperature",
+    success: true,
+  },
+  {
+    name: "Temperature",
+    success: false,
+  },
+];
 
 const NumberFormField = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
+  const boxColor = useColorModeValue("gray.200", "gray.600");
 
-  const { commands, responses, addCommand, setReferenceLine } = useContext(
-    CommandResponseContext
-  );
+  const {
+    commands,
+    responses,
+    addCommand,
+    addResponse,
+    setReferenceLine,
+  } = useContext(CommandResponseContext);
 
   const displayCommand = (name, value) => {
     let cmd = {
@@ -43,18 +93,21 @@ const NumberFormField = () => {
     }
   };
 
+  useEffect(() => {
+    fakeCMD.map((cmd) => addCommand(cmd));
+    fakeRES.map((re) => addResponse(re));
+  }, []);
+
   return (
-    <VStack p={4} w="100%" h="100%">
-      <Flex w="100%" h="100%">
+    <VStack w="100%" h="100%">
+      <Box w="100%" h="100%">
         <VStack
-          border="1px"
-          borderColor="blackAlpha.800"
-          p={2}
-          style={{ overflowY: "auto" }}
+          boxShadow="dark-lg"
+          style={{ overflowY: "scroll" }}
           w="100%"
-          maxH="350px"
+          h="450px" // TODO: Fix better
         >
-          <HStack p={2} w="100%" fontSize="2xl">
+          <HStack p={2} w="100%" justifyContent="space-evenly" fontSize="2xl">
             <Text variant="solid" color={textColor}>
               COMMANDS
             </Text>
@@ -68,11 +121,21 @@ const NumberFormField = () => {
               {commands ? (
                 commands
                   .map((cmd, idx) => (
-                    <Flex key={idx} my={4} justifyContent="flex-start">
-                      <Text fontSize="md" color={textColor} my={2}>
-                        {cmd.name} to {cmd.value.toString()}
+                    <Alert
+                      status="info"
+                      my={2}
+                      key={idx}
+                      justifyContent="flex-start"
+                    >
+                      <AlertIcon />
+                      <Text casing="capitalize" fontSize="sm" color={textColor}>
+                        {cmd.name}
                       </Text>
-                    </Flex>
+                      <ChevronRightIcon color={textColor} />
+                      <Text fontSize="sm" color={textColor} fontWeight="bold">
+                        {cmd.value.toString()}
+                      </Text>
+                    </Alert>
                   ))
                   .reverse()
               ) : (
@@ -85,17 +148,17 @@ const NumberFormField = () => {
               {responses ? (
                 responses
                   .map((resp, idx) => (
-                    <Flex key={idx} my={4} justifyContent="flex-end">
-                      <Badge
-                        my={2}
-                        float="right"
-                        variant="solid"
-                        fontSize="sm"
-                        colorScheme={resp.success ? "green" : "red"}
-                      >
+                    <Alert
+                      status={resp.success ? "success" : "error"}
+                      my={2}
+                      key={idx}
+                      justifyContent="flex-end"
+                    >
+                      <AlertIcon />
+                      <Text casing="capitalize" fontSize="sm" color={textColor}>
                         {resp.name}
-                      </Badge>
-                    </Flex>
+                      </Text>
+                    </Alert>
                   ))
                   .reverse()
               ) : (
@@ -106,8 +169,8 @@ const NumberFormField = () => {
             </GridItem>
           </SimpleGrid>
         </VStack>
-      </Flex>
-      <Flex w="100%">
+      </Box>
+      <Box w="100%" h="100%" boxShadow="dark-lg" pl={2} pt={2}>
         <Formik
           initialValues={{ name: "", value: "" }}
           onSubmit={(data, actions) => {
@@ -125,32 +188,47 @@ const NumberFormField = () => {
               <FormLabel color={textColor} htmlFor="name">
                 Name
               </FormLabel>
-              <Select
-                name="name"
-                onChange={props.handleChange}
-                variant="outline"
-                onBlur={props.handleBlur}
-                style={{ display: "block" }}
-                value={props.values.name}
-                color={textColor}
-                id="name"
-              >
-                <option hidden value="">
-                  Name
-                </option>
-                {rovControlNames.map((nameObj) => {
-                  return (
-                    <option key={nameObj.id} value={nameObj.name}>
-                      {nameObj.name}
-                    </option>
-                  );
-                })}
-              </Select>
+              <InputGroup>
+                <Select
+                  name="name"
+                  onChange={props.handleChange}
+                  variant="outline"
+                  onBlur={props.handleBlur}
+                  style={{ display: "block" }}
+                  value={props.values.name}
+                  color={textColor}
+                  id="name"
+                  w="100%"
+                >
+                  <option hidden value="">
+                    Name
+                  </option>
+                  {rovControlNames.map((nameObj) => {
+                    return (
+                      <option key={nameObj.id} value={nameObj.name}>
+                        {nameObj.name}
+                      </option>
+                    );
+                  })}
+                </Select>
+                <InputRightAddon bg={boxColor}>
+                  <Button
+                    bg="teal"
+                    onClick={props.handleReset}
+                    isLoading={props.isSubmitting}
+                    color={textColor}
+                  >
+                    Reset
+                  </Button>
+                </InputRightAddon>
+              </InputGroup>
+
               <Field
                 placeholder="value"
                 name="value"
                 type="input"
                 validate={validateInput}
+                w="100%"
               >
                 {({ field, form }) => (
                   <FormControl
@@ -159,41 +237,34 @@ const NumberFormField = () => {
                     <FormLabel color={textColor} htmlFor="value">
                       Value
                     </FormLabel>
-                    <Input
-                      {...field}
-                      id="value"
-                      placeholder="value"
-                      autoComplete="off"
-                      color={textColor}
-                    />
+                    <InputGroup>
+                      <Input
+                        {...field}
+                        id="value"
+                        placeholder="value"
+                        autoComplete="off"
+                        color={textColor}
+                      />
+
+                      <InputRightAddon bg={boxColor}>
+                        <Button
+                          bg="teal"
+                          isLoading={props.isSubmitting}
+                          type="submit"
+                          color={textColor}
+                        >
+                          Submit
+                        </Button>
+                      </InputRightAddon>
+                    </InputGroup>
                     <FormErrorMessage>{form.errors.value}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
-              <Button
-                mt={4}
-                bg="teal"
-                onClick={props.handleReset}
-                isLoading={props.isSubmitting}
-                color={textColor}
-                mr={8}
-              >
-                Reset
-              </Button>
-              <Button
-                ml={8}
-                mt={4}
-                bg="teal"
-                isLoading={props.isSubmitting}
-                type="submit"
-                color={textColor}
-              >
-                Submit
-              </Button>
             </Form>
           )}
         </Formik>
-      </Flex>
+      </Box>
     </VStack>
   );
 };

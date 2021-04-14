@@ -182,16 +182,7 @@ const Test = () => {
     .padStart(2, "0");
 
   return (
-    <Flex
-      h="92vh"
-      mx="1vw"
-      my="1vh"
-      boxShadow="dark-lg"
-      rounded="lg"
-      color={textColor}
-      p={10}
-      bg={boxColor}
-    >
+    <Flex h="100vh" color={textColor} p={10} bg={boxColor}>
       <Box>
         <HStack>
           <Text fontSize="2xl">Session</Text>

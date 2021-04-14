@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, globalShortcut } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 
@@ -7,11 +7,18 @@ function createWindow() {
     width: 1280,
     height: 720,
     center: true,
+    frame: false,
+    fullscreenable: true,
     webPreferences: {
       nodeIntegration: true,
     },
   });
-  win.maximize();
+
+  // TODO: Prevent zooming
+  win.webContents.setZoomFactor(1.0);
+  win.webContents.setVisualZoomLevelLimits(1, 1);
+
+  win.setFullScreen(true);
 
   win.loadURL(
     isDev

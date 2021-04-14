@@ -113,15 +113,7 @@ const Settings = () => {
   };
 
   return (
-    <Flex
-      h="80vh"
-      mx="2vw"
-      boxShadow="dark-lg"
-      rounded="lg"
-      bg={boxColor}
-      color={textColor}
-      p={10}
-    >
+    <Flex h="100vh" bg={boxColor} color={textColor} p={10}>
       <div>
         <Heading pb={8}>Sensors</Heading>
         <Button isDisabled={!isEditing} onClick={onOpen} colorScheme="green">

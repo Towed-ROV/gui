@@ -6,6 +6,7 @@ import {
   useColorMode,
   IconButton,
   useColorModeValue,
+  Divider,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { SettingsIcon, SunIcon } from "@chakra-ui/icons";
@@ -20,15 +21,13 @@ const Navbar = (props) => {
       as="nav"
       bg={boxColor}
       color={textColor}
-      boxShadow="dark-lg"
-      rounded="lg"
       h="4vh"
-      mx="1vw"
-      my="1vh"
       align="center"
       justifyContent="space-between"
       wrap="wrap"
       {...props}
+      borderBottom="1px"
+      borderColor={textColor}
     >
       <Box marginLeft={4}>
         <IconButton
