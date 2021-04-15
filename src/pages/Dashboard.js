@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Flex,
-  Grid,
-  GridItem,
-  useColorModeValue,
-  VStack,
-} from "@chakra-ui/react";
+import { Flex, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
 import VideoDisplay from "../components/VideoDisplay";
 import NumberFormField from "../components/NumberFormField";
 import { CommandResponseProvider } from "../components/CommandResponseProvider";
