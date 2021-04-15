@@ -6,105 +6,188 @@ import {
   Switch,
   useColorModeValue,
   Badge,
+  HStack,
+  Text,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  VStack,
+  IconButton,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
+  AccordionPanel,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverCloseButton,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverBody,
+  Center,
+  Icon,
+  Spacer,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import offlineImage from "../assets/offline.png";
 import loadIMG from "../assets/loading.gif";
+import { CommandResponseContext } from "./CommandResponseProvider";
+import { sendCommand, takeSnapshot, toggleVideo } from "../fake_db/crud";
+import { ArrowRightIcon, EmailIcon } from "@chakra-ui/icons";
 
-const toggleVideo = async (toggle) => {
-  var url = "http://localhost:8000/videos/";
-  if (toggle) {
-    url += "video_start";
-  } else {
-    url += "video_stop";
-  }
-  await postSome(url);
-};
-
-const takeSnapshot = async () => {
-  await postSome("http://localhost:8000/videos/video_snapshot");
-};
-
-const postSome = async (url) => {
-  try {
-    const response = await axios.get(url);
-    const data = await response.data;
-    console.log(await JSON.stringify(data, null, 2));
-  } catch (err) {
-    console.log(err);
-  }
-};
+import { MdSend } from "react-icons/md";
+import { FiGitCommit, FiSun } from "react-icons/fi";
+import { AiFillCamera } from "react-icons/ai";
+import { VscDebugStart, VscDebugPause } from "react-icons/vsc";
 
 const VideoDisplay = () => {
+  const { addCommand } = useContext(CommandResponseContext);
+
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
   const VIDEO_STREAM = "http://localhost:8000/videos/video";
   const [isConnected, setIsConnected] = useState(false);
-  const [isConnectedText, setIsConnectedText] = useState("Disconnected");
-
   const [source, setSource] = useState(offlineImage);
 
-  const handleVideoConnection = async (e) => {
+  const [lightsOn, setLightsOn] = useState(false);
+  const [cameraAngle, setCameraAngle] = useState(0);
+  const camAngleRef = React.useRef();
+
+  const handleVideoConnection = async () => {
     setIsConnected(!isConnected);
     await toggleVideo(!isConnected);
     if (!isConnected) setSource(VIDEO_STREAM);
     if (isConnected) setSource(offlineImage);
   };
 
-  useEffect(() => {
-    if (isConnected) {
-      setIsConnectedText("Connected");
+  const toggleLights = async () => {
+    if (lightsOn) {
+      sendCommand("lights_on_off", true, true);
+      addCommand({ name: "lights_on_off", value: true });
     } else {
-      setIsConnectedText("Disconnected");
+      sendCommand("lights_on_off", false, true);
+      addCommand({ name: "lights_on_off", value: false });
     }
-  }, [isConnected]);
+    // TOGGLE
+    setLightsOn(!lightsOn);
+  };
+
+  const sendCameraAngle = () => {
+    sendCommand("camera_offset_angle", cameraAngle, false);
+    addCommand({ name: "camera_offset_angle", value: cameraAngle });
+  };
 
   return (
-    <Box bg={boxColor} h="100%" w="100%">
-      <Flex align="center" justifyContent="space-between">
-        <Flex align="center">
-          <Badge
-            color={textColor}
-            minWidth="8em"
-            fontSize="1em"
-            colorScheme={isConnected ? "green" : "red"}
-          >
-            {isConnectedText}
-          </Badge>
-        </Flex>
-        <Flex>
-          <Button
-            colorScheme="teal"
-            isDisabled={!isConnected}
-            onClick={takeSnapshot}
-            mr={14}
-            color={textColor}
-          >
-            Snap
-          </Button>
-        </Flex>
-        <Flex>
-          <Switch
-            color={textColor}
-            onChange={handleVideoConnection}
-            size="lg"
-            colorScheme="green"
-          >
-            Connect
-          </Switch>
-        </Flex>
-      </Flex>
-      <Box align="center" h="100%" w="100%">
+    <VStack bg="black" h="100%" boxShadow="dark-lg" spacing={0}>
+      <Spacer />
+      <Box h="550px" w="100%">
         <Image
+          h="100%"
+          w="100%"
           objectFit="cover"
           src={source}
           fallbackSrc={loadIMG}
           alt="noVideo"
         />
       </Box>
-    </Box>
+      <Flex
+        color={textColor}
+        h="5vh"
+        align="center"
+        justifyContent="space-between"
+        wrap="wrap"
+        w="100%"
+        maxW="640px"
+      >
+        <Box
+          pr={16}
+          as="button"
+          bg="teal"
+          color="white"
+          px={4}
+          h={8}
+          ml={10}
+          onClick={() => handleVideoConnection()}
+        >
+          {!isConnected ? (
+            <Icon as={VscDebugStart} mr={2} />
+          ) : (
+            <Icon as={VscDebugPause} mr={2} />
+          )}
+
+          {!isConnected ? "START" : "STOP"}
+        </Box>
+        <Box
+          pr={16}
+          as="button"
+          onClick={() => takeSnapshot()}
+          bg="teal"
+          color="white"
+          px={4}
+          h={8}
+        >
+          <Icon as={AiFillCamera} mr={2} />
+          SNAP
+        </Box>
+        <Box
+          pr={16}
+          as="button"
+          bg="teal"
+          color="white"
+          px={4}
+          h={8}
+          onClick={() => toggleLights()}
+        >
+          <Icon as={FiSun} mr={2} />
+          LIGHTS
+        </Box>
+        <Popover placement="top-start" initialFocusRef={camAngleRef}>
+          <PopoverTrigger>
+            <Box as="button" bg="teal" color="white" px={4} h={8} mr={10}>
+              <Icon as={FiGitCommit} mr={2} />
+              ANGLE
+            </Box>
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverBody>
+              <Center>
+                <Slider
+                  id="camera-angle-slider"
+                  aria-label="adjust-camera-angle"
+                  onChange={(value) => setCameraAngle(value)}
+                  defaultValue={0}
+                  min={-10}
+                  max={10}
+                  step={1}
+                  w="70%"
+                  colorScheme="green"
+                >
+                  <SliderTrack bg="red.100">
+                    <SliderFilledTrack bg="tomato" />
+                  </SliderTrack>
+                  <SliderThumb boxSize={8} ref={camAngleRef}>
+                    {cameraAngle}
+                  </SliderThumb>
+                </Slider>
+                <IconButton
+                  mx={2}
+                  colorScheme="green"
+                  size="sm"
+                  aria-label="send-camAngle"
+                  onClick={() => sendCameraAngle()}
+                  icon={<Icon as={MdSend} />}
+                />
+              </Center>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      </Flex>
+    </VStack>
   );
 };
 

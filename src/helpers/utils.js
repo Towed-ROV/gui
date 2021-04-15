@@ -44,8 +44,7 @@ export const distanceBetweenLatLong = (p1, p2) => {
 };
 
 export const isLatLongDistanceValid = (latLng1, latLng2, validDistance = 2) => {
-  let calculatedDistance = distanceBetweenLatLong(latLng1, latLng2);
-  if (calculatedDistance > validDistance) {
+  if (distanceBetweenLatLong(latLng1, latLng2) > validDistance) {
     return true;
   }
   return false;

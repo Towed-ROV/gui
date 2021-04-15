@@ -5,11 +5,11 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { getEmptyArray } from "../helpers/utils";
 
-const Chart = ({ sensorData, chartMode }) => {
+const Chart = ({ chartMode }) => {
   const textColor = useColorModeValue("#000000", "#E2E8F0");
   const boxColor = useColorModeValue("#E2E8F0", "#4A5568");
   const chartComponent = useRef(null);
-  const { referenceLine } = useContext(CommandResponseContext);
+  const { sensorData, referenceLine } = useContext(CommandResponseContext);
   const [counter, setCounter] = useState(0);
   const MAX_ELEMENTS = 60 * 5; // 300 samples per 1 minute
 

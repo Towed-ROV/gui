@@ -38,7 +38,8 @@ const Navbar = (props) => {
       align="center"
       wrap="wrap"
       {...props}
-      p={2}
+      pl={2}
+      pt={4}
       zIndex={500} // kinda hacky:) TODO: do better
     >
       <IconButton
@@ -137,7 +138,10 @@ const Navbar = (props) => {
                   <IconButton
                     size="md"
                     aria-label="Change colormode"
-                    onClick={toggleColorMode}
+                    onClick={() => {
+                      toggleColorMode();
+                      onClose();
+                    }}
                     icon={<SunIcon />}
                     bg={boxColor}
                     color={textColor}

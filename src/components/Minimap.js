@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import {
   MapContainer,
@@ -10,6 +10,7 @@ import {
 import L from "leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import { CommandResponseContext } from "./CommandResponseProvider";
 
 L.Marker.prototype.options.icon = L.icon({
   iconUrl: icon,
@@ -34,6 +35,12 @@ function LocationMarker() {
     </Marker>
   );
 }
+
+const wp = {
+  id: 0,
+  latitude: 62.383713,
+  longitude: 6.977545,
+};
 
 let data = [
   {
@@ -61,15 +68,32 @@ let data = [
 const Minimap = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
+  const { sensorData } = useContext(CommandResponseContext);
 
   const [waypoints, setWaypoints] = useState(data);
+  const [waypoint, setWaypoint] = useState(wp);
   const pos = [62.4698, 6.1872];
+
+  useEffect(() => {
+    const wp = { id: 0, latitude: 62.383713, longitude: 6.977545 };
+
+    sensorData.forEach((sensor) => {
+      if (sensor.name === "latitude") {
+        wp.latitude = sensor.value;
+      } else if (sensor.name === "longitude") {
+        wp.longitude = sensor.value;
+      } else {
+        // pass
+      }
+    });
+    setWaypoint(wp);
+  }, [sensorData]);
 
   return (
     <Flex w="100%" h="100%" bg="yellow.200">
       <MapContainer
         className="map"
-        center={[62.38384575, 6.97875625]}
+        center={[waypoint.latitude, waypoint.longitude]}
         zoom={16}
         style={{
           height: "100%",
@@ -80,12 +104,18 @@ const Minimap = () => {
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {waypoints &&
+        {/* {waypoints &&
           waypoints.map((wp) => (
             <Marker key={wp.id} position={[wp.latitude, wp.longitude]}>
               <Popup>ID: {wp.id}</Popup>
             </Marker>
-          ))}
+          ))} */}
+        <Marker
+          key={waypoint.id}
+          position={[waypoint.latitude, waypoint.longitude]}
+        >
+          <Popup>ID: {waypoint.id}</Popup>
+        </Marker>
       </MapContainer>
     </Flex>
   );

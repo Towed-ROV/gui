@@ -9,6 +9,7 @@ export const CommandResponseProvider = (props) => {
   const [commands, setCommands] = useState(testCommand);
   const [responses, setResponses] = useState(testResponses);
   const [referenceLine, setReferenceLine] = useState(0);
+  const [sensorData, setSensorData] = useState([]);
 
   const addCommand = (cmd) => {
     setCommands((oldCommands) => [...oldCommands, cmd]);
@@ -23,6 +24,8 @@ export const CommandResponseProvider = (props) => {
       value={{
         commands,
         responses,
+        sensorData,
+        setSensorData,
         referenceLine,
         addCommand,
         addResponse,

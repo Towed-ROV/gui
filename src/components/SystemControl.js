@@ -12,10 +12,18 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
+  Flex,
+  Icon,
+  Center,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { sendCommand, toggleRecording } from "../fake_db/crud";
 import { CommandResponseContext } from "./CommandResponseProvider";
+import { FaPowerOff } from "react-icons/fa";
+import { GrPowerReset } from "react-icons/gr";
+import { VscDebugRestart } from "react-icons/vsc";
+import { BsSearch } from "react-icons/bs";
+import { GoAlert } from "react-icons/go";
 
 const SystemControl = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
@@ -25,29 +33,20 @@ const SystemControl = () => {
 
   const [autoMode, setAutoMode] = useState(false);
   const [isDepthMode, setIsDepthMode] = useState(false);
-  const [cameraAngle, setCameraAngle] = useState(0);
-  const [canSendAngle, setCanSendAngle] = useState(false);
-  const startCanSendAngle = () => {
-    setCanSendAngle(true);
-  };
+  const [sysRunning, setSysRunning] = useState(false);
 
   // @TODO: improve the addition of addings commands to display box
 
-  const stopCanSendAngle = () => {
-    if (canSendAngle) {
-      sendCameraAngle(cameraAngle);
+  const toggleRemoteConnection = () => {
+    if (sysRunning) {
+      sendCommand("start_system", false, true);
+      addCommand({ name: "start_system", value: false });
+    } else {
+      sendCommand("start_system", true, true);
+      addCommand({ name: "start_system", value: true });
     }
-    setCanSendAngle(false);
-  };
 
-  const startRemoteConnection = () => {
-    sendCommand("start_system", true, true);
-    addCommand({ name: "start_system", value: true });
-  };
-
-  const stopRemoteConnection = () => {
-    sendCommand("start_system", false, true);
-    addCommand({ name: "start_system", value: false });
+    setSysRunning(!sysRunning);
   };
 
   const sendResetCommand = () => {
@@ -58,21 +57,6 @@ const SystemControl = () => {
   const sendKillCommand = () => {
     sendCommand("emergency_surface", true, true);
     addCommand({ name: "emergency_surface", value: true });
-  };
-
-  const sendCameraAngle = (angle) => {
-    sendCommand("camera_offset_angle", angle, false);
-    addCommand({ name: "camera_offset_angle", value: angle });
-  };
-
-  const lightsOn = () => {
-    sendCommand("lights_on_off", true, true);
-    addCommand({ name: "lights_on_off", value: true });
-  };
-
-  const lightsOff = () => {
-    sendCommand("lights_on_off", false, true);
-    addCommand({ name: "lights_on_off", value: false });
   };
 
   const toggleAutoMode = () => {
@@ -93,115 +77,128 @@ const SystemControl = () => {
   };
 
   return (
-    <VStack p={6} justifyContent="space-evenly" h="100%" bg={boxColor}>
-      <Heading color={textColor}>SYSTEM</Heading>
-      <HStack>
-        <Button
-          id="connection-button"
-          color={textColor}
-          onClick={startRemoteConnection}
-          bg="green.400"
-          colorScheme="teal"
-          size="md"
+    <Flex
+      h="6vh"
+      w="100%"
+      bg={boxColor}
+      boxShadow="dark-lg"
+      justifyContent="space-evenly"
+      align="center"
+    >
+      <Flex justifyContent="center" wrap="wrap" w="100%">
+        <Box
+          mr={6}
+          as="button"
+          bg="teal"
+          color="white"
+          px={4}
+          minWidth="10rem"
+          h={10}
+          onClick={() => toggleRemoteConnection()} // startRemoteConnection, stopRemoteConnection
         >
-          On
-        </Button>
-        <Button
-          id="connection-button"
-          color={textColor}
-          onClick={stopRemoteConnection}
-          bg="red.400"
-          colorScheme="teal"
-          size="md"
+          <Icon as={FaPowerOff} mr={2} color="white" />
+          {!sysRunning ? "CONNECT" : "DISCONNECT"}
+        </Box>
+        <Box
+          mr={6}
+          minWidth="10rem"
+          as="button"
+          bg="teal"
+          color="white"
+          px={4}
+          h={10}
+          onClick={() => sendResetCommand()}
         >
-          Off
-        </Button>
-      </HStack>
-      <HStack>
-        <Button
-          id="reset-button"
-          color={textColor}
-          onClick={sendResetCommand}
-          bg="yellow.200"
-          size="md"
+          <Icon as={VscDebugRestart} mr={2} color="white" />
+          RESET
+        </Box>
+        <Box
+          mr={6}
+          as="button"
+          minWidth="10rem"
+          bg="teal"
+          color="white"
+          px={4}
+          h={10}
+          onClick={() => searchComPorts()}
         >
-          Reset
-        </Button>
-        <Button
-          id="reset-button"
-          color={textColor}
-          onClick={searchComPorts}
-          bg="orange.200"
-          size="md"
+          <Icon as={BsSearch} mr={2} color="white" />
+          PORTS
+        </Box>
+        <Box
+          mr={6}
+          minWidth="10rem"
+          as="button"
+          bg="teal"
+          color="white"
+          px={4}
+          h={10}
+          onClick={() => sendKillCommand()}
         >
-          Find ports
-        </Button>
-        <Button
-          id="kill-button"
-          color={textColor}
-          onClick={sendKillCommand}
-          bg="red"
-          size="md"
-        >
+          <Icon as={GoAlert} mr={2} color="white" />
           E-STOP
-        </Button>
-      </HStack>
-      <Text fontSize="xl" color={textColor}>
-        Logging
-      </Text>
-      <Switch
-        name="Status"
-        onChange={toggleRecording}
-        size="lg"
-        colorScheme="green"
-      />
-      <Text fontSize="xl" color={textColor}>
-        Auto mode
-      </Text>
-      <Switch
-        onChange={(e) => toggleAutoMode()}
-        size="lg"
-        colorScheme="green"
-      />
-      <Text fontSize="xl" color={textColor}>
-        Depth or Seafloor
-      </Text>
-      <Switch onChange={toggleDepthOrFloor} size="lg" colorScheme="green" />
-      <Text fontSize="xl" color={textColor}>
-        Lights
-      </Text>
-      <HStack>
-        <Button color={textColor} bg="green.500" onClick={lightsOn}>
-          On
-        </Button>
-        <Button color={textColor} bg="red.500" onClick={lightsOff}>
-          Off
-        </Button>
-      </HStack>
-      <Text fontSize="xl" color={textColor}>
-        Camera angle
-      </Text>
-      <Slider
-        id="camera-angle-slider"
-        aria-label="adjust-camera-angle"
-        onChange={(value) => setCameraAngle(value)}
-        onChangeStart={(e) => startCanSendAngle()}
-        onChangeEnd={(e) => stopCanSendAngle()}
-        defaultValue={0}
-        min={-10}
-        max={10}
-        step={1}
-        w="50%"
-        colorScheme="green"
-      >
-        <SliderTrack bg="red.100">
-          <Box position="relative" right={10} />
-          <SliderFilledTrack bg="tomato" />
-        </SliderTrack>
-        <SliderThumb boxSize={6} />
-      </Slider>
-      <Text color={textColor}>{cameraAngle}</Text>
-    </VStack>
+        </Box>
+      </Flex>
+      <Flex justifyContent="center" wrap="wrap" w="100%">
+        <Box
+          flexDirection="row"
+          mr={6}
+          minWidth="10rem"
+          bg="teal"
+          color="white"
+          px={4}
+          h={10}
+          align="center"
+          pt={2}
+        >
+          <Switch
+            mr={2}
+            onChange={toggleRecording}
+            size="md"
+            colorScheme="green"
+          />
+          LOGGING
+        </Box>
+
+        <Box
+          mr={6}
+          minWidth="10rem"
+          bg="teal"
+          color="white"
+          px={4}
+          h={10}
+          align="center"
+          pt={2}
+        >
+          <Switch
+            mr={2}
+            onChange={(e) => toggleAutoMode()}
+            size="md"
+            colorScheme="green"
+          />
+          AUTO MODE
+        </Box>
+
+        <Box
+          mr={6}
+          minWidth="10rem"
+          bg="teal"
+          color="white"
+          px={4}
+          h={10}
+          align="center"
+          pt={2}
+        >
+          <Switch
+            mr={2}
+            onChange={toggleDepthOrFloor}
+            size="md"
+            colorScheme="green"
+          />
+          DEPTH MODE
+        </Box>
+      </Flex>
+    </Flex>
   );
 };
 

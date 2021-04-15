@@ -33,7 +33,6 @@ import {
 } from "../fake_db/crud";
 import {
   createLatLng,
-  distanceBetweenLatLong,
   extractWaypointIntoDict,
   isLatLongDistanceValid,
 } from "../helpers/utils";
@@ -341,7 +340,20 @@ const Test = () => {
             </Form>
           )}
         </Formik>
-        <Flex h="200px" overflowY="scroll">
+        <Flex
+          h="200px"
+          overflowY="scroll"
+          sx={{
+            "&::-webkit-scrollbar": {
+              width: "10px",
+              borderRadius: "8px",
+              backgroundColor: `rgba(0, 0, 0, 0.5)`,
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: `rgba(0, 0, 0, 0.5)`,
+            },
+          }}
+        >
           <Table variant="striped" colorScheme="blackAlpha" size="sm">
             <Thead>
               <Tr>

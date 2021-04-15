@@ -17,14 +17,16 @@ export const SensorCard = (props) => {
       px={{ base: 2, sm: 2 }}
       py="2"
       color={textColor}
-      boxShadow="dark-lg"
+      boxShadow="lg"
+      border="1px"
+      borderTopWidth="thin"
       rounded="lg"
       minWidth="150px"
     >
-      <StatLabel variant="bold" fontSize="md" color={textColor}>
+      <StatLabel fontWeight="medium" isTruncated color={textColor}>
         {props.sensor.name}
       </StatLabel>
-      <StatNumber fontSize="md" fontWeight="large" color={textColor}>
+      <StatNumber fontSize="2xl" fontWeight="medium" color={textColor}>
         {props.sensor.value}
       </StatNumber>
     </Stat>

@@ -22,7 +22,7 @@ export const updateSession = async (session_id, is_complete) => {
   };
   try {
     const resp = await api.post(URL, payload);
-    const _ = await resp.data; // DO we need feedback?
+    return await resp.data; // DO we need feedback?
   } catch (err) {
     console.log(err);
   }
@@ -58,8 +58,6 @@ export const sendCommand = async (name, value, toSystem = false) => {
   try {
     const resp = await api.post(URL, cmd);
     const response = await resp.data;
-    console.log(cmd);
-    console.log(response);
   } catch (err) {
     console.log("ERROR YO : ", err);
   }
@@ -115,8 +113,6 @@ export const toggleRecording = async () => {
   }
 };
 
-export const getRemoteImage = async (fileName) => {};
-
 const sendConnectionStatus = async (isConnected) => {
   sendCommand("is_running", isConnected);
 };
@@ -143,4 +139,26 @@ const _postRecording = async (status) => {
   }
 };
 
-const sendSensorData = () => {};
+export const toggleVideo = async (toggle) => {
+  var url = "http://localhost:8000/videos/";
+  if (toggle) {
+    url += "video_start";
+  } else {
+    url += "video_stop";
+  }
+  await postSome(url);
+};
+
+export const takeSnapshot = async () => {
+  await postSome("http://localhost:8000/videos/video_snapshot");
+};
+
+export const postSome = async (url) => {
+  try {
+    const response = await api.get(url);
+    const data = await response.data;
+    console.log(await JSON.stringify(data, null, 2));
+  } catch (err) {
+    console.log(err);
+  }
+};
