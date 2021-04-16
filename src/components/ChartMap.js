@@ -26,14 +26,14 @@ const ChartMap = () => {
 
   return (
     <Box w="100%" h="90%" boxShadow="dark-lg" bg={boxColor}>
-      <HStack w="100%" color={textColor} colSpan={1} ml={1}>
-        <RadioGroup
-          mt={2}
-          ml={40}
-          mr={40}
-          onChange={setDisplayMode}
-          value={displayMode}
-        >
+      <HStack
+        w="100%"
+        color={textColor}
+        colSpan={1}
+        ml={1}
+        justifyContent="space-around"
+      >
+        <RadioGroup mt={2} onChange={setDisplayMode} value={displayMode}>
           <HStack>
             <Radio value="plot">
               {" "}

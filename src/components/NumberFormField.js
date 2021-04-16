@@ -21,10 +21,10 @@ import {
   AlertIcon,
   Box,
 } from "@chakra-ui/react";
-import { sendCommand } from "../fake_db/crud";
+import { sendCommand } from "../db/crud";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { validateInput } from "../helpers/validate";
-import { rovControlNames } from "../fake_db/settings";
+import { rovControlNames } from "../db/config";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
 // const fakeCMD = [

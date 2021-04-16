@@ -35,7 +35,7 @@ import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import { Form, Formik } from "formik";
 import { RepeatIcon } from "@chakra-ui/icons";
-import { getCompletedSessions, getWaypointsFromSession } from "../fake_db/crud";
+import { getCompletedSessions, getWaypointsFromSession } from "../db/crud";
 import WaypointCard from "../components/WaypointCard";
 
 L.Marker.prototype.options.icon = L.icon({

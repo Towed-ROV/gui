@@ -19,9 +19,7 @@ import { HamburgerIcon, SettingsIcon, SunIcon } from "@chakra-ui/icons";
 
 const Navbar = (props) => {
   const { toggleColorMode } = useColorMode();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [placement, setPlacement] = useState("top");
 
   const textColor = useColorModeValue("grey.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600"); // ("gray.200", "gray.600");
@@ -50,7 +48,7 @@ const Navbar = (props) => {
         bg={menuButtonColor}
       />
       <Drawer
-        placement={placement}
+        placement="top"
         onClose={onClose}
         isOpen={isOpen}
         returnFocusOnClose={true}

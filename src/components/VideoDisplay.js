@@ -1,46 +1,36 @@
 import {
   Box,
-  Button,
   Image,
   Flex,
-  Switch,
   useColorModeValue,
-  Badge,
-  HStack,
-  Text,
   Slider,
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
   VStack,
   IconButton,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
   Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverCloseButton,
   PopoverArrow,
-  PopoverHeader,
   PopoverBody,
   Center,
   Icon,
   Spacer,
 } from "@chakra-ui/react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import offlineImage from "../assets/offline.png";
 import loadIMG from "../assets/loading.gif";
 import { CommandResponseContext } from "./CommandResponseProvider";
-import { sendCommand, takeSnapshot, toggleVideo } from "../fake_db/crud";
-import { ArrowRightIcon, EmailIcon } from "@chakra-ui/icons";
+import { sendCommand, takeSnapshot, toggleVideo } from "../db/crud";
 
 import { MdSend } from "react-icons/md";
 import { FiGitCommit, FiSun } from "react-icons/fi";
 import { AiFillCamera } from "react-icons/ai";
 import { VscDebugStart, VscDebugPause } from "react-icons/vsc";
+import { Prompt } from "react-router";
+import { VIDEO_URL_STREAM } from "../db/config";
 
 const VideoDisplay = () => {
   const { addCommand } = useContext(CommandResponseContext);
@@ -48,18 +38,17 @@ const VideoDisplay = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
-  const VIDEO_STREAM = "http://localhost:8000/videos/video";
   const [isConnected, setIsConnected] = useState(false);
   const [source, setSource] = useState(offlineImage);
 
   const [lightsOn, setLightsOn] = useState(false);
   const [cameraAngle, setCameraAngle] = useState(0);
-  const camAngleRef = React.useRef();
+  const camAngleRef = useRef();
 
   const handleVideoConnection = async () => {
     setIsConnected(!isConnected);
     await toggleVideo(!isConnected);
-    if (!isConnected) setSource(VIDEO_STREAM);
+    if (!isConnected) setSource(VIDEO_URL_STREAM);
     if (isConnected) setSource(offlineImage);
   };
 
@@ -82,6 +71,10 @@ const VideoDisplay = () => {
 
   return (
     <VStack bg="black" h="100%" boxShadow="dark-lg" spacing={0}>
+      <Prompt
+        when={isConnected}
+        message="Camera still running, please close it."
+      />
       <Spacer />
       <Box h="550px" w="100%">
         <Image
@@ -192,5 +185,3 @@ const VideoDisplay = () => {
 };
 
 export default VideoDisplay;
-
-// <Flex align="center" justifyContent="center" w="640px" h="480px"></Flex>

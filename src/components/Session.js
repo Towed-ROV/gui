@@ -32,7 +32,7 @@ import {
   getSessions,
   createWaypoint,
   updateSession,
-} from "../fake_db/crud";
+} from "../db/crud";
 import {
   createLatLng,
   extractWaypointIntoDict,

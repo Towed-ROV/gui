@@ -97,9 +97,6 @@ const db = [
 const Home = () => {
   const textColor = useColorModeValue("grey.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
-
-  const { sensorSettings } = useContext(SettingsContext);
-
   return (
     <Flex
       h="100vh"

@@ -17,7 +17,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
-import { sendCommand, toggleRecording } from "../fake_db/crud";
+import { sendCommand, toggleRecording } from "../db/crud";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { FaPowerOff } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
