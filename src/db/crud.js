@@ -1,24 +1,20 @@
-import { get } from "../services/api-methods";
-import { post } from "../services/api-methods";
-import { put } from "../services/api-methods";
-import { del } from "../services/api-methods";
-
-// DB ENDPOINTS
-const WAYPOINT_SESSIONS = "/waypoint_sessions/";
-const WAYPOINTS = "/waypoints/";
-const SENSORS = "/sensors/";
-const VIDEOS = "/videos/";
-const COMMANDS = "/commands/";
+import { get, post, put, del, post_raw } from "../services/api-methods";
+import {
+  WAYPOINT_SESSIONS,
+  COMMANDS,
+  WAYPOINTS,
+  SENSORS,
+  VIDEOS,
+} from "./config";
 
 export const createSession = async (session_id) => {
-  let dbError = undefined;
+  let details = undefined;
   try {
-    return await post(WAYPOINT_SESSIONS, { session_id: session_id });
+    details = await post_raw(WAYPOINT_SESSIONS, { session_id: session_id });
   } catch (err) {
-    dbError = "DUPLICATE";
-    console.log(err);
+    details = "DUPLICATE";
   }
-  return dbError;
+  return details;
 };
 
 export const updateSession = async (session_id, is_complete) => {
@@ -108,7 +104,7 @@ export const toggleVideo = async (toggle) => {
 
 export const takeSnapshot = async () => {
   const ACTION = "snap";
-  return await post(VIDEOS + ACTION);
+  return await get(VIDEOS + ACTION);
 };
 
 // export const postSome = async (url) => {

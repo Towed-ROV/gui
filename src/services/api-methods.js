@@ -9,6 +9,10 @@ export const get = async (url) => {
   }
 };
 
+export const post_raw = async (url, content) => {
+  return await api.post(url, content);
+};
+
 export const post = async (url, content) => {
   try {
     const response = await api.post(url, content);

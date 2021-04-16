@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Flex,
   Table,
   Tbody,
@@ -40,43 +39,10 @@ import {
 } from "../helpers/utils";
 import { validateStringInput } from "../helpers/validate";
 import { RepeatIcon } from "@chakra-ui/icons";
-import { VscDebugStart, VscDebugPause, VscDebugStop } from "react-icons/vsc";
+import { VscDebugStart } from "react-icons/vsc";
 import { IoStop } from "react-icons/io5";
 import { FcAddDatabase } from "react-icons/fc";
 import { CommandResponseContext } from "./CommandResponseProvider";
-const gpsMIN = [62.383713, 6.977545];
-const gpsMAX = [62.38389, 6.97916];
-
-const rangeLat = gpsMAX[0] - gpsMIN[0];
-const rangeLng = gpsMAX[1] - gpsMIN[1];
-
-const STEPS = 4;
-
-const stepLat = rangeLat / STEPS;
-const stepLng = rangeLng / STEPS;
-
-let fakeSensors = [
-  {
-    name: "temperature",
-    value: 0,
-  },
-  {
-    name: "oxygen",
-    value: 0,
-  },
-  {
-    name: "latitude",
-    value: 62.383713,
-  },
-  {
-    name: "depth",
-    value: 0,
-  },
-  {
-    name: "longitude",
-    value: 6.977545,
-  },
-];
 
 const Session = () => {
   const { sensorData } = useContext(CommandResponseContext);
@@ -88,7 +54,6 @@ const Session = () => {
   const [sessionId, setSessionId] = useState("");
   const [currentLatLng, setCurrentLatLng] = useState([undefined, undefined]);
   const [currentSessions, setCurrentSessions] = useState([]);
-  const [id, setId] = useState(0);
   const [timer, setTimer] = useState(0);
 
   const displayWaypoint = (wp) => {
@@ -103,10 +68,6 @@ const Session = () => {
   const fetchSessions = async () => {
     const sess = await getSessions();
     setCurrentSessions(sess);
-    console.log(sess);
-    // if (sess !== undefined) {
-    //   setCurrentSessions(sess);
-    // }
   };
 
   const saveDataAndDisplay = async (sensorData) => {
@@ -165,30 +126,14 @@ const Session = () => {
     return [validChange, updateLatLng, latLng];
   };
 
-  // Simulate SENSORDATA
-  //   useEffect(() => {
-  //     fakeSensors.forEach((sensor) => {
-  //       if (sensor.name === "latitude") {
-  //         sensor.value += stepLat;
-  //       } else if (sensor.name === "longitude") {
-  //         sensor.value += stepLng;
-  //       } else {
-  //         sensor.value = id;
-  //       }
-  //     });
-  //     saveDataAndDisplay(fakeSensors);
-  //   }, [id]);
-
   useEffect(() => {
     saveDataAndDisplay(sensorData);
   }, [sensorData]);
 
-  //   // Simulate STATE CHANGES
   useEffect(() => {
     if (isSessionRunning) {
       const interval = setInterval(() => {
         setTimer((timer) => timer + 1);
-        setId((id) => id + 1);
       }, 1000);
 
       return () => {
@@ -201,10 +146,6 @@ const Session = () => {
   const displayMinutes = Math.floor(timer / 60)
     .toString()
     .padStart(2, "0");
-
-  useEffect(() => {
-    console.log("SESS ACTIVE: ", isSessionRunning);
-  }, [isSessionRunning]);
 
   return (
     <Box
@@ -231,7 +172,7 @@ const Session = () => {
         onSubmit={async (data, actions) => {
           actions.setSubmitting(true);
           const err = await createSession(data.name);
-          if (err) {
+          if (err === "DUPLICATE") {
             actions.setErrors({ name: "Session already exists" });
           } else {
             actions.setFieldValue("name", "", false);

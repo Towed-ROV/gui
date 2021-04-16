@@ -1,24 +1,19 @@
 import {
-  Button,
   Center,
   Flex,
   Heading,
   Table,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
   useColorModeValue,
   VStack,
-  Wrap,
-  WrapItem,
 } from "@chakra-ui/react";
-import React, { useEffect, useContext, useState } from "react";
-// import { dummyData } from "../fake_db/settings";
+import React, { useEffect, useContext } from "react";
+import { SENSOR_LIVE_STREAM } from "../db/config";
 import { CommandResponseContext } from "./CommandResponseProvider";
-import { SensorCard } from "./SensorCard";
 
 const SensorDisplay = () => {
   const boxColor = useColorModeValue("gray.200", "gray.600");
@@ -28,7 +23,7 @@ const SensorDisplay = () => {
   );
 
   useEffect(() => {
-    // let eventSource = new EventSource("http://localhost:8000/sensors/stream");
+    // let eventSource = new EventSource(SENSOR_LIVE_STREAM);
     // eventSource.addEventListener("open", (e) => {});
     // eventSource.addEventListener("stream", (event) => {
     //   try {

@@ -1,4 +1,16 @@
-export const VIDEO_URL_STREAM = "http://localhost:8000/videos/live";
+// ENDPOINTS
+export const WAYPOINT_SESSIONS = "/waypoint_sessions/";
+export const WAYPOINTS = "/waypoints/";
+export const SENSORS = "/sensors/";
+export const VIDEOS = "/videos/";
+export const COMMANDS = "/commands/";
+
+// ENDPOINT SUFFIXES
+const LIVE = "live";
+
+// STREAMS
+export const VIDEO_LIVE_STREAM = VIDEOS + LIVE;
+export const SENSOR_LIVE_STREAM = SENSORS + LIVE;
 
 export const rovControlNames = [
   { name: "set_point_depth", id: 0 },

@@ -19,7 +19,7 @@ import {
   Icon,
   Spacer,
 } from "@chakra-ui/react";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import offlineImage from "../assets/offline.png";
 import loadIMG from "../assets/loading.gif";
 import { CommandResponseContext } from "./CommandResponseProvider";
@@ -30,7 +30,7 @@ import { FiGitCommit, FiSun } from "react-icons/fi";
 import { AiFillCamera } from "react-icons/ai";
 import { VscDebugStart, VscDebugPause } from "react-icons/vsc";
 import { Prompt } from "react-router";
-import { VIDEO_URL_STREAM } from "../db/config";
+import { VIDEO_LIVE_STREAM } from "../db/config";
 
 const VideoDisplay = () => {
   const { addCommand } = useContext(CommandResponseContext);
@@ -48,7 +48,7 @@ const VideoDisplay = () => {
   const handleVideoConnection = async () => {
     setIsConnected(!isConnected);
     await toggleVideo(!isConnected);
-    if (!isConnected) setSource(VIDEO_URL_STREAM);
+    if (!isConnected) setSource(VIDEO_LIVE_STREAM);
     if (isConnected) setSource(offlineImage);
   };
 

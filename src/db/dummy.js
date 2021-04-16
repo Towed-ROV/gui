@@ -40,3 +40,26 @@ export const dummyData = [
     value: 0.0055,
   },
 ];
+
+export const fakeSensors = [
+  {
+    name: "temperature",
+    value: 0,
+  },
+  {
+    name: "oxygen",
+    value: 0,
+  },
+  {
+    name: "latitude",
+    value: 62.383713,
+  },
+  {
+    name: "depth",
+    value: 0,
+  },
+  {
+    name: "longitude",
+    value: 6.977545,
+  },
+];
