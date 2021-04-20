@@ -38,6 +38,15 @@ export const getSessions = async () => {
   }
 };
 
+export const deleteSession = async (sessId) => {
+  try {
+    const _ = await del(WAYPOINTS, sessId); // Connected waypoints
+    return await del(WAYPOINT_SESSIONS, sessId); // Connected waypoint session
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getCompletedSessions = async () => {
   const STATUS = "completed";
   try {
@@ -76,6 +85,7 @@ export const createWaypoint = async (sessionId, latLng, sensorData) => {
     longitude: latLng[1],
     sensors: sensorData,
   };
+  console.log(payload);
   try {
     return await post(WAYPOINTS, payload);
   } catch (err) {

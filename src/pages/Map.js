@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {
-  Box,
-  Center,
-  Image,
-  Stack,
   Text,
   Heading,
   Flex,
   useColorModeValue,
   Grid,
   GridItem,
-  HStack,
   VStack,
   InputGroup,
   InputLeftAddon,
@@ -18,6 +13,7 @@ import {
   Select,
   InputRightAddon,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import L from "leaflet";
 import {
@@ -35,7 +31,11 @@ import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import { Form, Formik } from "formik";
 import { RepeatIcon } from "@chakra-ui/icons";
-import { getCompletedSessions, getWaypointsFromSession } from "../db/crud";
+import {
+  deleteSession,
+  getCompletedSessions,
+  getWaypointsFromSession,
+} from "../db/crud";
 import WaypointCard from "../components/WaypointCard";
 
 L.Marker.prototype.options.icon = L.icon({
@@ -92,6 +92,7 @@ const Map = () => {
   const [sessionId, setSessionId] = useState("");
   const [waypoints, setWaypoints] = useState([]);
   const [waypointSessions, setWaypointSessions] = useState([]);
+  const toast = useToast();
 
   // React.useEffect(() => {
   //   const timer = setInterval(() => {
@@ -104,6 +105,7 @@ const Map = () => {
   // }, [newY]); // Pass in empty array to run effect only once!
 
   const fetchAndDisplayWaypoints = async (session_id) => {
+    // Loads all waypoints from session_id and displays them
     if (session_id !== undefined) {
       const wps = await getWaypointsFromSession(session_id);
       setWaypoints(wps);
@@ -111,8 +113,24 @@ const Map = () => {
   };
 
   const fetchWaypointSessions = async () => {
+    // Loads completed session into the "Select"-options in Formik
     const sess = await getCompletedSessions();
     if (sess !== undefined) setWaypointSessions(sess);
+  };
+
+  const deleteSessionByID = async () => {
+    // Deletes the select waypointSession-session_id in Formik
+    if (sessionId !== undefined) {
+      const r = await deleteSession(sessionId);
+      toast({
+        title: `Deleted session: ${sessionId}.`,
+        position: "top-right",
+        description: `Detail: ${r.message}`,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -122,7 +140,7 @@ const Map = () => {
           <MapContainer
             zoomControl={false}
             className="map"
-            center={[62.38384575, 6.97875625]}
+            // center={[62.38384575, 6.97875625]}
             zoom={16}
             style={{
               height: "100%",
@@ -159,7 +177,9 @@ const Map = () => {
               initialValues={{ session_name: "" }}
               onSubmit={(data, actions) => {
                 actions.setSubmitting(true);
-                fetchAndDisplayWaypoints(data.session_name);
+                const name = data.session_name;
+                fetchAndDisplayWaypoints(name);
+                setSessionId(name);
                 actions.setSubmitting(false);
               }}
             >
@@ -206,21 +226,34 @@ const Map = () => {
                         isLoading={props.isSubmitting}
                         type="submit"
                         // isDisabled={isSessionRunning}
-                        color={textColor}
+                        color="black"
                       >
-                        Fetch
+                        Display
                       </Button>
 
                       <Button
                         size="sm"
-                        bg="red.400"
-                        color={textColor}
+                        bg="yellow.400"
+                        color="black"
                         onClick={() => {
                           props.setFieldValue("session_name", "", false);
                           setWaypoints([]);
                         }}
                       >
                         Reset
+                      </Button>
+                      <Button
+                        size="sm"
+                        bg="red.400"
+                        color="black"
+                        onClick={() => {
+                          deleteSessionByID();
+                          setWaypoints([]);
+                          setSessionId(undefined);
+                          props.setFieldValue("session_name", "", false);
+                        }}
+                      >
+                        Delete
                       </Button>
                     </InputRightAddon>
                   </InputGroup>

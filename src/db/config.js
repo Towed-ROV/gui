@@ -12,6 +12,9 @@ const LIVE = "live";
 export const VIDEO_LIVE_STREAM = VIDEOS + LIVE;
 export const SENSOR_LIVE_STREAM = SENSORS + LIVE;
 
+// Supported commands inside the Towed-ROV
+// they all accept a float value
+// ie: {name: "set_point_depth", value: 104.55}
 export const rovControlNames = [
   { name: "set_point_depth", id: 0 },
   { name: "camera_offset_angle", id: 1 },

@@ -110,12 +110,12 @@ const Minimap = () => {
               <Popup>ID: {wp.id}</Popup>
             </Marker>
           ))} */}
-        <Marker
+        {/* <Marker
           key={waypoint.id}
           position={[waypoint.latitude, waypoint.longitude]}
         >
           <Popup>ID: {waypoint.id}</Popup>
-        </Marker>
+        </Marker> */}
       </MapContainer>
     </Flex>
   );
