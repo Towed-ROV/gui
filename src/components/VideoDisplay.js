@@ -18,15 +18,21 @@ import {
   Center,
   Icon,
   Spacer,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
 } from "@chakra-ui/react";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import offlineImage from "../assets/offline.png";
 import loadIMG from "../assets/loading.gif";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { sendCommand, takeSnapshot, toggleVideo } from "../db/crud";
 
 import { MdSend } from "react-icons/md";
-import { FiGitCommit, FiSun } from "react-icons/fi";
+import { SiSonarsource } from "react-icons/si";
+import { FiGitCommit, FiSun, FiCamera } from "react-icons/fi";
 import { AiFillCamera } from "react-icons/ai";
 import { VscDebugStart, VscDebugPause } from "react-icons/vsc";
 import { Prompt } from "react-router";
@@ -40,14 +46,27 @@ const VideoDisplay = () => {
 
   const [isConnected, setIsConnected] = useState(false);
   const [source, setSource] = useState(offlineImage);
+  const [displayMode, setDisplayMode] = useState("video"); // vidoe or sonar
 
   const [lightsOn, setLightsOn] = useState(false);
   const [cameraAngle, setCameraAngle] = useState(0);
   const camAngleRef = useRef();
 
-  const handleVideoConnection = async () => {
-    setIsConnected(!isConnected);
-    await toggleVideo(!isConnected);
+  const handleVideoConnection = async (selectedMode = undefined) => {
+    // If we call this method without args it refers to "STOP" whathever mode is selected
+    // otherwise, we use the arg input to "START"
+
+    if (selectedMode === undefined) {
+      // Use the one stord in displayMode
+      setIsConnected(!isConnected);
+      await toggleVideo(!isConnected, displayMode);
+    } else {
+      setIsConnected(!isConnected);
+      await toggleVideo(!isConnected, selectedMode);
+
+      // then, update our new selected displayMode
+      setDisplayMode(selectedMode);
+    }
     if (!isConnected) setSource(VIDEO_LIVE_STREAM);
     if (isConnected) setSource(offlineImage);
   };
@@ -68,6 +87,10 @@ const VideoDisplay = () => {
     sendCommand("camera_offset_angle", cameraAngle, false);
     addCommand({ name: "camera_offset_angle", value: cameraAngle });
   };
+
+  useEffect(() => {
+    console.log(displayMode);
+  }, [displayMode]);
 
   return (
     <VStack bg="black" h="100%" boxShadow="dark-lg" spacing={0}>
@@ -95,7 +118,59 @@ const VideoDisplay = () => {
         w="100%"
         maxW="640px"
       >
-        <Box
+        {!isConnected ? (
+          <Menu placement="top">
+            <MenuButton pr={16} bg="teal" color="white" px={4} h={8} ml={10}>
+              <Icon as={VscDebugStart} mr={2} />
+              Start
+            </MenuButton>
+            <MenuList bg="black" border="0px" py={2}>
+              <Center>
+                <MenuItem
+                  bg="teal"
+                  w="40%"
+                  h={8}
+                  color="white"
+                  onClick={() => {
+                    handleVideoConnection("video");
+                  }}
+                >
+                  <Icon as={FiCamera} mr={2} />
+                  Video
+                </MenuItem>
+              </Center>
+              <Center>
+                <MenuItem
+                  bg="teal"
+                  w="40%"
+                  h={8}
+                  color="white"
+                  onClick={() => {
+                    handleVideoConnection("sonar");
+                  }}
+                >
+                  <Icon as={SiSonarsource} mr={2} />
+                  Sonar
+                </MenuItem>
+              </Center>
+            </MenuList>
+          </Menu>
+        ) : (
+          <Box
+            pr={16}
+            as="button"
+            bg="teal"
+            color="white"
+            px={4}
+            h={8}
+            ml={10}
+            onClick={() => handleVideoConnection()} // we dont use param, so we stop whatevers already set
+          >
+            <Icon as={VscDebugPause} mr={2} />
+            STOP
+          </Box>
+        )}
+        {/* <Box
           pr={16}
           as="button"
           bg="teal"
@@ -106,13 +181,17 @@ const VideoDisplay = () => {
           onClick={() => handleVideoConnection()}
         >
           {!isConnected ? (
-            <Icon as={VscDebugStart} mr={2} />
+            <>
+              <Icon as={VscDebugStart} mr={2} />
+              START
+            </>
           ) : (
-            <Icon as={VscDebugPause} mr={2} />
+            <>
+              <Icon as={VscDebugPause} mr={2} />
+              STOP
+            </>
           )}
-
-          {!isConnected ? "START" : "STOP"}
-        </Box>
+        </Box> */}
         <Box
           pr={16}
           as="button"

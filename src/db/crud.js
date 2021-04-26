@@ -5,6 +5,7 @@ import {
   WAYPOINTS,
   SENSORS,
   VIDEOS,
+  VIDEO_PREFERENCE,
 } from "./config";
 
 export const createSession = async (session_id) => {
@@ -102,14 +103,18 @@ export const toggleRecording = async () => {
   }
 };
 
-export const toggleVideo = async (toggle) => {
-  let ACTION = "";
+export const toggleVideo = async (toggle, mode) => {
+  let action = "";
   if (toggle) {
-    ACTION = "start";
+    action = "start";
   } else {
-    ACTION = "stop";
+    action = "stop";
   }
-  return await get(VIDEOS + ACTION);
+  const content = {
+    action: action,
+    display_mode: mode,
+  };
+  return await post(VIDEO_PREFERENCE, content);
 };
 
 export const takeSnapshot = async () => {

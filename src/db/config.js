@@ -3,13 +3,17 @@ export const WAYPOINT_SESSIONS = "/waypoint_sessions/";
 export const WAYPOINTS = "/waypoints/";
 export const SENSORS = "/sensors/";
 export const VIDEOS = "/videos/";
+export const VIDEO_PREFERENCE = "/videos/preference";
 export const COMMANDS = "/commands/";
 
 // ENDPOINT SUFFIXES
 const LIVE = "live";
 
+// ENDPOINT PREFIX
+const BASE_URL = "http://localhost:8000";
+
 // STREAMS
-export const VIDEO_LIVE_STREAM = VIDEOS + LIVE;
+export const VIDEO_LIVE_STREAM = BASE_URL + VIDEOS + LIVE;
 export const SENSOR_LIVE_STREAM = SENSORS + LIVE;
 
 // Supported commands inside the Towed-ROV
