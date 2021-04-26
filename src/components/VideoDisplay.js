@@ -170,28 +170,6 @@ const VideoDisplay = () => {
             STOP
           </Box>
         )}
-        {/* <Box
-          pr={16}
-          as="button"
-          bg="teal"
-          color="white"
-          px={4}
-          h={8}
-          ml={10}
-          onClick={() => handleVideoConnection()}
-        >
-          {!isConnected ? (
-            <>
-              <Icon as={VscDebugStart} mr={2} />
-              START
-            </>
-          ) : (
-            <>
-              <Icon as={VscDebugPause} mr={2} />
-              STOP
-            </>
-          )}
-        </Box> */}
         <Box
           pr={16}
           as="button"

@@ -92,26 +92,28 @@ const Settings = () => {
     let samples = [];
 
     let step = 0;
-    for (let i = 0; i < totalSamples; i++) {
-      samples.push(step);
-      step += 0.001;
-    }
 
     const sessID = "Session-123";
     const response = await createSession(sessID);
+    console.log("Created: ", sessID);
 
     const LAT = fakeSensors.filter((sensor) => sensor.name === "latitude")[0]
       .value;
     const LNG = fakeSensors.filter((sensor) => sensor.name === "longitude")[0]
       .value;
 
-    for await (const step of samples) {
-      let lng = LNG + step;
-      const details = await createWaypoint(sessID, [LAT, lng], data);
+    for (let i = 0; i < totalSamples; i++) {
+      samples.push(LNG + step);
+      step += 0.001;
+    }
+
+    for await (let samp of samples) {
+      await createWaypoint(sessID, [LAT, samp], data);
     }
 
     const isComplete = true;
     const responseDetails = await updateSession(sessID, isComplete);
+    console.log("Session: ", sessID, " completed: ", isComplete);
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -332,7 +334,8 @@ const Settings = () => {
         <Divider />
         <HStack>
           <Heading>Database</Heading>
-          <Button onClick={seedDatabase}>SEED</Button>
+          <span>Remember to use test_img and not img from queue</span>
+          <Button onClick={() => seedDatabase()}>SEED</Button>
         </HStack>
       </Box>
     </Flex>

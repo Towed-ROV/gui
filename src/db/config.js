@@ -14,7 +14,7 @@ const BASE_URL = "http://localhost:8000";
 
 // STREAMS
 export const VIDEO_LIVE_STREAM = BASE_URL + VIDEOS + LIVE;
-export const SENSOR_LIVE_STREAM = SENSORS + LIVE;
+export const SENSOR_LIVE_STREAM = BASE_URL + SENSORS + LIVE;
 
 // Supported commands inside the Towed-ROV
 // they all accept a float value

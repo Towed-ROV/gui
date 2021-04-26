@@ -23,32 +23,32 @@ const SensorDisplay = () => {
   );
 
   useEffect(() => {
-    // let eventSource = new EventSource(SENSOR_LIVE_STREAM);
-    // eventSource.addEventListener("open", (e) => {});
-    // eventSource.addEventListener("stream", (event) => {
-    //   try {
-    //     // @ts-ignore
-    //     let payload = JSON.parse(event.data);
-    //     let name = payload.payload_name;
-    //     let data = payload.payload_data;
-    //     switch (name) {
-    //       case "sensor_data":
-    //         setSensorData(data);
-    //         break;
-    //       case "response":
-    //         data.map((resp) => addResponse(resp));
-    //         break;
-    //       default:
-    //         break;
-    //     }
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // });
-    // eventSource.addEventListener("close", (e) => {
-    //   eventSource.close();
-    // });
-    // return () => eventSource.close();
+    let eventSource = new EventSource(SENSOR_LIVE_STREAM);
+    eventSource.addEventListener("open", (e) => {});
+    eventSource.addEventListener("stream", (event) => {
+      try {
+        // @ts-ignore
+        let payload = JSON.parse(event.data);
+        let name = payload.payload_name;
+        let data = payload.payload_data;
+        switch (name) {
+          case "sensor_data":
+            setSensorData(data);
+            break;
+          case "response":
+            data.map((resp) => addResponse(resp));
+            break;
+          default:
+            break;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    });
+    eventSource.addEventListener("close", (e) => {
+      eventSource.close();
+    });
+    return () => eventSource.close();
   }, []);
 
   return (

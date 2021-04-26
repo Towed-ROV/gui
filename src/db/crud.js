@@ -24,7 +24,7 @@ export const updateSession = async (session_id, is_complete) => {
     is_complete: is_complete,
   };
   try {
-    return await post(WAYPOINT_SESSIONS + session_id, payload);
+    return await put(WAYPOINT_SESSIONS + session_id, payload);
   } catch (err) {
     console.log(err);
   }
@@ -86,9 +86,8 @@ export const createWaypoint = async (sessionId, latLng, sensorData) => {
     longitude: latLng[1],
     sensors: sensorData,
   };
-  console.log(payload);
   try {
-    return await post(WAYPOINTS, payload);
+    const p = await post(WAYPOINTS, payload);
   } catch (err) {
     console.log(err);
   }

@@ -93,8 +93,13 @@ const Session = () => {
   };
 
   const finishSession = async () => {
+    setIsSessionRunning(false);
+    setWaypoints([]);
+    setTimer(0);
+
     const isComplete = true;
     const details = await updateSession(sessionId, isComplete);
+
     toast({
       title: `Saved session: ${details.session_id}.`,
       position: "bottom-left",
@@ -103,9 +108,6 @@ const Session = () => {
       duration: 2000,
       isClosable: true,
     });
-    setIsSessionRunning(false);
-    setWaypoints([]);
-    setTimer(0);
   };
 
   const filterWaypointLatLng = (sensorData) => {
@@ -284,6 +286,7 @@ const Session = () => {
                   minW="10rem"
                   bg="teal"
                   color="white"
+                  disabled={isSessionRunning}
                   h={8}
                   onClick={() => {
                     console.log("START BUTTON");
@@ -297,6 +300,7 @@ const Session = () => {
                   as="button"
                   type="button"
                   id="stop-button"
+                  disabled={!isSessionRunning}
                   minW="10rem"
                   bg="teal"
                   color="white"
