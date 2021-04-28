@@ -8,7 +8,6 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Home from "./pages/Home";
 import Map from "./pages/Map";
-import Test from "./discarded/Test";
 
 function App() {
   return (

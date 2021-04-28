@@ -1,4 +1,4 @@
-import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Flex, useColorModeValue } from "@chakra-ui/react";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import Highcharts from "highcharts";

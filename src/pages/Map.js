@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Text,
   Heading,
@@ -21,11 +21,9 @@ import {
   TileLayer,
   Marker,
   Popup,
-  useMapEvents,
   ZoomControl,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import offlineImage from "../assets/offline.png";
 
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
@@ -43,66 +41,13 @@ L.Marker.prototype.options.icon = L.icon({
   shadowUrl: iconShadow,
 });
 
-function LocationMarker() {
-  const [position, setPosition] = useState(null);
-  const map = useMapEvents({
-    click() {
-      map.locate();
-    },
-    locationfound(e) {
-      setPosition(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
-    },
-  });
-
-  return position === null ? null : (
-    <Marker position={position}>
-      <Popup>You are here</Popup>
-    </Marker>
-  );
-}
-
-let data = [
-  {
-    id: 0,
-    latitude: 62.383713,
-    longitude: 6.977545,
-  },
-  {
-    id: 1,
-    latitude: 62.383713 + 0.001,
-    longitude: 6.977545,
-  },
-  {
-    id: 2,
-    latitude: 62.383713 + 0.002,
-    longitude: 6.977545,
-  },
-  {
-    id: 3,
-    latitude: 62.383713 + 0.003,
-    longitude: 6.977545,
-  },
-];
-
 const Map = () => {
-  const x = 62.4698;
   const textColor = useColorModeValue("grey.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
   const [sessionId, setSessionId] = useState("");
   const [waypoints, setWaypoints] = useState([]);
   const [waypointSessions, setWaypointSessions] = useState([]);
   const toast = useToast();
-
-  // React.useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     let interval = 0.0001;
-  //     setnewY(newY + interval);
-  //   }, 1000);
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, [newY]); // Pass in empty array to run effect only once!
 
   const fetchAndDisplayWaypoints = async (session_id) => {
     // Loads all waypoints from session_id and displays them

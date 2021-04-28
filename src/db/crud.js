@@ -6,6 +6,10 @@ import {
   SENSORS,
   VIDEOS,
   VIDEO_PREFERENCE,
+  SNAP,
+  TOGGLE_RECORDING,
+  UNCOMPLETED,
+  COMPLETED,
 } from "./config";
 
 export const createSession = async (session_id) => {
@@ -31,9 +35,8 @@ export const updateSession = async (session_id, is_complete) => {
 };
 
 export const getSessions = async () => {
-  const STATUS = "uncompleted";
   try {
-    return await get(WAYPOINT_SESSIONS + STATUS);
+    return await get(WAYPOINT_SESSIONS + UNCOMPLETED);
   } catch (err) {
     console.log(err);
   }
@@ -41,7 +44,7 @@ export const getSessions = async () => {
 
 export const deleteSession = async (sessId) => {
   try {
-    const _ = await del(WAYPOINTS, sessId); // Connected waypoints
+    await del(WAYPOINTS, sessId); // Connected waypoints
     return await del(WAYPOINT_SESSIONS, sessId); // Connected waypoint session
   } catch (err) {
     console.log(err);
@@ -49,9 +52,8 @@ export const deleteSession = async (sessId) => {
 };
 
 export const getCompletedSessions = async () => {
-  const STATUS = "completed";
   try {
-    return await get(WAYPOINT_SESSIONS + STATUS);
+    return await get(WAYPOINT_SESSIONS + COMPLETED);
   } catch (err) {
     console.log(err);
   }
@@ -66,14 +68,13 @@ export const sendCommand = async (name, value, toSystem = false) => {
   try {
     return await post(COMMANDS, payload);
   } catch (err) {
-    console.log("ERROR YO : ", err);
+    console.log(err);
   }
 };
 
 export const getWaypointsFromSession = async (sessionId) => {
-  const URL = WAYPOINTS + sessionId;
   try {
-    return await get(URL);
+    return await get(WAYPOINTS + sessionId);
   } catch (err) {
     console.log(err);
   }
@@ -87,16 +88,15 @@ export const createWaypoint = async (sessionId, latLng, sensorData) => {
     sensors: sensorData,
   };
   try {
-    const p = await post(WAYPOINTS, payload);
+    return await post(WAYPOINTS, payload);
   } catch (err) {
     console.log(err);
   }
 };
 
 export const toggleRecording = async () => {
-  const ACTION = "toggle_recording";
   try {
-    return await get(SENSORS + ACTION);
+    return await get(SENSORS + TOGGLE_RECORDING);
   } catch (err) {
     console.log(err);
   }
@@ -109,24 +109,13 @@ export const toggleVideo = async (toggle, mode) => {
   } else {
     action = "stop";
   }
-  const content = {
+  const preference = {
     action: action,
     display_mode: mode,
   };
-  return await post(VIDEO_PREFERENCE, content);
+  return await post(VIDEO_PREFERENCE, preference);
 };
 
 export const takeSnapshot = async () => {
-  const ACTION = "snap";
-  return await get(VIDEOS + ACTION);
+  return await get(VIDEOS + SNAP);
 };
-
-// export const postSome = async (url) => {
-//   try {
-//     const response = await api.get(url);
-//     const data = await response.data;
-//     console.log(await JSON.stringify(data, null, 2));
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };

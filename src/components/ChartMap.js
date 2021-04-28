@@ -1,5 +1,4 @@
 import {
-  Flex,
   HStack,
   Radio,
   Text,
@@ -9,8 +8,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import React from "react";
-import { useContext, useState } from "react";
-import { CommandResponseContext } from "./CommandResponseProvider";
+import { useState } from "react";
 import Chart from "./Chart";
 import Minimap from "./Minimap";
 

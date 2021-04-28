@@ -25,35 +25,21 @@ import {
   ModalBody,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Field, FieldArray, Form, Formik } from "formik";
-import { useSpring } from "framer-motion";
+import { Field, Form, Formik } from "formik";
 
 import React, { useContext, useEffect, useState } from "react";
 import { SettingsContext } from "../components/SettingsProvider";
 import { createSession, createWaypoint, updateSession } from "../db/crud";
 import { fakeSensors } from "../db/dummy";
-import api from "../services/api";
-
-const initialFormData = undefined;
 
 const Settings = () => {
   const textColor = useColorModeValue("grey.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
   const [isEditing, setIsEditing] = useState(false);
 
-  const {
-    sensorSettings,
-    addSensorToSettings,
-    removeSensorFromSettings,
-    setNewSettings,
-  } = useContext(SettingsContext);
-
-  // const addDummyData = () => {
-  //   dummyData.map((data) => {
-  //     addSensorToSettings(data);
-  //   });
-  //   console.log("Loaded dummydata.");
-  // };
+  const { sensorSettings, addSensorToSettings, setNewSettings } = useContext(
+    SettingsContext
+  );
 
   const updateSensorEnabledState = (id, state) => {
     let updatedSettings = [];
@@ -87,33 +73,26 @@ const Settings = () => {
   const seedDatabase = async () => {
     // A pure test method for seeding the database with 'x' samples.
     const totalSamples = 10;
-
     let data = [...fakeSensors];
     let samples = [];
-
     let step = 0;
 
     const sessID = "Session-123";
-    const response = await createSession(sessID);
-    console.log("Created: ", sessID);
+    await createSession(sessID);
 
     const LAT = fakeSensors.filter((sensor) => sensor.name === "latitude")[0]
       .value;
     const LNG = fakeSensors.filter((sensor) => sensor.name === "longitude")[0]
       .value;
-
     for (let i = 0; i < totalSamples; i++) {
       samples.push(LNG + step);
       step += 0.001;
     }
-
     for await (let samp of samples) {
       await createWaypoint(sessID, [LAT, samp], data);
     }
-
     const isComplete = true;
-    const responseDetails = await updateSession(sessID, isComplete);
-    console.log("Session: ", sessID, " completed: ", isComplete);
+    await updateSession(sessID, isComplete);
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -138,11 +117,11 @@ const Settings = () => {
   };
 
   return (
-    <Flex h="100vh" bg={boxColor} color={textColor} p={10}>
+    <Flex h="100vh" bg={boxColor} color={textColor} p={20}>
       <Box>
         <Heading pb={8}>Sensors</Heading>
         <Button isDisabled={!isEditing} onClick={onOpen} colorScheme="green">
-          Add User
+          Add sensor
         </Button>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
@@ -332,10 +311,12 @@ const Settings = () => {
           </Flex>
         )}
         <Divider />
-        <HStack>
-          <Heading>Database</Heading>
-          <span>Remember to use test_img and not img from queue</span>
-          <Button onClick={() => seedDatabase()}>SEED</Button>
+        <HStack justifyContent="left">
+          <VStack justifyContent="left">
+            <Heading ml="0">Database</Heading>
+            <p>Seed the database with 10 waypoints</p>
+            <Button onClick={() => seedDatabase()}>SEED</Button>
+          </VStack>
         </HStack>
       </Box>
     </Flex>

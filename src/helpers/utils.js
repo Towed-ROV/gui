@@ -9,6 +9,9 @@ export const extractWaypointIntoDict = (wp) => {
 };
 
 export const getEmptyArray = (MAX_ELEMENTS) => {
+  /**
+   * Generates an empty array for the Highcharts plot
+   */
   var data = [];
   var time = new Date().getTime();
   for (var i = -MAX_ELEMENTS; i <= 0; i++) {
@@ -21,6 +24,11 @@ export const getEmptyArray = (MAX_ELEMENTS) => {
 };
 
 export const distanceBetweenLatLong = (p1, p2) => {
+  /**
+   * Calculates the distance between two GPS coordinates (latitude, longitude)
+   *
+   * return: the distance in metres
+   */
   var [lat1, lon1] = p1;
   var [lat2, lon2] = p2;
 
@@ -51,6 +59,9 @@ export const isLatLongDistanceValid = (latLng1, latLng2, validDistance = 2) => {
 };
 
 export const createLatLng = (sensorData) => {
+  /**
+   * Craates a pair of longitude and latitude if found, otherwise undefined
+   */
   var newLatLng = [undefined, undefined];
   sensorData.forEach((sensor) => {
     if (sensor.name === "latitude") {

@@ -7,7 +7,11 @@ export const VIDEO_PREFERENCE = "/videos/preference";
 export const COMMANDS = "/commands/";
 
 // ENDPOINT SUFFIXES
-const LIVE = "live";
+export const LIVE = "live";
+export const UNCOMPLETED = "uncompleted";
+export const COMPLETED = "completed";
+export const TOGGLE_RECORDING = "toggle_recording";
+export const SNAP = "snap";
 
 // ENDPOINT PREFIX
 const BASE_URL = "http://localhost:8000";

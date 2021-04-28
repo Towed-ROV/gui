@@ -105,7 +105,7 @@ const Session = () => {
       position: "bottom-left",
       description: `ID: ${details.id}`,
       status: "success",
-      duration: 2000,
+      duration: 5000,
       isClosable: true,
     });
   };

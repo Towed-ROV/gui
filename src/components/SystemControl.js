@@ -1,32 +1,13 @@
-import {
-  Button,
-  Heading,
-  HStack,
-  VStack,
-  Text,
-  Slider,
-  Switch,
-  Spacer,
-  Box,
-  useColorModeValue,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  Flex,
-  Icon,
-  Center,
-} from "@chakra-ui/react";
+import { Switch, Box, useColorModeValue, Flex, Icon } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { sendCommand, toggleRecording } from "../db/crud";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { FaPowerOff } from "react-icons/fa";
-import { GrPowerReset } from "react-icons/gr";
 import { VscDebugRestart } from "react-icons/vsc";
 import { BsSearch } from "react-icons/bs";
 import { GoAlert } from "react-icons/go";
 
 const SystemControl = () => {
-  const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
   const { addCommand } = useContext(CommandResponseContext);

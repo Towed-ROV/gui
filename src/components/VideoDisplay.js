@@ -22,7 +22,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  Button,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import offlineImage from "../assets/offline.png";
@@ -42,7 +41,6 @@ const VideoDisplay = () => {
   const { addCommand } = useContext(CommandResponseContext);
 
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
-  const boxColor = useColorModeValue("gray.200", "gray.600");
 
   const [isConnected, setIsConnected] = useState(false);
   const [source, setSource] = useState(offlineImage);
@@ -87,10 +85,6 @@ const VideoDisplay = () => {
     sendCommand("camera_offset_angle", cameraAngle, false);
     addCommand({ name: "camera_offset_angle", value: cameraAngle });
   };
-
-  useEffect(() => {
-    console.log(displayMode);
-  }, [displayMode]);
 
   return (
     <VStack bg="black" h="100%" boxShadow="dark-lg" spacing={0}>
