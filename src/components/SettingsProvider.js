@@ -6,14 +6,23 @@ export const SettingsProvider = (props) => {
   const [sensorSettings, setSensorSettings] = useState([]);
 
   const addSensorToSettings = (sensor) => {
-    console.log(JSON.stringify(sensor, null, 2));
     setSensorSettings((oldSettings) => [...oldSettings, sensor]);
   };
 
-  const removeSensorFromSettings = (name) => {
-    setSensorSettings(
-      sensorSettings.filter((sensorSetting) => sensorSetting.name !== name)
+  const removeSensorFromSettings = (id) => {
+    setNewSettings(
+      sensorSettings.filter((sensorSetting) => sensorSetting.id !== id)
     );
+  };
+
+  const updateSensorEnabled = (dbSensor) => {
+    let updatedSettings = [...sensorSettings];
+    updatedSettings.forEach((sensor) => {
+      if (sensor.id === dbSensor.id) {
+        sensor.enabled = dbSensor.enabled;
+      }
+    });
+    setNewSettings(updatedSettings);
   };
 
   const setNewSettings = (newSettings) => {
@@ -26,6 +35,7 @@ export const SettingsProvider = (props) => {
         sensorSettings,
         addSensorToSettings,
         removeSensorFromSettings,
+        updateSensorEnabled,
         setNewSettings,
       }}
     >

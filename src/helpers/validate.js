@@ -18,8 +18,6 @@ export const validateStringInput = (value) => {
     error = "WOW, easy there tiger! A bit long?";
   } else {
     // let userExist = false;
-    // const r =
   }
-  console.log("validating ..");
   return error;
 };

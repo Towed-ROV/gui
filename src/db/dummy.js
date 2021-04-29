@@ -153,3 +153,66 @@ export const fakeSettings = [
     enabled: false,
   },
 ];
+
+// const seedDatabase = async () => {
+//   // A pure test method for seeding the database with 'x' samples.
+//   const totalSamples = 10;
+//   let data = [...fakeSensors];
+//   let samples = [];
+//   let step = 0;
+
+//   const sessID = "Session-123";
+//   await createSession(sessID);
+
+//   const LAT = fakeSensors.filter((sensor) => sensor.name === "latitude")[0]
+//     .value;
+//   const LNG = fakeSensors.filter((sensor) => sensor.name === "longitude")[0]
+//     .value;
+//   for (let i = 0; i < totalSamples; i++) {
+//     samples.push(LNG + step);
+//     step += 0.001;
+//   }
+//   for await (let samp of samples) {
+//     await createWaypoint(sessID, [LAT, samp], data);
+//   }
+//   const isComplete = true;
+//   await updateSession(sessID, isComplete);
+// };
+
+// const fakeCMD = [
+//   {
+//     name: "temperature",
+//     value: 20.53,
+//   },
+//   {
+//     name: "heat",
+//     value: 1.02,
+//   },
+//   {
+//     name: "oxygen",
+//     value: 0.1004,
+//   },
+//   {
+//     name: "depth",
+//     value: 104,
+//   },
+// ];
+
+// const fakeRES = [
+//   {
+//     name: "Temperature",
+//     success: true,
+//   },
+//   {
+//     name: "Temperature",
+//     success: false,
+//   },
+//   {
+//     name: "Temperature",
+//     success: true,
+//   },
+//   {
+//     name: "Temperature",
+//     success: false,
+//   },
+// ];

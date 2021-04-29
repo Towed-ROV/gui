@@ -1,10 +1,11 @@
 // ENDPOINTS
-export const WAYPOINT_SESSIONS = "/waypoint_sessions/";
-export const WAYPOINTS = "/waypoints/";
-export const SENSORS = "/sensors/";
 export const VIDEOS = "/videos/";
 export const VIDEO_PREFERENCE = "/videos/preference";
+export const WAYPOINTS = "/waypoints/";
+export const WAYPOINT_SESSIONS = "/waypoint_sessions/";
+export const SENSORS = "/sensors/";
 export const COMMANDS = "/commands/";
+export const SETTINGS = "/settings/";
 
 // ENDPOINT SUFFIXES
 export const LIVE = "live";
@@ -13,8 +14,8 @@ export const COMPLETED = "completed";
 export const TOGGLE_RECORDING = "toggle_recording";
 export const SNAP = "snap";
 
-// ENDPOINT PREFIX
-const BASE_URL = "http://localhost:8000";
+// API BASE_URL
+export const BASE_URL = "http://localhost:8000";
 
 // STREAMS
 export const VIDEO_LIVE_STREAM = BASE_URL + VIDEOS + LIVE;
@@ -36,3 +37,8 @@ export const rovControlNames = [
   { name: "manual_wing_pos", id: 9 },
   { name: "depth_rov_offset", id: 10 },
 ];
+
+// TOWD ROV CONTROL NAMES
+export const lights_on_off = "lights_on_off";
+export const camera_offset_angle = "camera_offset_angle";
+export const brightness_light = "brightness_light";

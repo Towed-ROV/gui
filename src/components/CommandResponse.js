@@ -27,45 +27,7 @@ import { validateInput } from "../helpers/validate";
 import { rovControlNames } from "../db/config";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
-// const fakeCMD = [
-//   {
-//     name: "temperature",
-//     value: 20.53,
-//   },
-//   {
-//     name: "heat",
-//     value: 1.02,
-//   },
-//   {
-//     name: "oxygen",
-//     value: 0.1004,
-//   },
-//   {
-//     name: "depth",
-//     value: 104,
-//   },
-// ];
-
-// const fakeRES = [
-//   {
-//     name: "Temperature",
-//     success: true,
-//   },
-//   {
-//     name: "Temperature",
-//     success: false,
-//   },
-//   {
-//     name: "Temperature",
-//     success: true,
-//   },
-//   {
-//     name: "Temperature",
-//     success: false,
-//   },
-// ];
-
-const NumberFormField = () => {
+const CommandResponse = () => {
   const textColor = useColorModeValue("blackAlpha.900", "gray.200");
   const boxColor = useColorModeValue("gray.200", "gray.600");
 
@@ -277,4 +239,4 @@ const NumberFormField = () => {
   );
 };
 
-export default NumberFormField;
+export default CommandResponse;

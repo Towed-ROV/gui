@@ -5,6 +5,8 @@ import {
   VStack,
   Text,
   Link,
+  Box,
+  Heading,
 } from "@chakra-ui/react";
 import React from "react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
@@ -16,21 +18,18 @@ const Home = () => {
     <Flex
       h="100vh"
       color={textColor}
-      bg={boxColor}
+      bg="rov.jpg"
       align="center"
       justify="center"
+      bgImage="url('/rov_dark.jpg')"
+      bgPosition="center"
+      bgRepeat="no-repeat"
+      backgroundClip="content-box"
     >
       <VStack>
-        <Text fontSize="2xl">TOWED ROV 2021</Text>
-        <Link isExternal={true} href="https://github.com/Towed-ROV">
-          <IconButton
-            colorScheme="teal"
-            aria-label="Github"
-            size="lg"
-            href="www.google.no"
-            icon={<ExternalLinkIcon />}
-          />
-        </Link>
+        <Heading color="white" fontSize="5xl">
+          TOWED ROV 2021
+        </Heading>
       </VStack>
     </Flex>
   );

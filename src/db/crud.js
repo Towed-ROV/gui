@@ -10,6 +10,7 @@ import {
   TOGGLE_RECORDING,
   UNCOMPLETED,
   COMPLETED,
+  SETTINGS,
 } from "./config";
 
 export const createSession = async (session_id) => {
@@ -118,4 +119,26 @@ export const toggleVideo = async (toggle, mode) => {
 
 export const takeSnapshot = async () => {
   return await get(VIDEOS + SNAP);
+};
+
+export const createSetting = async (setting) => {
+  return await post(SETTINGS, setting);
+};
+
+export const getSettings = async () => {
+  return await get(SETTINGS);
+};
+
+export const getSetting = async (id) => {
+  return await get(SETTINGS + id);
+};
+
+export const updateSetting = async (id, enabled) => {
+  const updateSensor = { enabled: enabled };
+  console.log("SEND : ", updateSensor);
+  return await put(SETTINGS + id, updateSensor);
+};
+
+export const deleteSetting = async (id) => {
+  return await del(SETTINGS, id);
 };

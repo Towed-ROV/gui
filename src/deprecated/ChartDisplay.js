@@ -21,12 +21,6 @@ const ChartDisplay = ({ sensorData, chartMode }) => {
       onChange={(index) => console.log(index)}
     >
       <TabList ml={32}>
-        {/* <Tab
-            color={textColor}
-            _selected={{ color: tabTextColor, bg: "teal" }}
-          >
-            Stream
-          </Tab> */}
         <Tab color={textColor} _selected={{ color: tabTextColor, bg: "teal" }}>
           Chart
         </Tab>
@@ -35,9 +29,6 @@ const ChartDisplay = ({ sensorData, chartMode }) => {
         </Tab>
       </TabList>
       <TabPanels h="inherit">
-        {/* <TabPanel color={textColor} w="100%" h="90%">
-            <SensorDisplay sensorData={sensorData} />
-          </TabPanel> */}
         <TabPanel bg="blue"></TabPanel>
         <TabPanel>{/* <Minimap /> */}</TabPanel>
       </TabPanels>

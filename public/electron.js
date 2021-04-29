@@ -7,7 +7,8 @@ function createWindow() {
     width: 1280,
     height: 720,
     center: true,
-    frame: false,
+    titleBarStyle: "hidden",
+    // frame: false,
     fullscreenable: true,
     webPreferences: {
       nodeIntegration: true,

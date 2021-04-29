@@ -32,14 +32,10 @@ export const put = async (url, content) => {
 };
 
 export const del = async (url, sessID) => {
-  // if (config.hasOwnProperty("data")) {
   try {
     const response = await api.delete(url + sessID);
     return await response.data;
   } catch (err) {
     console.log(err);
   }
-  // } else {
-  //   console.log(`DELETE req. failed: ${config} has no data-key`);
-  // }
 };

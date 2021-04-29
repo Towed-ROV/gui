@@ -58,10 +58,7 @@ const Navbar = (props) => {
           <DrawerContent bg={boxColor}>
             <DrawerHeader borderBottomWidth="1px">
               <Text fontWeight="bold" float="left" color={textColor}>
-                Towed ROV 2021 🛥️
-              </Text>
-              <Text as="cite" float="right" color={textColor}>
-                "Champions keep playing until they get it right."
+                Copyright (c) 2021 Towed ROV
               </Text>
             </DrawerHeader>
             <DrawerBody w="100%" bg={boxColor}>

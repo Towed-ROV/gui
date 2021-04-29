@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
 import VideoDisplay from "../components/VideoDisplay";
-import NumberFormField from "../components/NumberFormField";
+import CommandResponse from "../components/CommandResponse";
 import { CommandResponseProvider } from "../components/CommandResponseProvider";
 import SystemControl from "../components/SystemControl";
 import ChartMap from "../components/ChartMap";
@@ -31,7 +31,7 @@ const Dashboard = () => {
             <VideoDisplay />
           </GridItem>
           <GridItem p={1} colSpan={4} rowSpan={8}>
-            <NumberFormField />
+            <CommandResponse />
           </GridItem>
           <GridItem p={1} colSpan={7} rowSpan={5}>
             <Session />
