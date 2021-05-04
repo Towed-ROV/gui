@@ -72,8 +72,10 @@ const Settings = () => {
 
   const isSensorInSettings = (name) => {
     let exist = false;
-    if (sensorSettings.some((sensor) => sensor.name === name)) {
-      exist = true;
+    if (sensorSettings !== undefined) {
+      if (sensorSettings.some((sensor) => sensor.name === name)) {
+        exist = true;
+      }
     }
     return exist;
   };
@@ -91,6 +93,7 @@ const Settings = () => {
   useEffect(() => {
     async function fetchDatabaseSettings() {
       let dbSettings = await getSettings();
+      console.log("Setting newSettings!!: ", dbSettings);
       setNewSettings(dbSettings);
     }
     fetchDatabaseSettings();
@@ -165,11 +168,11 @@ const Settings = () => {
                         <option hidden value="">
                           -- select --
                         </option>
-                        <option key="1" value="arduino_1">
-                          arduino_1
+                        <option key="1" value="arduino_stepper">
+                          arduino_stepper
                         </option>
-                        <option key="2" value="arduino_2">
-                          arduino_2
+                        <option key="2" value="arduino_sensor">
+                          arduino_sensor
                         </option>
                       </Select>
 
@@ -254,7 +257,7 @@ const Settings = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {sensorSettings.length > 0 &&
+              {sensorSettings &&
                 sensorSettings.map((sensor) => (
                   <Tr key={sensor.id}>
                     <Td style={{ width: "50px" }}>

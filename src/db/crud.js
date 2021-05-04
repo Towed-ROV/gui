@@ -60,13 +60,41 @@ export const getCompletedSessions = async () => {
   }
 };
 
-export const sendCommand = async (name, value, toSystem = false) => {
+export const sendCommand = async (
+  name,
+  value,
+  toSystem = false,
+  config = false
+) => {
   const payload = {
     name: name,
     value: value,
     toSystem: toSystem,
+    config: config,
   };
   try {
+    return await post(COMMANDS, payload);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const sendSettingsCommand = async (
+  name,
+  origin,
+  port,
+  toSystem = false,
+  config = true
+) => {
+  const payload = {
+    name: name,
+    origin: origin,
+    port: port,
+    toSystem: toSystem,
+    config: config,
+  };
+  try {
+    console.log("Sending setting: ", payload);
     return await post(COMMANDS, payload);
   } catch (err) {
     console.log(err);

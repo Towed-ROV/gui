@@ -1,19 +1,8 @@
-import {
-  Flex,
-  IconButton,
-  useColorModeValue,
-  VStack,
-  Text,
-  Link,
-  Box,
-  Heading,
-} from "@chakra-ui/react";
+import { Flex, useColorModeValue, VStack, Heading } from "@chakra-ui/react";
 import React from "react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const Home = () => {
   const textColor = useColorModeValue("grey.900", "gray.200");
-  const boxColor = useColorModeValue("gray.200", "gray.600");
   return (
     <Flex
       h="100vh"

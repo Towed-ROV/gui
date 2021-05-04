@@ -67,14 +67,16 @@ const Map = () => {
     // Deletes the select waypointSession-session_id in Formik
     if (sessionId !== undefined) {
       const r = await deleteSession(sessionId);
-      toast({
-        title: `Deleted session: ${sessionId}.`,
-        position: "top-right",
-        description: `Detail: ${r.message}`,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
+      if (r !== undefined) {
+        toast({
+          title: `Deleted session: ${sessionId}.`,
+          position: "top-right",
+          description: `Detail: ${r.message}`,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     }
   };
 

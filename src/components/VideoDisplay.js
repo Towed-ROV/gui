@@ -120,10 +120,11 @@ const VideoDisplay = () => {
             <MenuList bg="black" border="0px" py={2}>
               <Center>
                 <MenuItem
-                  bg="teal"
+                  bg="teal.700"
                   w="40%"
                   h={8}
                   color="white"
+                  _hover={{ bg: "teal.400" }}
                   onClick={() => {
                     handleVideoConnection("video");
                   }}
@@ -134,8 +135,9 @@ const VideoDisplay = () => {
               </Center>
               <Center>
                 <MenuItem
-                  bg="teal"
+                  bg="teal.700"
                   w="40%"
+                  _hover={{ bg: "teal.400" }}
                   h={8}
                   color="white"
                   onClick={() => {

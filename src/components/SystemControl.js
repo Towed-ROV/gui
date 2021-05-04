@@ -1,16 +1,26 @@
-import { Switch, Box, useColorModeValue, Flex, Icon } from "@chakra-ui/react";
-import React, { useContext, useState } from "react";
-import { sendCommand, toggleRecording } from "../db/crud";
+import {
+  Switch,
+  Box,
+  useColorModeValue,
+  Flex,
+  Icon,
+  useToast,
+} from "@chakra-ui/react";
+import React, { useContext, useEffect, useState } from "react";
+import { sendCommand, sendSettingsCommand, toggleRecording } from "../db/crud";
 import { CommandResponseContext } from "./CommandResponseProvider";
+import { SettingsContext } from "./SettingsProvider";
 import { FaPowerOff } from "react-icons/fa";
-import { VscDebugRestart } from "react-icons/vsc";
+import { VscDebugRestart, VscDebugStart } from "react-icons/vsc";
 import { BsSearch } from "react-icons/bs";
 import { GoAlert } from "react-icons/go";
 
 const SystemControl = () => {
   const boxColor = useColorModeValue("gray.200", "gray.600");
+  const toast = useToast();
 
   const { addCommand } = useContext(CommandResponseContext);
+  const { sensorSettings } = useContext(SettingsContext);
 
   const [autoMode, setAutoMode] = useState(false);
   const [isDepthMode, setIsDepthMode] = useState(false);
@@ -57,6 +67,25 @@ const SystemControl = () => {
     addCommand({ name: "com_port_search", value: true });
   };
 
+  const sendSensorSettingsToRov = async () => {
+    console.log(sensorSettings);
+    if (sensorSettings.length > 0) {
+      sensorSettings.map(
+        async (setting) =>
+          await sendSettingsCommand(setting.name, setting.origin, setting.port)
+      );
+    } else {
+      toast({
+        title: `Settings information.`,
+        position: "top",
+        description: `Settings is empty`,
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <Flex
       h="6vh"
@@ -88,6 +117,19 @@ const SystemControl = () => {
           color="white"
           px={4}
           h={10}
+          onClick={() => sendSensorSettingsToRov()}
+        >
+          <Icon as={VscDebugStart} mr={2} color="white" />
+          SEND CONFIG
+        </Box>
+        <Box
+          mr={6}
+          minWidth="10rem"
+          as="button"
+          bg="teal"
+          color="white"
+          px={4}
+          h={10}
           onClick={() => sendResetCommand()}
         >
           <Icon as={VscDebugRestart} mr={2} color="white" />
@@ -105,19 +147,6 @@ const SystemControl = () => {
         >
           <Icon as={BsSearch} mr={2} color="white" />
           PORTS
-        </Box>
-        <Box
-          mr={6}
-          minWidth="10rem"
-          as="button"
-          bg="teal"
-          color="white"
-          px={4}
-          h={10}
-          onClick={() => sendKillCommand()}
-        >
-          <Icon as={GoAlert} mr={2} color="white" />
-          E-STOP
         </Box>
       </Flex>
       <Flex justifyContent="center" wrap="wrap" w="100%">
@@ -177,6 +206,19 @@ const SystemControl = () => {
             colorScheme="green"
           />
           DEPTH MODE
+        </Box>
+        <Box
+          mr={6}
+          minWidth="10rem"
+          as="button"
+          bg="teal"
+          color="white"
+          px={4}
+          h={10}
+          onClick={() => sendKillCommand()}
+        >
+          <Icon as={GoAlert} mr={2} color="white" />
+          E-STOP
         </Box>
       </Flex>
     </Flex>

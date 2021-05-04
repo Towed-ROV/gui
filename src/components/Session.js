@@ -286,6 +286,7 @@ const Session = () => {
                   minW="10rem"
                   bg="teal"
                   color="white"
+                  _disabled={{ bg: "#666666", opacity: 0.5 }}
                   disabled={isSessionRunning}
                   h={8}
                   onClick={() => {
