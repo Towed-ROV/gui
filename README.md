@@ -2,6 +2,8 @@
 
 An application designed and developed to control a remote-operated vehicle towed behind a vessel.
 
+![no_image](https://github.com/Towed-ROV/gui/blob/main/src/assets/rov.png?raw=true)
+
 ## Requirements
 
 - Git
