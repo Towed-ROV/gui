@@ -4,9 +4,9 @@ An application designed and developed to control a remote-operated vehicle towed
 
 ![no_image](https://github.com/Towed-ROV/gui/blob/main/docs/imgs/home.jpg?raw=true)
 <p float="left">
-  <img src="https://github.com/Towed-ROV/gui/blob/main/docs/imgs/settings.jpg" width="33%" />
-  <img src="https://github.com/Towed-ROV/gui/blob/main/docs/imgs/dashboard.jpg" width="33%" />
-  <img src="https://github.com/Towed-ROV/gui/blob/main/docs/imgs/map.jpg" width="33%"/>
+  <img src="https://github.com/Towed-ROV/gui/blob/main/docs/imgs/settings.jpg" width="250px" />
+  <img src="https://github.com/Towed-ROV/gui/blob/main/docs/imgs/dashboard.jpg" width="250px" />
+  <img src="https://github.com/Towed-ROV/gui/blob/main/docs/imgs/map.jpg" width="250px"/>
 </p>
 
 
