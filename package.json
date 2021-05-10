@@ -1,12 +1,13 @@
 {
-  "name": "control-app",
+  "name": "gui",
   "version": "0.1.0",
-  "description": "Control Application, Towed ROV 2021",
+  "description": "GUI: ROV Control Application, Towed ROV 2021",
   "author": "Andreas Øie",
   "main": "public/electron.js",
   "homepage": ".",
   "private": true,
   "build": {
+    "artifactName": "control-app.${ext}",
     "win": {
       "icon": "build/icon.png"
     }
