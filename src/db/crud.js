@@ -163,7 +163,6 @@ export const getSetting = async (id) => {
 
 export const updateSetting = async (id, enabled) => {
   const updateSensor = { enabled: enabled };
-  console.log("SEND : ", updateSensor);
   return await put(SETTINGS + id, updateSensor);
 };
 

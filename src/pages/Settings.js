@@ -52,7 +52,6 @@ const Settings = () => {
 
   const addSetting = async (sensor) => {
     let dbSensor = await createSetting(sensor);
-    console.log("From DB ADD: ", dbSensor);
     addSensorToSettings(dbSensor);
   };
 
@@ -93,7 +92,6 @@ const Settings = () => {
   useEffect(() => {
     async function fetchDatabaseSettings() {
       let dbSettings = await getSettings();
-      console.log("Setting newSettings!!: ", dbSettings);
       setNewSettings(dbSettings);
     }
     fetchDatabaseSettings();
@@ -108,7 +106,7 @@ const Settings = () => {
         </Button>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
-          <ModalContent onSubmit={() => console.log()}>
+          <ModalContent>
             <ModalHeader>Add sensor</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={8}>

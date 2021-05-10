@@ -23,7 +23,7 @@ import {
   MenuList,
   MenuItem,
 } from "@chakra-ui/react";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import offlineImage from "../assets/offline.png";
 import loadIMG from "../assets/loading.gif";
 import { CommandResponseContext } from "./CommandResponseProvider";
@@ -31,7 +31,7 @@ import { sendCommand, takeSnapshot, toggleVideo } from "../db/crud";
 
 import { MdSend } from "react-icons/md";
 import { SiSonarsource } from "react-icons/si";
-import { FiGitCommit, FiSun, FiCamera } from "react-icons/fi";
+import { FiGitCommit, FiCamera } from "react-icons/fi";
 import { AiFillCamera } from "react-icons/ai";
 import { VscDebugStart, VscDebugPause } from "react-icons/vsc";
 import { Prompt } from "react-router";

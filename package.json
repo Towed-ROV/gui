@@ -19,7 +19,6 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@types/socket.io-client": "^1.4.35",
     "axios": "^0.21.1",
     "cross-env": "^7.0.3",
     "electron-is-dev": "^1.2.0",
@@ -29,14 +28,12 @@
     "highcharts": "^9.0.1",
     "highcharts-react-official": "^3.0.0",
     "leaflet": "^1.7.1",
-    "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
     "react-leaflet": "^3.0.5",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
-    "socket.io-client": "^3.1.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

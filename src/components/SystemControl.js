@@ -6,7 +6,7 @@ import {
   Icon,
   useToast,
 } from "@chakra-ui/react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { sendCommand, sendSettingsCommand, toggleRecording } from "../db/crud";
 import { CommandResponseContext } from "./CommandResponseProvider";
 import { SettingsContext } from "./SettingsProvider";
@@ -25,8 +25,6 @@ const SystemControl = () => {
   const [autoMode, setAutoMode] = useState(false);
   const [isDepthMode, setIsDepthMode] = useState(false);
   const [sysRunning, setSysRunning] = useState(false);
-
-  // @TODO: improve the addition of addings commands to display box
 
   const toggleRemoteConnection = () => {
     if (sysRunning) {
@@ -68,7 +66,6 @@ const SystemControl = () => {
   };
 
   const sendSensorSettingsToRov = async () => {
-    console.log(sensorSettings);
     if (sensorSettings.length > 0) {
       sensorSettings.map(
         async (setting) =>

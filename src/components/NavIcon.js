@@ -56,11 +56,7 @@ const Navbar = (props) => {
       >
         <DrawerOverlay>
           <DrawerContent bg={boxColor}>
-            <DrawerHeader borderBottomWidth="1px">
-              <Text fontWeight="bold" float="left" color={textColor}>
-                Copyright (c) 2021 Towed ROV
-              </Text>
-            </DrawerHeader>
+            <DrawerHeader borderBottomWidth="1px"></DrawerHeader>
             <DrawerBody w="100%" bg={boxColor}>
               <Flex
                 as="nav"
