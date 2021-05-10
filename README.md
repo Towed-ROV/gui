@@ -11,7 +11,7 @@ An application designed and developed to control a remote-operated vehicle towed
 ## Installation
 In the terminal, run the following commands
 ```bash
-git clone https://github.com/Towed-ROV/gui
+git clone https://github.com/Towed-ROV/gui.git
 cd gui
 npm install
 ```
