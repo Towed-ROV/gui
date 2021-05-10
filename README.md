@@ -25,7 +25,7 @@ npm install
 ```bash
 npm run build (might take awhile)
 cd dist
-& '.\control-app Setup 0.1.0 exe'
+.\control-app.exe
 ```
 
 ### Method B
