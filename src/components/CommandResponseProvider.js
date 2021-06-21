@@ -10,6 +10,8 @@ export const CommandResponseProvider = (props) => {
   const [responses, setResponses] = useState(testResponses);
   const [referenceLine, setReferenceLine] = useState(0);
   const [sensorData, setSensorData] = useState([]);
+  const [alarmData, setAlarmData] = useState([]);
+  // const [alarmData, setAlarmData] = useState([{ "name": "leakage", "value": true }, { "name": "pres", "value": true }]);
 
   const addCommand = (cmd) => {
     setCommands((oldCommands) => [...oldCommands, cmd]);
@@ -22,6 +24,8 @@ export const CommandResponseProvider = (props) => {
   return (
     <CommandResponseContext.Provider
       value={{
+        alarmData,
+        setAlarmData,
         commands,
         responses,
         sensorData,
