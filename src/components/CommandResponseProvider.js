@@ -11,7 +11,7 @@ export const CommandResponseProvider = (props) => {
   const [referenceLine, setReferenceLine] = useState(0);
   const [sensorData, setSensorData] = useState([]);
   const [alarmData, setAlarmData] = useState([]);
-  // const [alarmData, setAlarmData] = useState([{ "name": "leakage", "value": true }, { "name": "pres", "value": true }]);
+  // const [alarmData, setAlarmData] = useState([{ "name": "leakage", "value": false }, { "name": "pres", "value": true }]);
 
   const addCommand = (cmd) => {
     setCommands((oldCommands) => [...oldCommands, cmd]);
