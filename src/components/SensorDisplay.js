@@ -29,20 +29,6 @@ const SensorDisplay = () => {
     CommandResponseContext
   );
 
-  const checkForAlarms = (alarmData) => {
-
-    if (alarmData.value == true) {
-      toast({
-        title: `${alarmData.name} has occured`,
-        status: "error",
-        position: "bottom-left",
-        isClosable: true,
-      });
-    };
-  };
-
-  checkForAlarms(alarmData);
-
   useEffect(() => {
     if (alarmData) {
       // const { title, body } = toastMessage;
@@ -54,13 +40,11 @@ const SensorDisplay = () => {
             // description: body,
             status: 'error',
             duration: 9000,
-            position: "bottom-left",
+            position: "top",
             isClosable: true
           });
         }
       }
-
-
     }
   }, [alarmData, toast]);
 
@@ -73,12 +57,6 @@ const SensorDisplay = () => {
         let payload = JSON.parse(event.data);
         let name = payload.payload_name;
         let data = payload.payload_data;
-        // test  
-        // let name = "sensor_value";
-        // let data = {
-        //   "name": "leakage",
-        //   "value": true
-        // };
 
         switch (name) {
           case "sensor_data":
@@ -105,25 +83,6 @@ const SensorDisplay = () => {
   }, []);
 
   return (
-    // <Wrap>
-    //   {alarmData &&
-    //           alarmData.map((alarm, idx) => (
-    //     <WrapItem key={idx}>
-    //       <Button
-    //         onClick={() =>
-    //           toast({
-    //             title: `${alarmData} toast`,
-    //             status: "error",
-    //             position: "bottom-left",
-    //             isClosable: true,
-    //           })
-    //         }
-    //       >
-    //         Show {alarmData} toast
-    //       </Button>
-    //     </WrapItem>
-    //   ))}
-    // </Wrap>,
     <VStack
       w="100%"
       h="100%"
@@ -132,20 +91,6 @@ const SensorDisplay = () => {
       p={4}
       boxShadow="dark-lg"
     >
-      {/* <Button
-        onClick={() =>
-          toast({
-            position: "bottom-left",
-            render: () => (
-              <Box color="white" p={3} bg="blue.500">
-                Hello World
-              </Box>
-            ),
-          })
-        }
-      >
-        Show Toast
-      </Button> */}
       <Flex h="10%">
         <Center my={4} color={textColor} alig="center">
           <Heading alig="center" size="lg">
